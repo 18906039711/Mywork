@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Classes\AppDelegate.cpp">
+      <Filter>Source Files\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\proj.win32\main.cpp">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\cocos\precheader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseScene.cpp">
+      <Filter>Source Files\Classes\ChooseScene</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpScene.cpp">
+      <Filter>Source Files\Classes\HelpScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SuspendScene.cpp">
+      <Filter>Source Files\Classes\SuspendScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene1.cpp">
+      <Filter>Source Files\Classes\PlayScene1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\templates\cpp-template-default\Classes\MainScene.cpp">
+      <Filter>Source Files\Classes\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Classes\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Classes\player</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerListener.cpp">
+      <Filter>Source Files\Classes\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveController.cpp">
+      <Filter>Source Files\Classes\player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Classes\AppDelegate.h">
+      <Filter>Source Files\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\proj.win32\main.h">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\proj.win32\resource.h">
+      <Filter>Source Files\proj.win32</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\HelloWorld.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\fonts\Marker Felt.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\fonts\arial.ttf">
+      <Filter>Resources\fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\res\.gitkeep">
+      <Filter>Resources\res</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\CloseNormal.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\Resources\CloseSelected.png">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseScene.h">
+      <Filter>Source Files\Classes\ChooseScene</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpScene.h">
+      <Filter>Source Files\Classes\HelpScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SuspendScene.h">
+      <Filter>Source Files\Classes\SuspendScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene1.h">
+      <Filter>Source Files\Classes\PlayScene1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\templates\cpp-template-default\Classes\MainScene.h">
+      <Filter>Source Files\Classes\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Classes\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Source Files\Classes\player</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerListener.h">
+      <Filter>Source Files\Classes\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveController.h">
+      <Filter>Source Files\Classes\player</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D:\cocos2d-x\cocos2d-x-4.0\templates\cpp-template-default\proj.win32\game.rc">
+      <Filter>Source Files\proj.win32</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3648453A-1F7D-31DB-970E-52BF8C6809F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\fonts">
+      <UniqueIdentifier>{C1B4F254-CB18-3012-8802-91F0A49AD335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\res">
+      <UniqueIdentifier>{A1A48E4B-B5DD-3D8B-ADF9-FD2ADB4C00C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{95432EA7-3853-36F4-BFB8-2B7909BB61F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes">
+      <UniqueIdentifier>{9E17B769-4104-3F7C-AA89-75CAE4FB575D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proj.win32">
+      <UniqueIdentifier>{A99F37A8-D404-3EE6-98C8-70CFA338EB9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\character">
+      <UniqueIdentifier>{586a1fa0-7d5e-41e7-b4d3-6f7d9f642ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\player">
+      <UniqueIdentifier>{73b2b2a8-89c1-4d63-ada5-87b15e6819f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\MainScreen">
+      <UniqueIdentifier>{a22ef896-1ebd-4002-8fdd-02afeb2cc577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\ChooseScene">
+      <UniqueIdentifier>{56b8f2bb-7249-4f38-af42-cc71e53e0bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\HelpScene">
+      <UniqueIdentifier>{4ca55e23-6927-41fd-ad06-8b953f80dea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\button">
+      <UniqueIdentifier>{5809b4b4-4978-4f01-93f2-e1fdbb91f16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\SuspendScene">
+      <UniqueIdentifier>{f7eee59b-80cb-4224-a9ab-fae902188d34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\PlayScene1">
+      <UniqueIdentifier>{d5510f9d-9d08-481a-8d69-b0ce3c64ac7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\MainScene">
+      <UniqueIdentifier>{710276f9-6bd6-481e-9902-a7dbc82fef91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Classes\Entity">
+      <UniqueIdentifier>{99e86a42-939f-438c-ba8c-709f6806f4e2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\MainScreen\SoulKnight.png">
+      <Filter>Resources\MainScreen</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\start.png">
+      <Filter>Resources\MainScreen</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\rangerWB.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\sorcererWB.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\ranger_right.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\ranger_left.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\sorcerer_left.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\character\sorcerer_right.png">
+      <Filter>Resources\character</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\eddy.png">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\cancel.png">
+      <Filter>Resources\button</Filter>
+    </Image>
+    <Image Include="..\..\..\bin\HelloCpp\Debug\Resources\help.png">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
