@@ -1,12 +1,11 @@
 #include"Entity.h"
 
 void Entity::bindSprite(Sprite* sprite) {
+	this->removeChildByTag(1);
 	my_sprite = sprite;
-	this->addChild(my_sprite);
+	this->addChild(my_sprite, 0, 1);
 }
 
-void Entity::setController(ControllerListener* controller) {
-	this->my_controller = controller;
-	my_controller->setControllerListener(this);
-}
+
+
 

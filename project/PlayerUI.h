@@ -15,10 +15,10 @@ class PlayerUI :public Node{
 public:
 	CREATE_FUNC(PlayerUI);
 	virtual bool init();
-
-	void getPlayerMaxAttribute();
+	void update(float delta);
+	void bindPlayer(Player* player);
 	void setUI();
-	void updateUI(Player* player);
+	void updateUI();
 
 private:
 	Sprite* BottomFrameUI = Sprite::create("UI/BottomFrameUI.png");
@@ -26,6 +26,7 @@ private:
 	ui::LoadingBar* PlayerDefendceUI = ui::LoadingBar::create("UI/PlayerDefendceUI.png");
 	ui::LoadingBar* PlayerMPUI = ui::LoadingBar::create("UI/PlayerMPUI.png");
 
+	Player* my_player;
 	int HP = 0;
 	int MP = 0;
 	int Defendce = 0;

@@ -2,10 +2,18 @@
 
 bool PlayerUI::init()
 {
+	this->scheduleUpdate();
+	this->setUI();
 	return true;
 }
 
-void  PlayerUI::getPlayerMaxAttribute() {
+void PlayerUI::bindPlayer(Player* player) {
+	my_player = player;
+}
+
+void PlayerUI::setUI() {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
 	if (player_num == 1) {
 		MaxHP = UserDefault::getInstance()->getIntegerForKey("RangerHP", 6);
 		MaxDefendce = UserDefault::getInstance()->getIntegerForKey("RangerDefendce", 3);
@@ -16,10 +24,8 @@ void  PlayerUI::getPlayerMaxAttribute() {
 		MaxDefendce = UserDefault::getInstance()->getIntegerForKey("sorcererDefendce", 5);
 		MaxMP = UserDefault::getInstance()->getIntegerForKey("sorcererMP", 240);
 	}
-}
 
-void PlayerUI::setUI() {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
+
 	//底框
 	BottomFrameUI->setAnchorPoint(Vec2(0, 1));
 	BottomFrameUI->setPosition(0, visibleSize.height + BottomFrameUI->getContentSize().height / 2);
@@ -38,10 +44,10 @@ void PlayerUI::setUI() {
 	BottomFrameUI->runAction(MoveTo::create(0.5, Vec2(0, visibleSize.height)));
 }
 
-void PlayerUI::updateUI(Player* player) {
-	HP = player->HP;
-	MP = player->MP;
-	Defendce = player->Defendce;
+void PlayerUI::updateUI() {
+	HP = UserDefault::getInstance()->getIntegerForKey("PlayerHP");
+	MP = UserDefault::getInstance()->getIntegerForKey("PlayerMP");
+	Defendce = UserDefault::getInstance()->getIntegerForKey("PlayerDefendce");
 
 	PlayerHPUI->setPercent(static_cast<float>(HP) / MaxHP * 100);
 	PlayerDefendceUI->setPercent(static_cast<float>(Defendce) / MaxDefendce * 100);
@@ -60,7 +66,22 @@ void PlayerUI::updateUI(Player* player) {
 	Label* MPLabel = Label::createWithTTF(MPstr, "fonts/arial.ttf", 80);
 	MPLabel->setPosition(Vec2(BottomFrameUI->getContentSize().width / 5 * 3 - 27, BottomFrameUI->getContentSize().height / 4 + 4));
 
-	BottomFrameUI->addChild(HPLabel);
-	BottomFrameUI->addChild(DefendceLabel);
-	BottomFrameUI->addChild(MPLabel);
+	//移除之前的数字
+	BottomFrameUI->removeChildByTag(1);
+	BottomFrameUI->removeChildByTag(2);
+	BottomFrameUI->removeChildByTag(3);
+	
+	//添加改变后的数字
+	BottomFrameUI->addChild(HPLabel, 1, 1);
+	BottomFrameUI->addChild(DefendceLabel, 1, 2);
+	BottomFrameUI->addChild(MPLabel, 1, 3);
+
+}
+
+void PlayerUI::update(float delta) {
+	if (HP != UserDefault::getInstance()->getIntegerForKey("PlayerHP")
+		|| MP != UserDefault::getInstance()->getIntegerForKey("PlayerMP") 
+		|| Defendce != UserDefault::getInstance()->getIntegerForKey("PlayerDefendce")) {
+		this->updateUI();
+	}
 }

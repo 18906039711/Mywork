@@ -6,16 +6,17 @@
 #include "cocos2d.h"
 #include "PlayScene1.h"
 #include "SuspendScene.h"
-#include "PlayerMoveController.h"
 #include "player.h"
 #include "PlayerUI.h"
+#include "CoinUI.h"
+#include"TreasureChest.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;
 
 class Player;
 
-class ChooseScene :public Scene
+class ChooseScene :public Layer
 {
 public:
 	CREATE_FUNC(ChooseScene);
@@ -30,28 +31,29 @@ public:
 
 	void setMusic();
 
-	/*void update(float delta);
+	void setTreasureChest();
 
-	void makeEddy();
+	void displayCoinNum();
+
+	void ifChestOpened(float dt);
+	//void update(float delta);
+
+	/*void makeEddy();
 
 	void enterEddy();
 
-	void setButton();
-
-	void suspendCallback(cocos2d::Ref* pSender);
-
-
-
-	float pfh(float a, float b)
-	{
-		return a * a + b * b;
-	}*/
+	*/
 
 private:
 	Sprite* player_rangerwb = Sprite::create("character/rangerWB.png");
 	Sprite* player_sorcererwb = Sprite::create("character/sorcererWB.png");
 	TMXTiledMap* map = TMXTiledMap::create("map/chooseMap.tmx");
-	void addPlayerUI(Player* player);
+
+	Player* player;
+
+	TreasureChest*chest1 = TreasureChest::create(1);
+	TreasureChest* chest2 = TreasureChest::create(2);
+
 	void choosePlayer();
 	void addPlayer();
 	int backGroundMusic;

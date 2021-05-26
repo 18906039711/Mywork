@@ -5,7 +5,12 @@ int player_num = 0;
 
 Scene* ChooseScene::createScene()
 {
-	return ChooseScene::create();
+	auto scene = Scene::createWithPhysics();
+	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	auto layer = ChooseScene::create();
+	scene->addChild(layer);
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -17,19 +22,23 @@ static void problemLoading(const char* filename)
 
 bool ChooseScene::init()
 {
-	if (!Scene::init()) {
+	if (!Layer::init()) {
 		return false;
 	}
+
 	//设置地图
 	this->addChild(map);
-	
-	choosePlayer();
+
 	setButton();
 	setMusic();
-	
+	setTreasureChest();
+	displayCoinNum();
+	choosePlayer();
 
+	
 	return true;
 }
+
 void ChooseScene::choosePlayer() {
 	//获取屏幕显示大小
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -77,24 +86,15 @@ void ChooseScene::addPlayer() {
 
 	//设置玩家
 	Player* player = Player::create();
-	player = Player::setPlayer();
-	this->addChild(player, 0);
-
-	// 创建控制器
-	PlayerMoveController* moveController = PlayerMoveController::create();
-	moveController->setSpeed(8);
-	moveController->getMap(map);
-	map->addChild(moveController);
-
-	//对player进行控制
-	moveController->bindPlayer(player);
+	player->getMap(map);
+	map->addChild(player, 4);
+	player->changeMP(-400);
 
 	//增加playerUI
 	PlayerUI* playerUI = PlayerUI::create();
-	playerUI->getPlayerMaxAttribute();
-	playerUI->setUI();
-	playerUI->updateUI(player);
+	playerUI->bindPlayer(player);
 	this->addChild(playerUI);
+	
 }
 
 void ChooseScene::setButton() {
@@ -132,6 +132,7 @@ void ChooseScene::setMusic() {
 	backGroundMusic = AudioEngine::play2d("music/ElecrystalSoundTeam.mp3", true);
 	//将音乐ID传入UserDefault文件中
 	UserDefault::getInstance()->setIntegerForKey("backGroundMusicID", backGroundMusic);
+
 	//读取之前的音量
 	int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
 	AudioEngine::setVolume(backGroundMusic, volumePercent / 100.f);
@@ -151,6 +152,33 @@ void ChooseScene::suspendCallback(cocos2d::Ref* pSender) {
 
 	Director::getInstance()->pushScene(SuspendScene::scene(screen));
 }
+
+void ChooseScene::setTreasureChest() {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
+	map->addChild(chest1, 4);
+
+	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
+	map->addChild(chest2, 4, ObjectTag_TreasureChest);
+
+	this->schedule(CC_SCHEDULE_SELECTOR(ChooseScene::ifChestOpened), static_cast<float>(0.1));
+}
+
+void ChooseScene::ifChestOpened(float dt) {
+	if (chest2->ifOpened) {
+		this->unschedule(CC_SCHEDULE_SELECTOR(ChooseScene::ifChestOpened));
+		chest2->runAction(Sequence::create(DelayTime::create(static_cast<float>(4)), RemoveSelf::create(), NULL));
+	}
+}
+
+void ChooseScene::displayCoinNum() {
+	CoinUI* coinPanel= CoinUI::create();
+	coinPanel->intializeCoin();
+	this->addChild(coinPanel);
+}
+
+
 
 //
 //void ChooseScene::makeEddy() 
@@ -178,13 +206,4 @@ void ChooseScene::suspendCallback(cocos2d::Ref* pSender) {
 //		Director::getInstance()->pushScene(TransitionRotoZoom::create(1.f, playScene));
 //	}
 //}
-//
-//void ChooseScene::MusicCallback(cocos2d::Ref* pSender) 
-//{
-//
-//
-//}
-//
-//
-//
 

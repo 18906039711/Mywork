@@ -29,6 +29,20 @@ bool SuspendScene::init() {
     suspendSprite->setPosition(x, y);
     suspendSprite->setScale(visibleSize.height / suspendSprite->getContentSize().height / 2);
     this->addChild(suspendSprite);
+
+    Sprite* PlayerSculpture = Sprite::create();
+    if (player_num == 1) {
+        PlayerSculpture = Sprite::create("suspendScene/rangerSculpture.png");
+        
+    }
+    else if (player_num == 2) {
+        PlayerSculpture = Sprite::create("suspendScene/sorcererSculpture.png");
+        
+    }
+    PlayerSculpture->setPosition(PlayerSculpture->getContentSize().width / 2 + 52,
+        suspendSprite->getContentSize().height - PlayerSculpture->getContentSize().height / 2 - 80);
+    suspendSprite->addChild(PlayerSculpture);
+
     //continue°´Å¥
     auto continueItem = MenuItemImage::create(
         "suspendScene/continue.png",

@@ -9,6 +9,7 @@
 #include <string>
 #include "AudioEngine.h"
 
+extern int player_num;
 
 USING_NS_CC;
 
