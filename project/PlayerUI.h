@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-extern int player_num;
+extern int playerID;
 
 class Player;
 

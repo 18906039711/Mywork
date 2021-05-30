@@ -5,7 +5,9 @@
 #include"Entity.h"
 #include"Coin.h"
 #include"player.h"
+#include"Weapon.h"
 #include"ObjectTag.h"
+
 
 
 USING_NS_CC;
@@ -19,9 +21,10 @@ public:
 
 	bool onContactBegin(PhysicsContact& contact);
 
-	bool ifOpened = false;
+	void ifChestOpened(float dt);
+	
 private:
-
+	bool ifOpened = false;
 	int ID;
 	
 };

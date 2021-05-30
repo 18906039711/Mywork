@@ -14,12 +14,12 @@ void PlayerUI::bindPlayer(Player* player) {
 void PlayerUI::setUI() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	if (player_num == 1) {
+	if (playerID == 1) {
 		MaxHP = UserDefault::getInstance()->getIntegerForKey("RangerHP", 6);
 		MaxDefendce = UserDefault::getInstance()->getIntegerForKey("RangerDefendce", 3);
 		MaxMP = UserDefault::getInstance()->getIntegerForKey("RangerMP", 180);
 	}
-	else if (player_num == 2) {
+	else if (playerID == 2) {
 		MaxHP = UserDefault::getInstance()->getIntegerForKey("sorcererHP", 3);
 		MaxDefendce = UserDefault::getInstance()->getIntegerForKey("sorcererDefendce", 5);
 		MaxMP = UserDefault::getInstance()->getIntegerForKey("sorcererMP", 240);

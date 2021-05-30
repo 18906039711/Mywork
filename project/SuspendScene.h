@@ -9,7 +9,7 @@
 #include <string>
 #include "AudioEngine.h"
 
-extern int player_num;
+extern int playerID;
 
 USING_NS_CC;
 
@@ -26,9 +26,8 @@ public:
     void continueCallback(cocos2d::Ref* pSender);
     void returnMainCallback(cocos2d::Ref* pSender);
     void setCallback(cocos2d::Ref* pSender);
-    void musicCallback(cocos2d::Ref* pSender);
     void sliderCallback(cocos2d::Ref* pSender, ui::Slider::EventType type);
-
+    void musicCallback(cocos2d::Ref* pSender);
 
     static Scene* scene(RenderTexture* sqr);
 

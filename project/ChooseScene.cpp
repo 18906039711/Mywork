@@ -1,7 +1,7 @@
 #include"ChooseScene.h"
 
 
-int player_num = 0;
+int playerID = 0;
 
 Scene* ChooseScene::createScene()
 {
@@ -25,7 +25,7 @@ bool ChooseScene::init()
 	if (!Layer::init()) {
 		return false;
 	}
-
+	this->scheduleUpdate();
 	//设置地图
 	this->addChild(map);
 
@@ -34,8 +34,13 @@ bool ChooseScene::init()
 	setTreasureChest();
 	displayCoinNum();
 	choosePlayer();
-
 	
+	//设置通完下一场景的门
+	Sprite* door = Sprite::create("door.png");
+	door->setContentSize(Size(32 * 8, 32));
+	door->setPosition(static_cast<float>(map->getContentSize().width / 2), static_cast<float>(map->getContentSize().height * 0.88));
+	door->setVisible(false);
+	this->addChild(door, 1, ObjectTag_Exit);
 	return true;
 }
 
@@ -60,19 +65,17 @@ void ChooseScene::choosePlayer() {
 		Vec2 spriteLocatione = e->getLocationInView();
 		Rect rect_ranger = player_rangerwb->getBoundingBox();
 		Rect rect_sorcerer = player_sorcererwb->getBoundingBox();
-		if (rect_ranger.containsPoint(spriteLocatione) && player_num == 0) {//如果点击点在图片内
+		if (rect_ranger.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
 			player_rangerwb->setVisible(false);
 			player_sorcererwb->setVisible(false);
-			player_num = 1;
+			playerID = 1;
 			addPlayer();
-			this->scheduleUpdate();
 		}
-		else if (rect_sorcerer.containsPoint(spriteLocatione) && player_num == 0) {//如果点击点在图片内
+		else if (rect_sorcerer.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
 			player_rangerwb->setVisible(false);
 			player_sorcererwb->setVisible(false);
-			player_num = 2;
+			playerID = 2;
 			addPlayer();
-			this->scheduleUpdate();
 		}
 
 	};
@@ -85,11 +88,22 @@ void ChooseScene::addPlayer() {
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//设置玩家
-	Player* player = Player::create();
+	player = Player::create();
 	player->getMap(map);
-	map->addChild(player, 4);
-	player->changeMP(-400);
+	//设置初始面板属性
+	player->setPlayerAttribute();
+	//初始化
+	player->initializePlayer();
 
+	map->addChild(player, 4, ObjectTag_Player);;
+	if (playerID == 1) {
+		player->setPosition(player_rangerwb->getPosition());
+	}
+	else if (playerID == 2) {
+		player->setPosition(player_sorcererwb->getPosition());
+	}
+
+	player->changeMP(-10);
 	//增加playerUI
 	PlayerUI* playerUI = PlayerUI::create();
 	playerUI->bindPlayer(player);
@@ -129,7 +143,7 @@ void ChooseScene::setButton() {
 
 void ChooseScene::setMusic() {
 	// set the background music and continuously play it.
-	backGroundMusic = AudioEngine::play2d("music/ElecrystalSoundTeam.mp3", true);
+	backGroundMusic = AudioEngine::play2d("music/Home.mp3", true);
 	//将音乐ID传入UserDefault文件中
 	UserDefault::getInstance()->setIntegerForKey("backGroundMusicID", backGroundMusic);
 
@@ -143,7 +157,7 @@ void ChooseScene::suspendCallback(cocos2d::Ref* pSender) {
 	Size winSize = Director::getInstance()->getWinSize();
 
 	//创建RenderTexture，纹理图片大小为窗口大小winSize
-	RenderTexture* screen = RenderTexture::create(winSize.width, winSize.height);
+	RenderTexture* screen = RenderTexture::create(static_cast<int>(winSize.width), static_cast<int>(winSize.height));
 
 	//屏幕截图
 	screen->begin();            //开始抓屏
@@ -156,20 +170,15 @@ void ChooseScene::suspendCallback(cocos2d::Ref* pSender) {
 void ChooseScene::setTreasureChest() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
+	TreasureChest* chest1 = TreasureChest::create(1);
 	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
-	map->addChild(chest1, 4);
+	map->addChild(chest1, 4, ObjectTag_TreasureChest);
 
+	TreasureChest* chest2 = TreasureChest::create(2);
 	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
 	map->addChild(chest2, 4, ObjectTag_TreasureChest);
 
-	this->schedule(CC_SCHEDULE_SELECTOR(ChooseScene::ifChestOpened), static_cast<float>(0.1));
-}
 
-void ChooseScene::ifChestOpened(float dt) {
-	if (chest2->ifOpened) {
-		this->unschedule(CC_SCHEDULE_SELECTOR(ChooseScene::ifChestOpened));
-		chest2->runAction(Sequence::create(DelayTime::create(static_cast<float>(4)), RemoveSelf::create(), NULL));
-	}
 }
 
 void ChooseScene::displayCoinNum() {
@@ -178,7 +187,16 @@ void ChooseScene::displayCoinNum() {
 	this->addChild(coinPanel);
 }
 
+void ChooseScene::update(float dt) {
+	auto exit = this->getChildByTag(ObjectTag_Exit);
+	if (player != nullptr) {
+		if (exit->getBoundingBox().containsPoint(player->getPosition())) {
+			AudioEngine::stopAll();
+			Director::getInstance()->pushScene(TransitionFade::create(0.5f, PlayScene1::createScene()));
+		}
+	}
 
+}
 
 //
 //void ChooseScene::makeEddy() 
@@ -190,7 +208,7 @@ void ChooseScene::displayCoinNum() {
 //	eddy->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 1.2 + origin.y));
 //	eddy->setScale(0.05f);
 //	Action* eddy_amplify = ScaleTo::create(1.f, 0.3f);
-//	eddy->runAction(eddy_amplify);
+//	eddy->runAction(eddy_amplify);	
 //	Action* eddy_revolve = RotateBy::create(10000.f, 10000.f * 10);
 //	eddy->runAction(eddy_revolve);
 //
@@ -199,7 +217,7 @@ void ChooseScene::displayCoinNum() {
 //}
 //
 //void ChooseScene::enterEddy() {
-//	auto sprite_right = this->getChildByTag(player_num);
+//	auto sprite_right = this->getChildByTag(playerID);
 //	auto eddy = this->getChildByTag(100);
 //	auto playScene = PlayScene1::create();
 //	if (eddy->getBoundingBox().containsPoint(sprite_right->getPosition())) {

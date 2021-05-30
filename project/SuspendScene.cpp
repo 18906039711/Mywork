@@ -31,11 +31,11 @@ bool SuspendScene::init() {
     this->addChild(suspendSprite);
 
     Sprite* PlayerSculpture = Sprite::create();
-    if (player_num == 1) {
+    if (playerID == 1) {
         PlayerSculpture = Sprite::create("suspendScene/rangerSculpture.png");
         
     }
-    else if (player_num == 2) {
+    else if (playerID == 2) {
         PlayerSculpture = Sprite::create("suspendScene/sorcererSculpture.png");
         
     }
@@ -137,8 +137,8 @@ void SuspendScene::sliderCallback(cocos2d::Ref* pSender, ui::Slider::EventType t
         num->setPosition(Vec2(Background->getContentSize().width / 5 * 3 + 20, Background->getContentSize().height / 4 * 3));
 
         UserDefault::getInstance()->setIntegerForKey("volumePercent", volumePercent);
-        int backGroundMusic = UserDefault::getInstance()->getIntegerForKey("backGroundMusicID");
-        AudioEngine::setVolume(backGroundMusic, volumePercent / 100.f);
+        auto backGroundMusic = UserDefault::getInstance()->getIntegerForKey("backGroundMusicID");
+        AudioEngine::setVolume(backGroundMusic, volumePercent / static_cast<float>(100));
     }
 }
 void SuspendScene::setCallback(cocos2d::Ref* pSender) {
@@ -159,8 +159,8 @@ void SuspendScene::continueCallback(cocos2d::Ref* pSender) {
 }
 
 void SuspendScene::returnMainCallback(cocos2d::Ref* pSender) {
-    extern int player_num;
-    player_num = 0;
+    extern int playerID;
+    playerID = 0;
     AudioEngine::stopAll();
     Director::getInstance()->popToRootScene();
 }
@@ -182,4 +182,5 @@ Scene* SuspendScene::scene(RenderTexture* sqr) {
 }
 
 void SuspendScene::musicCallback(cocos2d::Ref* pSender) {
+
 }

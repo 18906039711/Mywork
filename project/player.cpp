@@ -12,23 +12,19 @@ bool Player::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	Sprite* playerSprite = Sprite::create();
 	
-	if (player_num == 1) {
+	if (playerID == 1) {
 		playerSprite = Sprite::create("character/ranger_right.png");
-		playerSprite->setScale(0.2f);
+		playerSprite->setScale(static_cast<float>(0.2));
 		//绑定精灵图像
 		this->bindSprite(playerSprite);
-		this->setPosition(Vec2(visibleSize.width / 4 * 3, visibleSize.height / 3 + origin.y));
 	}
-	else if (player_num == 2) {
-		 playerSprite = Sprite::create("character/sorcerer_right.png");
-		playerSprite->setScale(0.2f);
+	else if (playerID == 2) {
+		playerSprite = Sprite::create("character/sorcerer_right.png");
+		playerSprite->setScale(static_cast<float>(0.2));
 		this->bindSprite(playerSprite);
-		this->setPosition(Vec2(visibleSize.width / 4, visibleSize.height / 3 + origin.y));
 	}
 	//设置站立动画
 	this->StandAction();
-	//设置初始面板属性
-	this->setPlayerAttribute();
 	//设置移动速度
 	this->setSpeed(8);
 
@@ -37,6 +33,7 @@ bool Player::init()
 	body->setContactTestBitmask(0xFFFFFFFF);
 	body->setDynamic(false);
 	this->addComponent(body);
+
 
 	this->scheduleUpdate();
 	//键盘移动事件监听
@@ -50,21 +47,23 @@ bool Player::init()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(playerMove, this);
 
+
 	return true;
 }
 
+//动画
 void Player::StandAction() {
 	//创建序列帧
 	auto animation = Animation::create();
 
-	if (player_num == 1) {
+	if (playerID == 1) {
 		for (int i = 1; i <= 2; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/ranger%d.png", i);
 			animation->addSpriteFrameWithFile(nameSize);
 		}
 	}
-	else if (player_num == 2) {
+	else if (playerID == 2) {
 		for (int i = 1; i <= 2; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/sorcerer%d.png", i);
@@ -83,7 +82,7 @@ void Player::StandAction() {
 
 void Player::RunningAction() {
 	auto animation = Animation::create();
-	if (player_num == 1) {
+	if (playerID == 1) {
 		for (int i = 1; i <= 4; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/ranger/run%d.png", i);
@@ -100,25 +99,22 @@ void Player::stopPlayerAllActions() {
 	my_sprite->stopAllActions();
 }
 
-//设置初始面板属性
+//设置面板属性
 void Player::setPlayerAttribute() {
-	if (player_num == 1) {
+	if (playerID == 1) {
 		maxHP = UserDefault::getInstance()->getIntegerForKey("RangerHP", 6);
 		maxDefendce = UserDefault::getInstance()->getIntegerForKey("RangerDefendce", 3);
 		maxMP = UserDefault::getInstance()->getIntegerForKey("RangerMP", 180);
 	}
-	else if (player_num == 2) {
+	else if (playerID == 2) {
 		maxHP = UserDefault::getInstance()->getIntegerForKey("sorcererHP", 3);
 		maxDefendce = UserDefault::getInstance()->getIntegerForKey("sorcererDefendce", 5);
 		maxMP = UserDefault::getInstance()->getIntegerForKey("sorcererMP", 240);
 	}
-	UserDefault::getInstance()->setIntegerForKey("PlayerHP", maxHP);
-	UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", maxDefendce);
-	UserDefault::getInstance()->setIntegerForKey("PlayerMP", maxMP);
 
-	HP = UserDefault::getInstance()->getIntegerForKey("PlayerHP");
-	MP = UserDefault::getInstance()->getIntegerForKey("PlayerMP");
-	Defendce = UserDefault::getInstance()->getIntegerForKey("PlayerDefendce");
+	HP = UserDefault::getInstance()->getIntegerForKey("PlayerHP", maxHP);
+	MP = UserDefault::getInstance()->getIntegerForKey("PlayerMP", maxMP);
+	Defendce = UserDefault::getInstance()->getIntegerForKey("PlayerDefendce", maxDefendce);
 }
 
 void Player::changeHP(int changeValue) {
@@ -134,6 +130,16 @@ void Player::changeHP(int changeValue) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerHP", HP + changeValue);
 		HP += changeValue;
 	}
+	//数字显示
+	if(changeValue>0){
+		std::string Changestr = "+" + std::to_string(changeValue);
+		Label* HPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
+		HPLabel->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), RemoveSelf::create(), NULL));
+		HPLabel->setTextColor(Color4B::RED);
+		HPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2));
+		this->addChild(HPLabel);
+	}
+	
 }
 void Player::changeMP(int changeValue) {
 	if (MP + changeValue < 0) {
@@ -148,10 +154,17 @@ void Player::changeMP(int changeValue) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerMP", MP + changeValue);
 		MP += changeValue;
 	}
-
+	//数字显示
+	if (changeValue > 0) {
+		std::string Changestr = "+" + std::to_string(changeValue);
+		Label* MPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
+		MPLabel->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), RemoveSelf::create(), NULL));
+		MPLabel->setTextColor(Color4B::BLUE);
+		MPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2));
+		this->addChild(MPLabel);
+	}
 }
 void Player::changeDefendce(int changeValue) {
-	
 	if (Defendce + changeValue < 0) {
 		UserDefault::getInstance()->setIntegerForKey("Player Defendce", 0);
 		Defendce = 0;
@@ -167,11 +180,66 @@ void Player::changeDefendce(int changeValue) {
 	
 }
 
-void  Player::update(float delta) {
+void Player::initializePlayer() {
+	UserDefault::getInstance()->setIntegerForKey("PlayerHP", maxHP);
+	HP = UserDefault::getInstance()->getIntegerForKey("PlayerHP");
 
-	if (!player_num) {  //如果未选择无法移动
+	UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", maxDefendce);
+	Defendce = UserDefault::getInstance()->getIntegerForKey("PlayerDefendce");
+
+	UserDefault::getInstance()->setIntegerForKey("PlayerMP", maxMP);
+	MP = UserDefault::getInstance()->getIntegerForKey("PlayerMP");
+
+	UserDefault::getInstance()->setIntegerForKey("weaponID", 0);
+}
+
+void Player::updatePlayerAttribute() {
+	
+}
+
+
+void Player::pickUp(Weapon* weapon) {
+	
+
+
+}
+
+//武器
+void Player::getWeapon(Weapon* weapon) {
+	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
+		weapon->retain();
+		weapon->removeFromParent();
+		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 4 * 3, my_sprite->getContentSize().height / 4));
+		weapon->setScale(5);
+		UserDefault::getInstance()->setIntegerForKey("weaponID", weapon->ID);
+		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
+	}
+}
+
+void Player::getWeapon() {
+	//如果携带武器，创建角色时直接加上武器
+	int id = UserDefault::getInstance()->getIntegerForKey("weaponID");
+	if (id != 0) {
+		Weapon* weapon = Weapon::create(id);
+		this->getWeapon(weapon);
+	}
+}
+
+void  Player::update(float delta) {
+	//玩家移动
+	moving();
+}
+
+
+
+
+
+//玩家移动
+void Player::moving() {
+	if (!playerID) {  //如果未选择无法移动
 		return;
 	}
+
 	auto up = EventKeyboard::KeyCode::KEY_W;
 	auto left = EventKeyboard::KeyCode::KEY_A;
 	auto down = EventKeyboard::KeyCode::KEY_S;
@@ -217,21 +285,21 @@ void  Player::update(float delta) {
 		Y += Speed;
 	}
 	if (keyMap[left] && !tiledGid_left1 && !tiledGid_left2) {
-		this->setScaleX(-1);
+		my_sprite->setScaleX(-static_cast<float>(0.2));
 		X -= Speed;
 	}
 	if (keyMap[down] && !tiledGid_down1 && !tiledGid_down2) {
 		Y -= Speed;
 	}
 	if (keyMap[right] && !tiledGid_right1 && !tiledGid_right2) {
-		this->setScaleX(1);
+		my_sprite->setScaleX(static_cast<float>(0.2));
 		X += Speed;
 	}
 
 	//各向同速
 	if (X != 0 && Y != 0) {
-		X /= sqrt(2);
-		Y /= sqrt(2);
+		X /= static_cast<float>(sqrt(2));
+		Y /= static_cast<float>(sqrt(2));
 	}
 
 	Vec2 point = this->getPosition();
@@ -255,7 +323,7 @@ void  Player::update(float delta) {
 	keyBoardOrgin = keyBoardNow;
 }
 
-void  Player::setSpeed(int speed) {
+void Player::setSpeed(int speed) {
 	this->Speed = speed;
 }
 
@@ -281,8 +349,8 @@ Vec2  Player::tileCoordForPosition(Vec2 point) {
 	int y = int(point.y / (tiledSize.height * 2));
 
 	//cocos2dx与tiledmap坐标不同
-	y = mapTiledNum.height - y - 1;
+	y = static_cast<int>(mapTiledNum.height - y - 1);
 
 	//格子坐标从零开始
-	return Vec2(x, y);
+	return Vec2(static_cast<float>(x), static_cast<float>(y));
 }

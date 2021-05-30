@@ -23,13 +23,17 @@ bool TreasureChest::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 
-
 	return true;
 }
 
 
 TreasureChest* TreasureChest::create(int m_ID) {
 	auto Chest = new TreasureChest();
+
+	//在碰撞检测中加入带物理刚体的对象无法正确设置其位置
+	//且每个对象分别判定，，所以不能放在init里
+	Chest->schedule(CC_SCHEDULE_SELECTOR(TreasureChest::ifChestOpened), static_cast<float>(0.1));
+
 	Chest->ID = m_ID;
 	if (Chest && Chest->init()) {
 		Chest->autorelease();
@@ -91,8 +95,8 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 				MpFactor->runAction(Sequence::create(MoveTo::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
 					DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(2)), NULL));
 				Chest->addChild(MpFactor);
-				player->changeMP(5);
 			}
+			player->changeMP(5 * MpFactorNum);
 		}
 		Chest->ifOpened = true;
 		Chest->removeAllComponents();
@@ -100,4 +104,15 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 	return true;
 }
 
-
+void TreasureChest::ifChestOpened(float dt) {
+	if (this->ifOpened) {
+		if (this->ID == 1) {
+			Weapon* Rfile = Weapon::create(RfileID);
+			this->addChild(Rfile);
+		}
+		if (this->ID == 2) {
+			this->runAction(Sequence::create(DelayTime::create(static_cast<float>(4)), RemoveSelf::create(), NULL));
+		}
+		this->unschedule(CC_SCHEDULE_SELECTOR(TreasureChest::ifChestOpened));
+	}
+}

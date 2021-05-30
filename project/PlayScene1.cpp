@@ -1,11 +1,15 @@
 #include"PlayScene1.h"
-#include "ui/CocosGUI.h"
 
 extern int player_num;
 
 Scene* PlayScene1::createScene()
 {
-	return PlayScene1::create();
+	auto scene = Scene::createWithPhysics();
+	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	auto layer = PlayScene1::create();
+	scene->addChild(layer);
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -17,66 +21,32 @@ static void problemLoading(const char* filename)
 
 bool PlayScene1::init()
 {
-	if (!Scene::init()) {
+	if (!Layer::init()) {
 		return false;
 	}
-	this->scheduleUpdate();
-	setPlayer();
+	//this->scheduleUpdate();
+	//设置地图
+	this->addChild(map);
+
 	setButton();
+	setMusic();
+	setTreasureChest();
+	displayCoinNum();
+	addPlayer();
 	
 	return true;
 }
 
-void PlayScene1::update(float delta) {
-	// Register an update function that checks to see if the CTRL key is pressed
-	// and if it is displays how long, otherwise tell the user to press it
-	Node::update(delta);
-	EventListenerKeyboard* playerMove = EventListenerKeyboard::create();
-	playerMove->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
-	{
-		keyMap[code] = true;
-	};
-	playerMove->onKeyReleased = [=](EventKeyboard::KeyCode code, Event* event) {
-		keyMap[code] = false;
-	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(playerMove, this);
+void PlayScene1::setMusic() {
 
-	auto up = EventKeyboard::KeyCode::KEY_W;
-	auto left = EventKeyboard::KeyCode::KEY_A;
-	auto down = EventKeyboard::KeyCode::KEY_S;
-	auto right = EventKeyboard::KeyCode::KEY_D;
+	// set the background music and continuously play it.
+    backGroundMusic1 = AudioEngine::play2d("music/Forest.mp3", true);
+	//将音乐ID传入UserDefault文件中
+	UserDefault::getInstance()->setIntegerForKey("backGroundMusicID", backGroundMusic1);
 
-	float X = 0, Y = 0;
-	static int mark = 0;
-
-
-	if (keyMap[up]) {
-		Y = 7;
-	}
-	if (keyMap[left]) {
-		mark = 1;
-		X = -7;
-	}
-	if (keyMap[down]) {
-		Y = -7;
-	}
-	if (keyMap[right]) {
-		X = 7;
-		mark = 0;
-	}
-	auto sprite_left = this->getChildByTag(2);
-	auto sprite_right = this->getChildByTag(1);
-
-	if (mark) {
-		sprite_left->setVisible(true);
-		sprite_right->setVisible(false);
-	}
-	else {
-		sprite_left->setVisible(false);
-		sprite_right->setVisible(true);
-	}
-	sprite_left->runAction(MoveBy::create(0.2f, Vec2(X, Y)));
-	sprite_right->runAction(MoveBy::create(0.2f, Vec2(X, Y)));
+	//读取之前的音量
+	int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
+	AudioEngine::setVolume(backGroundMusic1, volumePercent / 100.f);
 }
 
 void PlayScene1::suspendCallback(cocos2d::Ref* pSender) {
@@ -94,46 +64,11 @@ void PlayScene1::suspendCallback(cocos2d::Ref* pSender) {
 	Director::getInstance()->pushScene(SuspendScene::scene(screen));
 }
 
-void PlayScene1::MusicCallback(cocos2d::Ref* pSender)
-{
-
-}
-
-void PlayScene1::setPlayer() {
-	//获取屏幕显示大小
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
-	if (player_num == 1) {
-		player_right = Sprite::create("character/ranger_right.png");
-		player_left = Sprite::create("character/ranger_left.png");
-		player_right->setScale(visibleSize.height / player_right->getContentSize().height / 10);
-		player_left->setScale(visibleSize.height / player_right->getContentSize().height / 10);
-	}
-	else if (player_num == 2) {
-		player_right = Sprite::create("character/sorcerer_right.png");
-		player_left = Sprite::create("character/sorcerer_left.png");
-		player_right->setScale(visibleSize.height / player_right->getContentSize().height / 9);
-		player_left->setScale(visibleSize.height / player_right->getContentSize().height / 9);
-	}
-
-	player_right->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	
-	player_left->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	
-
-	
-	this->addChild(player_right, 1, 1);
-	this->addChild(player_left, 1, 2);
-	player_left->setVisible(false);
-	player_right->setVisible(true);
-}
-
 void PlayScene1::setButton() {
 	//获取屏幕显示大小
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
+
 
 	//pause按钮
 	auto suspendItem = MenuItemImage::create(
@@ -154,26 +89,45 @@ void PlayScene1::setButton() {
 	{
 		suspendItem->setPosition(Vec2(x, y));
 	}
-
-	//音乐按钮
-	auto openSpr = Sprite::create("button/openMusic.png");
-	auto closeSpr = Sprite::create("button/closeMusic.png");
-	auto openItem = MenuItemSprite::create(openSpr, openSpr);
-	auto closeItem = MenuItemSprite::create(closeSpr, closeSpr);
-	auto musicItem = MenuItemToggle::createWithCallback(
-		CC_CALLBACK_1(PlayScene1::MusicCallback, this), openItem, closeItem, NULL);
-	if (musicItem == nullptr ||
-		musicItem->getContentSize().width <= 0 ||
-		musicItem->getContentSize().height <= 0)
-	{
-		problemLoading("'button/openMusic.png' and 'button/closeMusic.png'");
-	}
-	else
-	{
-		musicItem->setPosition(Vec2(x - musicItem->getContentSize().width * 3 / 2, y));
-	}
-	auto menu = Menu::create(suspendItem, musicItem, NULL);
+	auto menu = Menu::create(suspendItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 }
 
+void PlayScene1::displayCoinNum() {
+	CoinUI* coinPanel = CoinUI::create();
+	this->addChild(coinPanel);
+}
+
+void PlayScene1::addPlayer() {
+	//获取屏幕显示大小
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//设置玩家
+	player = Player::create();
+	player->getMap(map);
+	//继承面板属性
+	player->setPlayerAttribute();
+	player->getWeapon();
+	map->addChild(player, 4);
+	player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+
+	//增加playerUI
+	PlayerUI* playerUI = PlayerUI::create();
+	playerUI->bindPlayer(player);
+	this->addChild(playerUI);
+
+}
+
+void PlayScene1::setTreasureChest() {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	TreasureChest* chest1 = TreasureChest::create(1);
+	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
+	map->addChild(chest1, 4, ObjectTag_TreasureChest);
+
+	TreasureChest* chest2 = TreasureChest::create(2);
+	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
+	map->addChild(chest2, 4, ObjectTag_TreasureChest);
+
+}

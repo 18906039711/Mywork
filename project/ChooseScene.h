@@ -10,6 +10,7 @@
 #include "PlayerUI.h"
 #include "CoinUI.h"
 #include"TreasureChest.h"
+#include"Weapon.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;
@@ -35,8 +36,9 @@ public:
 
 	void displayCoinNum();
 
-	void ifChestOpened(float dt);
-	//void update(float delta);
+	//void ifChestOpened(float dt);
+
+	void update(float delta);
 
 	/*void makeEddy();
 
@@ -50,9 +52,6 @@ private:
 	TMXTiledMap* map = TMXTiledMap::create("map/chooseMap.tmx");
 
 	Player* player;
-
-	TreasureChest*chest1 = TreasureChest::create(1);
-	TreasureChest* chest2 = TreasureChest::create(2);
 
 	void choosePlayer();
 	void addPlayer();
