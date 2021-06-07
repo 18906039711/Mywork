@@ -5,7 +5,7 @@ bool Weapon::init()
 	//设置Tag
 	this->setTag(ObjectTag_Weapon);
 
-	std::string weaponID = "Weapon/" + std::to_string(ID) + ".png";
+	std::string weaponID = "Weapon/" + std::to_string(ID) + "/Weapon.png";
 	Sprite* weaponSprite = Sprite::create(weaponID);
 	weaponSprite->setScale(static_cast<float>(0.7));
 	this->bindSprite(weaponSprite);
@@ -173,10 +173,19 @@ void Weapon::setInformation() {
 }
 
 void Weapon::attack(float dt) {
+	//计算攻击间隔
 	static float count = 0;
-	if (attackMark&& attackMark1) {
-		//获取枪中心的坐标（相对于地图）
-		Player* player = dynamic_cast<Player*>(this->getParent()->getParent());
+
+	//获取角色信息
+	Player* player = dynamic_cast<Player*>(this->my_map->getChildByTag(ObjectTag_Player));
+
+	/*满足按J键(attackMark), 武器不在发射冷却时间(attackMark1), MP大于蓝耗(player->MP >= MPConsumption)
+	才能发射子弹*/
+	if (attackMark && attackMark1 && (player->MP >= MPConsumption)) {
+		//耗蓝
+		player->changeMP(-MPConsumption);
+
+		//获取玩家的坐标（相对于地图）
 		Vec2 point = player->getPosition();
 		
 		//计算枪口位置
@@ -188,10 +197,10 @@ void Weapon::attack(float dt) {
 			point.x -= player->showSprite()->getBoundingBox().size.width * 3 / 10;
 			point.x -= my_sprite->getBoundingBox().size.width / 2 * cos(this->getRotation() / 180 * M_PI);
 		}
-
 		point.y -= player->showSprite()->getBoundingBox().size.height / 4;
 		point.y -= my_sprite->getBoundingBox().size.width / 2 * sin(this->getRotation() / 180 * M_PI);
 
+		//发射子弹
 		auto bullet = Bullet::create(ID);
 		bullet->my_map = this->my_map;
 		bullet->putIntoMap(point, this->getRotation());

@@ -70,6 +70,7 @@ private:
 	int Speed = 7;
 	int weaponID = 0;
 	friend class PlayerUI;
+	friend class Weapon;
 
 private:
 	//范围内有敌人返回真

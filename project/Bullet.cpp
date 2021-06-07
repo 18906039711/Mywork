@@ -6,11 +6,18 @@ bool Bullet::init()
 	//设置Tag
 	this->setTag(ObjectTag_Bullet);
 
-	std::string bulletID = "Weapon/" + std::to_string(ID) + "Bullet.png";
+	std::string bulletID = "Weapon/" + std::to_string(ID) + "/Bullet.png";
 	Sprite* bulletSprite = Sprite::create(bulletID);
 	bulletSprite->setScale(static_cast<float>(0.5));
 	this->bindSprite(bulletSprite);
 	setInformation();
+
+	std::string bulletBackgroundID = "Weapon/" + std::to_string(ID) + "/BulletBackground.png";
+	Sprite* bulletBackgroundSprite = Sprite::create(bulletBackgroundID);
+	if (bulletBackgroundSprite != nullptr) {
+		bulletBackgroundSprite->setOpacity(100);
+		this->addChild(bulletBackgroundSprite,0, ObjectTag_BulletBackground);
+	}
 
 
 
@@ -45,7 +52,7 @@ void Bullet::update(float delta) {
 	Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
 	Vec2 tiledPos = tileCoordForPosition(this->getPosition());
 	if (barrier->getTileGIDAt(tiledPos)) {
-		this->runAction(RemoveSelf::create());
+		this->removeBullet();
 	}
 }
 
@@ -67,12 +74,34 @@ bool Bullet::onContactBegin(PhysicsContact& contact)
 	//子弹碰到敌人
 	if (nodeA->getTag() == ObjectTag_Bullet && nodeB->getTag() == ObjectTag_Enemy) {
 		enemy->changeHP(-damage);
-
-		//要先移除物理刚体，否则会出现多次伤害的情况
-		bullet->removeAllComponents();
-		bullet->runAction(RemoveSelf::create());
+		bullet->removeBullet();
 	}
 	return true;
+}
+
+void Bullet::removeBullet() {
+	//要先移除物理刚体，否则会出现多次伤害的情况
+	this->removeAllComponents();
+	this->my_sprite->setVisible(false);
+	this->stopAllActions();
+	this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.15)), RemoveSelf::create(), NULL));
+
+	//创建子弹撞击动画
+	auto animation = Animation::create();
+
+	for (int i = 1; i <= 3; i++) {
+		char nameSize[100] = { 0 };
+		sprintf(nameSize, "Weapon/%d/removeAction%d.png", ID, i);
+		animation->addSpriteFrameWithFile(nameSize);
+	}
+	
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.05));
+
+	//执行动画
+	this->getChildByTag(ObjectTag_BulletBackground)->runAction(Animate::create(animation));
+	this->getChildByTag(ObjectTag_BulletBackground)->setOpacity(255);
+	
 }
 
 void Bullet::setInformation() {

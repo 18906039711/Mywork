@@ -7,7 +7,7 @@ Scene* ChooseScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = ChooseScene::create();
 	scene->addChild(layer);
 	return scene;
@@ -103,7 +103,7 @@ void ChooseScene::addPlayer() {
 		player->setPosition(player_sorcererwb->getPosition());
 	}
 
-	player->changeMP(-10);
+	player->changeMP(-150);
 	//Ôö¼ÓplayerUI
 	PlayerUI* playerUI = PlayerUI::create();
 	playerUI->bindPlayer(player);

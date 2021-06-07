@@ -22,8 +22,11 @@ public:
 	bool onContactBegin(PhysicsContact& contact);
 	void setInformation();
 
-
+	//将子弹放入地图中
 	void putIntoMap(Vec2 point, float rotation);
+
+	//子弹消除的一系列动作
+	void removeBullet();
 
 private:
 	int ID;
