@@ -9,3 +9,5 @@ void Entity::bindSprite(Sprite* sprite) {
 
 
 
+
+

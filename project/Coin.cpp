@@ -8,7 +8,7 @@ bool Coin::init()
 	this->bindSprite(Sprite::create("Coin/GoldCoin.png"));
 	this->setScale(static_cast<float>(0.4));
 	my_sprite->runAction(Sequence::create(MoveTo::create(static_cast<float>(0.2), Vec2(rand_0_1() * 300 - 150, rand_0_1() * 300 - 150)),
-		DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(2)), NULL));
+		DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
 
 	int coinNum = UserDefault::getInstance()->getIntegerForKey("CoinNumber", 0);
 	UserDefault::getInstance()->setIntegerForKey("CoinNumber", coinNum + 1);

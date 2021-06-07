@@ -11,6 +11,7 @@
 #include "CoinUI.h"
 #include"TreasureChest.h"
 #include"Weapon.h"
+#include"Enemy.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;
@@ -36,7 +37,7 @@ public:
 
 	void displayCoinNum();
 
-	//void ifChestOpened(float dt);
+	void setEnemy();
 
 	void update(float delta);
 

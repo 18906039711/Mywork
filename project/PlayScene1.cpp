@@ -77,8 +77,7 @@ void PlayScene1::setButton() {
 		CC_CALLBACK_1(PlayScene1::suspendCallback, this));
 	float x = origin.x + visibleSize.width - suspendItem->getContentSize().width / 2;
 	float y = origin.y + visibleSize.height - suspendItem->getContentSize().height / 2;
-	/*float x = origin.x + visibleSize.width - suspendItem->getContentSize().width / 2;
-	float y = origin.y + visibleSize.height - suspendItem->getContentSize().height / 2;*/
+
 	if (suspendItem == nullptr ||
 		suspendItem->getContentSize().width <= 0 ||
 		suspendItem->getContentSize().height <= 0)
@@ -105,12 +104,13 @@ void PlayScene1::addPlayer() {
 
 	//设置玩家
 	player = Player::create();
-	player->getMap(map);
+	player->putIntoMap(map);
+	player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+
 	//继承面板属性
 	player->setPlayerAttribute();
 	player->getWeapon();
-	map->addChild(player, 4);
-	player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+
 
 	//增加playerUI
 	PlayerUI* playerUI = PlayerUI::create();
@@ -124,10 +124,10 @@ void PlayScene1::setTreasureChest() {
 
 	TreasureChest* chest1 = TreasureChest::create(1);
 	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
-	map->addChild(chest1, 4, ObjectTag_TreasureChest);
+	map->addChild(chest1, 5, ObjectTag_TreasureChest);
 
 	TreasureChest* chest2 = TreasureChest::create(2);
 	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
-	map->addChild(chest2, 4, ObjectTag_TreasureChest);
+	map->addChild(chest2, 5, ObjectTag_TreasureChest);
 
 }

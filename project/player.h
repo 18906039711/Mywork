@@ -5,6 +5,7 @@
 #include"Entity.h"
 #include"PlayerUI.h"
 #include"Weapon.h"
+#include"Enemy.h"
 #include"ObjectTag.h"
 
 USING_NS_CC;
@@ -40,10 +41,10 @@ public:
 	void update(float delta);
 
 	//玩家移动有关
-	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;
+	std::map<cocos2d::EventKeyboard::KeyCode, bool> keyMap;//存放键盘按键数据
 	void moving();
 	void setSpeed(int speed);
-	void getMap(TMXTiledMap* map);
+	void putIntoMap(TMXTiledMap* map);
 
 	//捡道具、武器
 	void pickUp(Weapon* weapon);
@@ -51,6 +52,14 @@ public:
 	//佩戴武器
 	void getWeapon(Weapon* weapon);
 	void getWeapon();
+	//调整武器角度
+	void rotateWeapon(float rotation);
+
+	//判断范围内是否有敌人
+	void searchEnemy();
+
+	//攻击
+	void attack();
 private:
 	int maxHP = 0;
 	int maxMP = 0;
@@ -63,6 +72,8 @@ private:
 	friend class PlayerUI;
 
 private:
+	//范围内有敌人返回真
+	bool enemyMark = false;
 	TMXTiledMap* my_map;
 	TMXLayer* barrier;
 

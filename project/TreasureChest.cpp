@@ -82,7 +82,7 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 			
 			//随机生成1-3个coin，以及3-5个MpFactor
 			std::srand((unsigned)time(0));
-			int null = rand_0_1();
+			int null = static_cast<int>(rand_0_1());
 			int CoinNum = static_cast<int>(rand_0_1() * 3) + 1;
 			int MpFactorNum = static_cast<int>(rand_0_1() * 3) + 3;
 			for (int i = 0; i < CoinNum; i++) {
@@ -93,7 +93,7 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 				Sprite* MpFactor = Sprite::create("Coin/MPFactor.png");
 				MpFactor->setScale(static_cast<float>(0.3));
 				MpFactor->runAction(Sequence::create(MoveTo::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
-					DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(2)), NULL));
+					DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
 				Chest->addChild(MpFactor);
 			}
 			player->changeMP(5 * MpFactorNum);
@@ -107,11 +107,13 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 void TreasureChest::ifChestOpened(float dt) {
 	if (this->ifOpened) {
 		if (this->ID == 1) {
-			Weapon* Rfile = Weapon::create(RfileID);
-			this->addChild(Rfile);
+			Weapon* weapon = Weapon::create(AK47ID);
+			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
+			weapon->fireSwitch(false);
+			this->addChild(weapon);
 		}
 		if (this->ID == 2) {
-			this->runAction(Sequence::create(DelayTime::create(static_cast<float>(4)), RemoveSelf::create(), NULL));
+			this->runAction(Sequence::create(DelayTime::create(static_cast<float>(2)), RemoveSelf::create(), NULL));
 		}
 		this->unschedule(CC_SCHEDULE_SELECTOR(TreasureChest::ifChestOpened));
 	}

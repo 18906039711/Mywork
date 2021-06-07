@@ -107,9 +107,9 @@ void Player::setPlayerAttribute() {
 		maxMP = UserDefault::getInstance()->getIntegerForKey("RangerMP", 180);
 	}
 	else if (playerID == 2) {
-		maxHP = UserDefault::getInstance()->getIntegerForKey("sorcererHP", 3);
-		maxDefendce = UserDefault::getInstance()->getIntegerForKey("sorcererDefendce", 5);
-		maxMP = UserDefault::getInstance()->getIntegerForKey("sorcererMP", 240);
+		maxHP = UserDefault::getInstance()->getIntegerForKey("SorcererHP", 3);
+		maxDefendce = UserDefault::getInstance()->getIntegerForKey("SorcererDefendce", 5);
+		maxMP = UserDefault::getInstance()->getIntegerForKey("SorcererMP", 240);
 	}
 
 	HP = UserDefault::getInstance()->getIntegerForKey("PlayerHP", maxHP);
@@ -140,6 +140,10 @@ void Player::changeHP(int changeValue) {
 		this->addChild(HPLabel);
 	}
 	
+	if (changeValue < 0) {
+		my_sprite->runAction(Sequence::create(TintTo::create(static_cast<float>(0.1), Color3B::RED),
+			TintTo::create(static_cast<float>(0.1), Color3B::WHITE), NULL));
+	}
 }
 void Player::changeMP(int changeValue) {
 	if (MP + changeValue < 0) {
@@ -207,12 +211,18 @@ void Player::pickUp(Weapon* weapon) {
 //武器
 void Player::getWeapon(Weapon* weapon) {
 	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
+		this->getParent()->removeChildByTag(ObjectTag_weaponInformation);
+		weapon->removeChildByTag(ObjectTag_WeaponArrow);
 		weapon->retain();
 		weapon->removeFromParent();
-		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 4 * 3, my_sprite->getContentSize().height / 4));
+		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
 		weapon->setScale(5);
 		UserDefault::getInstance()->setIntegerForKey("weaponID", weapon->ID);
+		weaponID = weapon->ID;
 		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
+		weapon->fireSwitch(true);
+		//将玩家所在地图传给武器，以便传给子弹
+		weapon->my_map = this->my_map;
 	}
 }
 
@@ -221,18 +231,84 @@ void Player::getWeapon() {
 	int id = UserDefault::getInstance()->getIntegerForKey("weaponID");
 	if (id != 0) {
 		Weapon* weapon = Weapon::create(id);
-		this->getWeapon(weapon);
+		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
+		weapon->setScale(5);
+		weaponID = weapon->ID;
+		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
+		weapon->fireSwitch(true);
+		//将玩家所在地图传给武器，以便传给子弹
+		weapon->my_map = this->my_map;
 	}
+}
+
+void Player::rotateWeapon(float rotation) {
+	Weapon* weapon = dynamic_cast<Weapon*>(my_sprite->getChildByTag(ObjectTag_Weapon));
+	weapon->setRotation(rotation);
+	
 }
 
 void  Player::update(float delta) {
 	//玩家移动
 	moving();
+	searchEnemy();
+	if (weaponID != 0) {
+		attack();
+	}
 }
 
 
 
+void Player::searchEnemy() {
+	Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
+	if (enemy == nullptr) {
+		return;
+	}
 
+	Vec2 enemyPosition = enemy->getPosition();
+	Vec2 playerPosition = this->getPosition();
+	//可以直接平方比较，无需开方
+	float distance = static_cast<float>(pow(playerPosition.x - enemyPosition.x, 2) + pow(playerPosition.y - enemyPosition.y, 2));
+	float rotation = atan((playerPosition.y - enemyPosition.y) / (playerPosition.x - enemyPosition.x)) * 180 / M_PI;
+
+	if (distance < pow(1000, 2)) {
+		enemy->locked();
+		enemyMark = true;
+		//如果范围内有敌人，始终面向敌人
+		if (playerPosition > enemyPosition) {
+			my_sprite->setScaleX(-static_cast<float>(0.2));
+			//如果有武器，旋转武器
+			if (weaponID != 0) {
+				rotateWeapon(rotation);
+			}
+		}
+		else {
+			my_sprite->setScaleX(static_cast<float>(0.2));
+			//如果有武器，旋转武器
+			if (weaponID != 0) {
+				rotateWeapon(-rotation);
+			}
+		}
+		
+	}
+	else {
+		enemy->unlocked();
+		enemyMark = false;
+		if (weaponID != 0) {
+			rotateWeapon(0);
+		}
+	}
+}
+
+void Player::attack() {
+	Weapon* weapon = dynamic_cast<Weapon*>(my_sprite->getChildByTag(ObjectTag_Weapon));
+	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
+		weapon->attackMark = true;
+	}
+	else {
+		weapon->attackMark = false;
+	}
+
+}
 
 //玩家移动
 void Player::moving() {
@@ -285,14 +361,19 @@ void Player::moving() {
 		Y += Speed;
 	}
 	if (keyMap[left] && !tiledGid_left1 && !tiledGid_left2) {
-		my_sprite->setScaleX(-static_cast<float>(0.2));
+		//如果范围内没敌人，正常移动
+		if (!enemyMark) {
+			my_sprite->setScaleX(-static_cast<float>(0.2));
+		}
 		X -= Speed;
 	}
 	if (keyMap[down] && !tiledGid_down1 && !tiledGid_down2) {
 		Y -= Speed;
 	}
 	if (keyMap[right] && !tiledGid_right1 && !tiledGid_right2) {
-		my_sprite->setScaleX(static_cast<float>(0.2));
+		if (!enemyMark) {
+			my_sprite->setScaleX(static_cast<float>(0.2));
+		}
 		X += Speed;
 	}
 
@@ -327,8 +408,9 @@ void Player::setSpeed(int speed) {
 	this->Speed = speed;
 }
 
-void Player::getMap(TMXTiledMap* map) {
+void Player::putIntoMap(TMXTiledMap* map) {
 	my_map = map;
+	map->addChild(this, 5, ObjectTag_Player);
 }
 
 void Player::setBarrierLater() {
