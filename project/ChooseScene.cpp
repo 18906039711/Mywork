@@ -1,13 +1,12 @@
 #include"ChooseScene.h"
 
-
 int playerID = 0;
 
 Scene* ChooseScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = ChooseScene::create();
 	scene->addChild(layer);
 	return scene;
@@ -28,6 +27,7 @@ bool ChooseScene::init()
 	this->scheduleUpdate();
 	//设置地图
 	this->addChild(map);
+	preLoading();
 
 	setButton();
 	setMusic();
@@ -103,7 +103,6 @@ void ChooseScene::addPlayer() {
 		player->setPosition(player_sorcererwb->getPosition());
 	}
 
-	player->changeMP(-150);
 	//增加playerUI
 	PlayerUI* playerUI = PlayerUI::create();
 	playerUI->bindPlayer(player);
@@ -169,11 +168,11 @@ void ChooseScene::setTreasureChest() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	TreasureChest* chest1 = TreasureChest::create(1);
-	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
+	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 10 * 7);
 	map->addChild(chest1, 5);
 
 	TreasureChest* chest2 = TreasureChest::create(2);
-	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
+	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 10 * 7);
 	map->addChild(chest2, 5);
 
 
@@ -200,6 +199,23 @@ void ChooseScene::update(float dt) {
 			Director::getInstance()->pushScene(TransitionFade::create(0.5f, PlayScene1::createScene()));
 		}
 	}
+
+}
+
+void ChooseScene::preLoading() {
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/Bullet.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/BulletBackground.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction1.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction2.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction3.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/Bullet.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/BulletBackground.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction1.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction2.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction3.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
+	
+}
+void ChooseScene::loadingCallback(cocos2d::Ref* pSender) {
 
 }
 

@@ -22,6 +22,8 @@ bool TreasureChest::init()
 	contactListener->onContactBegin = CC_CALLBACK_1(TreasureChest::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	std::srand((unsigned)time(0));
+	int null = static_cast<int>(rand_0_1());
 
 	return true;
 }
@@ -81,8 +83,6 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 			Chest->bindSprite(Sprite::create("TreasureChest/opened2.png"));
 			
 			//随机生成1-3个coin，以及3-5个MpFactor
-			std::srand((unsigned)time(0));
-			int null = static_cast<int>(rand_0_1());
 			int CoinNum = static_cast<int>(rand_0_1() * 3) + 1;
 			int MpFactorNum = static_cast<int>(rand_0_1() * 3) + 3;
 			for (int i = 0; i < CoinNum; i++) {
@@ -107,10 +107,13 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 void TreasureChest::ifChestOpened(float dt) {
 	if (this->ifOpened) {
 		if (this->ID == 1) {
-			Weapon* weapon = Weapon::create(AK47ID);
+			//随机生成武器
+			int WeaponID = rand_0_1() * 2 + AK47ID;
+			Weapon* weapon = Weapon::create(WeaponID);
 			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
 			weapon->fireSwitch(false);
-			this->addChild(weapon);
+			weapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
+			weapon->putIntoMap(this->getPosition());
 		}
 		if (this->ID == 2) {
 			this->runAction(Sequence::create(DelayTime::create(static_cast<float>(2)), RemoveSelf::create(), NULL));

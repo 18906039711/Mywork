@@ -7,9 +7,10 @@
 #define ObjectTag_Enemy 103
 #define ObjectTag_lockingCircle 104
 #define ObjectTag_Bullet 105
-#define ObjectTag_Coin 106
-#define ObjectTag_Weapon 107
-#define ObjectTag_WeaponArrow 108
+#define ObjectTag_BulletBackground 106
+#define ObjectTag_Coin 107
+#define ObjectTag_Weapon 108
+#define ObjectTag_WeaponArrow 109
 
 #define ObjectTag_Exit 110 //切换地图的出口，门或旋涡
 

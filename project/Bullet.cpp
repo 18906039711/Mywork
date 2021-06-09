@@ -7,13 +7,15 @@ bool Bullet::init()
 	this->setTag(ObjectTag_Bullet);
 
 	std::string bulletID = "Weapon/" + std::to_string(ID) + "/Bullet.png";
-	Sprite* bulletSprite = Sprite::create(bulletID);
+	Sprite* bulletSprite = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(bulletID));
+	//Sprite* bulletSprite = Sprite::create(bulletID);
 	bulletSprite->setScale(static_cast<float>(0.5));
 	this->bindSprite(bulletSprite);
 	setInformation();
 
 	std::string bulletBackgroundID = "Weapon/" + std::to_string(ID) + "/BulletBackground.png";
-	Sprite* bulletBackgroundSprite = Sprite::create(bulletBackgroundID);
+	Sprite* bulletBackgroundSprite = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(bulletBackgroundID));
+	//Sprite* bulletBackgroundSprite = Sprite::create(bulletBackgroundID);
 	if (bulletBackgroundSprite != nullptr) {
 		bulletBackgroundSprite->setOpacity(100);
 		this->addChild(bulletBackgroundSprite,0, ObjectTag_BulletBackground);
@@ -92,7 +94,9 @@ void Bullet::removeBullet() {
 	for (int i = 1; i <= 3; i++) {
 		char nameSize[100] = { 0 };
 		sprintf(nameSize, "Weapon/%d/removeAction%d.png", ID, i);
-		animation->addSpriteFrameWithFile(nameSize);
+		//animation->addSpriteFrameWithFile(nameSize);
+		animation->addSpriteFrameWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(nameSize),
+			Rect(0, 0, 90, 90));
 	}
 	
 	//设置两帧间的时间间隔

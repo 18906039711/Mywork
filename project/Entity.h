@@ -15,7 +15,6 @@ public:
 		return my_sprite;
 	}
 
-	void putIntoMap();
 	TMXTiledMap* my_map;
 
 protected:

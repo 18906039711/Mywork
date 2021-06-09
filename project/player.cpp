@@ -211,6 +211,19 @@ void Player::pickUp(Weapon* weapon) {
 //武器
 void Player::getWeapon(Weapon* weapon) {
 	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
+		//如果手上有武器，先取下
+		if (weaponID != 0) {
+			//从玩家手中放入地图
+			Weapon* nowWeapon = dynamic_cast<Weapon*>(my_sprite->getChildByTag(ObjectTag_Weapon));
+			nowWeapon->retain();
+			nowWeapon->removeFromParent();
+			nowWeapon->setScale(1);
+			//关闭开关，防止射出子弹
+			nowWeapon->fireSwitch(false);
+			nowWeapon->putIntoMap(this->getPosition());
+			nowWeapon->scheduleUpdate();
+		}
+
 		this->getParent()->removeChildByTag(ObjectTag_weaponInformation);
 		weapon->removeChildByTag(ObjectTag_WeaponArrow);
 		weapon->retain();
@@ -224,6 +237,8 @@ void Player::getWeapon(Weapon* weapon) {
 		//将玩家所在地图传给武器，以便传给子弹
 		weapon->my_map = this->my_map;
 	}
+
+	
 }
 
 void Player::getWeapon() {
@@ -247,7 +262,7 @@ void Player::rotateWeapon(float rotation) {
 	
 }
 
-void  Player::update(float delta) {
+void Player::update(float delta) {
 	//玩家移动
 	moving();
 	searchEnemy();

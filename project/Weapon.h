@@ -18,12 +18,12 @@ public:
 	virtual bool init();
 	static Weapon* create(int m_ID);
 
+	void update(float delta);
+
 	//Åö×²¿ª¹Ø
 	void fireSwitch(bool mark);
 
-	bool onContactBegin(PhysicsContact& contact);
-	bool onContactPreSolve(PhysicsContact& contact);
-	bool onContactSeparate(PhysicsContact& contact);
+	void putIntoMap(Vec2 point);
 
 	void showInfomation();
 	void removeInfomation();
@@ -40,13 +40,12 @@ public:
 	int ID;
 	std::string name;
 private:
+	Sprite* fire;
 	int damage;
 	int MPConsumption;
 	//¹¥»÷¼ä¸ô/s
 	float firingRate;
 
-	/* Åö×²¼ì²â */
-	EventListenerPhysicsContact* contactListenerWeapon = EventListenerPhysicsContact::create();
 
 };
 #endif

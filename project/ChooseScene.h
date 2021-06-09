@@ -30,6 +30,7 @@ public:
 	void setButton();
 
 	void suspendCallback(cocos2d::Ref* pSender);
+	void loadingCallback(cocos2d::Ref* pSender);
 
 	void setMusic();
 
@@ -40,6 +41,8 @@ public:
 	void setEnemy();
 
 	void update(float delta);
+
+	void preLoading();
 
 	/*void makeEddy();
 
