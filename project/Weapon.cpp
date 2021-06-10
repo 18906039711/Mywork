@@ -11,13 +11,16 @@ bool Weapon::init()
 	weaponSprite->setScale(static_cast<float>(0.7));
 	this->bindSprite(weaponSprite);
 	setInformation();
-
+	
 	//枪口火焰
 	std::string fireStr = "Weapon/" + std::to_string(ID) + "/Fire.png";
 	fire = Sprite::create(fireStr);
-	fire->setPosition(my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2, 0);
-	this->addChild(fire);
-	fire->setOpacity(0);
+	if (fire!=nullptr){
+		fire->setPosition(my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2, 0);
+		this->addChild(fire);
+		fire->setOpacity(0);
+	}
+	
 
 	auto body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
 	body->setDynamic(false);
@@ -109,7 +112,7 @@ void Weapon::showInfomation() {
 
 	Sprite* arrow = Sprite::create("Weapon/arrow.png");
 	arrow->setScale(static_cast<float>(0.3));
-	arrow->setPosition(0, this->showSprite()->getContentSize().height / 2);
+	arrow->setPosition(0, this->showSprite()->getContentSize().height / 2 + 30);
 	this->addChild(arrow, 0, ObjectTag_WeaponArrow);
 	auto name = Label::createWithTTF(this->name, "fonts/arial.ttf", 120);
 	name->enableOutline(Color4B::WHITE, 2);
@@ -168,29 +171,67 @@ void Weapon::attack(float dt) {
 		//获取玩家的坐标（相对于地图）
 		Vec2 point = player->getPosition();
 		
-		//计算枪口位置
-		if (player->showSprite()->getScaleX() > 0) {
-			point.x += player->showSprite()->getBoundingBox().size.width * 3 / 10;
-			point.x += (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * cos(this->getRotation() / 180 * M_PI);
+		//射击武器
+		if (ID < SwordID) {
+			//计算枪口位置
+			if (player->showSprite()->getScaleX() > 0) {
+				point.x += player->showSprite()->getBoundingBox().size.width * 3 / 10;
+				point.x += (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * cos(this->getRotation() / 180 * M_PI);
+			}
+			else {
+				point.x -= player->showSprite()->getBoundingBox().size.width * 3 / 10;
+				point.x -= (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * cos(this->getRotation() / 180 * M_PI);
+			}
+			point.y -= player->showSprite()->getBoundingBox().size.height / 4;
+			point.y -= (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * sin(this->getRotation() / 180 * M_PI);
+
+			//发射子弹
+			//散弹多发
+			if (ID == ShootGunID) {
+				for (int i = 0; i < 4; i++) {
+					auto bullet = Bullet::create(ID);
+					bullet->my_map = this->my_map;
+					bullet->putIntoMap(point, this->getRotation() + rand_0_1() * 20 - 10);
+				}
+			}
+			else {
+				auto bullet = Bullet::create(ID);
+				bullet->my_map = this->my_map;
+				bullet->putIntoMap(point, this->getRotation() + rand_0_1() * 0);
+			}
+
+
+			//喷射火焰及后坐动画
+			this->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.1), Vec2(-50, 0)),
+				MoveBy::create(static_cast<float>(0.1), Vec2(50, 0)), NULL));
+			fire->runAction(Sequence::create(FadeIn::create(static_cast<float>(0.01)), DelayTime::create(static_cast<float>(0.08)),
+				FadeOut::create(static_cast<float>(0.01)), NULL));
 		}
+		//近战武器
 		else {
-			point.x -= player->showSprite()->getBoundingBox().size.width * 3 / 10;
-			point.x -= (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * cos(this->getRotation() / 180 * M_PI);
+			//计算枪口位置
+			if (player->showSprite()->getScaleX() > 0) {
+				point.x += player->showSprite()->getBoundingBox().size.width * 3 / 10;
+				point.x += my_sprite->getBoundingBox().size.width / 2* cos(this->getRotation() / 180 * M_PI);
+			}
+			else {
+				point.x -= player->showSprite()->getBoundingBox().size.width * 3 / 10;
+				point.x -= my_sprite->getBoundingBox().size.width / 2 * cos(this->getRotation() / 180 * M_PI);
+			}
+			point.y -= player->showSprite()->getBoundingBox().size.height / 4;
+			point.y -= my_sprite->getBoundingBox().size.width / 2 * sin(this->getRotation() / 180 * M_PI);
+
+			my_sprite->runAction(Sequence::create(RotateBy::create(static_cast<float>(0.01), -110),
+				RotateBy::create(static_cast<float>(0.15), 220), RotateBy::create(static_cast<float>(0.2), -110), NULL));
+
+			auto bullet = Bullet::create(ID);
+			bullet->my_map = this->my_map;
+			bullet->putIntoMap(point, this->getRotation() + rand_0_1() * 0);
+
 		}
-		point.y -= player->showSprite()->getBoundingBox().size.height / 4;
-		point.y -= (my_sprite->getBoundingBox().size.width / 2 + fire->getBoundingBox().size.width / 2) * sin(this->getRotation() / 180 * M_PI);
-
-		//发射子弹
-		auto bullet = Bullet::create(ID);
-		bullet->my_map = this->my_map;
-		bullet->putIntoMap(point, this->getRotation());
-
-		//喷射火焰及后坐动画
-
-		this->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.1), Vec2(-50, 0)), MoveBy::create(static_cast<float>(0.1), Vec2(50, 0)), NULL));
-		fire->runAction(Sequence::create(FadeIn::create(static_cast<float>(0.01)), DelayTime::create(static_cast<float>(0.08)),
-			FadeOut::create(static_cast<float>(0.01)), NULL));
-
+		
+		
+		
 		//攻击间隔
 		attackMark1 = false;
 		count = 0;

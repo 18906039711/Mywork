@@ -7,15 +7,13 @@ bool Bullet::init()
 	this->setTag(ObjectTag_Bullet);
 
 	std::string bulletID = "Weapon/" + std::to_string(ID) + "/Bullet.png";
-	Sprite* bulletSprite = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(bulletID));
-	//Sprite* bulletSprite = Sprite::create(bulletID);
+	Sprite* bulletSprite = Sprite::create(bulletID);
 	bulletSprite->setScale(static_cast<float>(0.5));
 	this->bindSprite(bulletSprite);
 	setInformation();
 
 	std::string bulletBackgroundID = "Weapon/" + std::to_string(ID) + "/BulletBackground.png";
-	Sprite* bulletBackgroundSprite = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(bulletBackgroundID));
-	//Sprite* bulletBackgroundSprite = Sprite::create(bulletBackgroundID);
+	Sprite* bulletBackgroundSprite = Sprite::create(bulletBackgroundID);
 	if (bulletBackgroundSprite != nullptr) {
 		bulletBackgroundSprite->setOpacity(100);
 		this->addChild(bulletBackgroundSprite,0, ObjectTag_BulletBackground);
@@ -27,8 +25,19 @@ bool Bullet::init()
 	////读取之前的音量
 	//int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
 	//AudioEngine::setVolume(soundEffect, volumePercent / 100.f);
-
-	auto body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
+	PhysicsBody* body;
+	if (ID < SwordID) {
+		body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
+	}
+	else {
+		Vec2 points[5] = { Vec2(-my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2),
+		Vec2(0, my_sprite->getBoundingBox().size.height / 2),
+		Vec2(my_sprite->getBoundingBox().size.width / 2,  0),
+		Vec2(0, -my_sprite->getBoundingBox().size.height / 2),
+		Vec2(-my_sprite->getBoundingBox().size.width / 2, -my_sprite->getBoundingBox().size.height / 2) };
+		body = PhysicsBody::createPolygon(points, 5);
+	}
+	
 	body->setDynamic(false);
 	body->setContactTestBitmask(0xFFFFFFFF);
 	this->addComponent(body);
@@ -76,7 +85,10 @@ bool Bullet::onContactBegin(PhysicsContact& contact)
 	//子弹碰到敌人
 	if (nodeA->getTag() == ObjectTag_Bullet && nodeB->getTag() == ObjectTag_Enemy) {
 		enemy->changeHP(-damage);
-		bullet->removeBullet();
+		//射击武器
+		if (bullet->ID < SwordID) {
+			bullet->removeBullet();
+		}
 	}
 	return true;
 }
@@ -94,11 +106,9 @@ void Bullet::removeBullet() {
 	for (int i = 1; i <= 3; i++) {
 		char nameSize[100] = { 0 };
 		sprintf(nameSize, "Weapon/%d/removeAction%d.png", ID, i);
-		//animation->addSpriteFrameWithFile(nameSize);
-		animation->addSpriteFrameWithTexture(Director::getInstance()->getTextureCache()->getTextureForKey(nameSize),
-			Rect(0, 0, 90, 90));
+		animation->addSpriteFrameWithFile(nameSize);
 	}
-	
+
 	//设置两帧间的时间间隔
 	animation->setDelayPerUnit(static_cast<float>(0.05));
 
@@ -125,26 +135,59 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 
 	my_map->addChild(this, 5);
 	this->setPosition(point);
-	
 
 	Player* player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
-	if (player->showSprite()->getScaleX() > 0) {
-		this->setScaleX(1);
-		this->setRotation(rotation);
-		this->runAction(MoveBy::create(static_cast <float>(2), Vec2(4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+	
+	//射击类武器
+	if (ID < SwordID) {
+		//人物朝右
+		if (player->showSprite()->getScaleX() > 0) {
+			this->setScaleX(1);
+			this->setRotation(rotation);
+			this->runAction(MoveBy::create(static_cast <float>(2), Vec2(4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+		}
+		//人物朝左
+		else {
+			this->setScaleX(-1);
+			this->setRotation(-rotation);
+			this->runAction(MoveBy::create(static_cast <float>(2), Vec2(-4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+		}
+		//设置障碍层
+		setBarrierLater();
+		this->scheduleUpdate();
 	}
+	//近战武器
 	else {
-		this->setScaleX(-1);
-		this->setRotation(-rotation);
-		this->runAction(MoveBy::create(static_cast <float>(2), Vec2(-4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+		//近战武器无需监听，判断障碍
+		this->unscheduleUpdate();
+
+		if (player->showSprite()->getScaleX() > 0) {
+			//人物朝右
+			this->setScaleX(1);
+			this->setRotation(rotation);
+		}
+		else {
+			//人物朝左
+			this->setScaleX(-1);
+			this->setRotation(-rotation);
+		}
+
+		//创建序列帧
+		auto animation = Animation::create();
+		for (int i = 1; i <= 2; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Weapon/%d/Bullet%d.png", ID, i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+		//设置两帧间的时间间隔
+		animation->setDelayPerUnit(static_cast<float>(0.1));
+		animation->setLoops(1);
+
+		//播放动画
+		my_sprite->runAction(Animate::create(animation));
+		this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.3)), RemoveSelf::create(), NULL));
 	}
 	
-	
-	
-	//设置障碍层
-	setBarrierLater();
-
-	this->scheduleUpdate();
 }
 
 void Bullet::setBarrierLater() {

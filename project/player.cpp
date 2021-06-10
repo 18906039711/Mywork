@@ -228,6 +228,11 @@ void Player::getWeapon(Weapon* weapon) {
 		weapon->removeChildByTag(ObjectTag_WeaponArrow);
 		weapon->retain();
 		weapon->removeFromParent();
+		//如果是近战武器
+		if (weapon->ID >= SwordID) {
+			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
+			weapon->setAnchorPoint(Vec2(0, 0.5));
+		}
 		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
 		weapon->setScale(5);
 		UserDefault::getInstance()->setIntegerForKey("weaponID", weapon->ID);
@@ -249,6 +254,10 @@ void Player::getWeapon() {
 		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
 		weapon->setScale(5);
 		weaponID = weapon->ID;
+		//如果是近战武器
+		if (weapon->ID >= SwordID) {
+			weapon->setAnchorPoint(Vec2(0, 0.5));
+		}
 		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
 		weapon->fireSwitch(true);
 		//将玩家所在地图传给武器，以便传给子弹
@@ -259,7 +268,6 @@ void Player::getWeapon() {
 void Player::rotateWeapon(float rotation) {
 	Weapon* weapon = dynamic_cast<Weapon*>(my_sprite->getChildByTag(ObjectTag_Weapon));
 	weapon->setRotation(rotation);
-	
 }
 
 void Player::update(float delta) {

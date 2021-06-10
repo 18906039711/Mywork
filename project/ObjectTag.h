@@ -18,6 +18,9 @@
 #define ObjectTag_weaponInformation 1000
 #define AK47ID 1001 //AR
 #define AuroraID 1002 //SR
+#define ShootGunID 1003
+#define SwordID 1004
+#define LongSwordID 1005
 
 /*enemy*/
 #define Dummy 10000//µ–∑ΩºŸ»À

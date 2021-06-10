@@ -6,7 +6,7 @@ Scene* ChooseScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = ChooseScene::create();
 	scene->addChild(layer);
 	return scene;
@@ -27,7 +27,6 @@ bool ChooseScene::init()
 	this->scheduleUpdate();
 	//ÉèÖÃµØÍ¼
 	this->addChild(map);
-	preLoading();
 
 	setButton();
 	setMusic();
@@ -202,22 +201,6 @@ void ChooseScene::update(float dt) {
 
 }
 
-void ChooseScene::preLoading() {
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/Bullet.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/BulletBackground.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction1.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction2.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1001/removeAction3.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/Bullet.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/BulletBackground.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction1.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction2.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	Director::getInstance()->getTextureCache()->addImageAsync("Weapon/1002/removeAction3.png", CC_CALLBACK_1(ChooseScene::loadingCallback, this));
-	
-}
-void ChooseScene::loadingCallback(cocos2d::Ref* pSender) {
-
-}
 
 //
 //void ChooseScene::makeEddy() 
