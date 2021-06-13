@@ -8,7 +8,8 @@
 #include "player.h"
 #include "PlayerUI.h"
 #include "CoinUI.h"
-#include"TreasureChest.h"
+#include "TreasureChest.h"
+#include "EnemyLayer.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;
@@ -22,6 +23,10 @@ public:
 
 	static cocos2d::Scene* createScene();
 
+	void update(float delta);
+
+	void setMap();
+
 	void setButton();
 
 	void suspendCallback(cocos2d::Ref* pSender);
@@ -32,12 +37,18 @@ public:
 
 	void displayCoinNum();
 
+	void setFence();
+	void removeFence();
+
+
 	//void ifChestOpened(float dt);
 
-	//void update(float delta);
+	
 
 private:
-	TMXTiledMap* map = TMXTiledMap::create("map/chooseMap.tmx");
+	TMXTiledMap* map = TMXTiledMap::create("map/PlayMap2.tmx");
+	float mapWidth = (map->getMapSize().width) * map->getTileSize().width * 2;
+	float mapHeight = (map->getMapSize().height) * map->getTileSize().height * 2;
 
 	Player* player;
 	void addPlayer();

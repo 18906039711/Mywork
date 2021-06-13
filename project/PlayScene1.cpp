@@ -1,4 +1,4 @@
-#include"PlayScene1.h"
+#include "PlayScene1.h"
 
 extern int player_num;
 
@@ -24,17 +24,41 @@ bool PlayScene1::init()
 	if (!Layer::init()) {
 		return false;
 	}
-	//this->scheduleUpdate();
-	//设置地图
-	this->addChild(map);
+	this->scheduleUpdate();
 
+	setMap();
 	setButton();
 	setMusic();
 	setTreasureChest();
 	displayCoinNum();
 	addPlayer();
-	
+	removeFence();
+
+	auto enemyLayer = EnemyLayer::create();
+	enemyLayer->putIntoMap(map);
+	enemyLayer->setPosition(mapWidth / 148 * 22, mapHeight / 2);
 	return true;
+}
+
+void PlayScene1::update(float delta) {
+
+}
+
+void PlayScene1::setMap() {
+	//设置地图
+	this->addChild(map);
+
+	//获取屏幕显示大小
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	map->setPosition(visibleSize.width / 2 - mapWidth / 2, visibleSize.height / 2 - mapHeight / 2);
+	map->getLayer("fenceFloor")->setPosition(0, -32);
+	map->getLayer("fence1")->setPosition(0, -32);
+	map->getLayer("fence2")->setPosition(0, 32);
+
+	//map->getLayer("barrier")->setVisible(false);
+	//map->getLayer("enemyBarrier")->setVisible(false);
+
 }
 
 void PlayScene1::setMusic() {
@@ -105,7 +129,10 @@ void PlayScene1::addPlayer() {
 	//设置玩家
 	player = Player::create();
 	player->putIntoMap(map);
-	player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	player->setPosition(mapWidth / 2, mapHeight / 2);
+
+	//视角跟随
+	player->playerFollowingMark = true;
 
 	//继承面板属性
 	player->setPlayerAttribute();
@@ -120,14 +147,65 @@ void PlayScene1::addPlayer() {
 }
 
 void PlayScene1::setTreasureChest() {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-
 	TreasureChest* chest1 = TreasureChest::create(1);
-	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 4 * 3);
-	map->addChild(chest1, 5, ObjectTag_TreasureChest);
+	chest1->setPosition(mapWidth / 2+256, mapHeight / 2);
+	map->addChild(chest1, map->getLayer("player")->getLocalZOrder() - 1);
 
 	TreasureChest* chest2 = TreasureChest::create(2);
-	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 4 * 3);
-	map->addChild(chest2, 5, ObjectTag_TreasureChest);
+	chest2->setPosition(mapWidth / 2-256, mapHeight / 2);
+	map->addChild(chest2, map->getLayer("player")->getLocalZOrder() - 1);
 
 }
+
+/*mark = true,set the fence. 
+  mark = false,remvove the fence.*/
+void ChangeFence(TMXTiledMap* map, int x, bool mark = false) {
+	if (mark) {
+		//Vertical
+		for (float i = 9; i <= 64; i += 26) {
+			for (float j = 0; j < 4; j++) {
+				map->getLayer("barrier")->setTileGID(1,Vec2(x, i + j));
+			}
+		}
+		//Horizontal
+		for (float i = 9; i <= 64; i += 26) {
+			for (float j = 0; j < 4; j++) {
+				map->getLayer("barrier")->setTileGID(1,Vec2(i + j, x));
+			}
+		}
+	}
+	else {
+		//Vertical
+		for (float i = 9; i <= 64; i += 26) {
+			for (float j = 0; j < 4; j++) {
+				map->getLayer("barrier")->removeTileAt(Vec2(x, i + j));
+			}
+		}
+		//Horizontal
+		for (float i = 9; i <= 64; i += 26) {
+			for (float j = 0; j < 4; j++) {
+				map->getLayer("barrier")->removeTileAt(Vec2(i + j, x));
+			}
+		}
+	}
+}
+
+
+void PlayScene1::setFence() {
+	ChangeFence(map, 20, true);
+	ChangeFence(map, 27, true);
+	ChangeFence(map, 46, true);
+	ChangeFence(map, 53, true);
+	map->getLayer("fence1")->setVisible(true);
+	map->getLayer("fence2")->setVisible(true);
+}
+
+void PlayScene1::removeFence() {
+	ChangeFence(map, 20, false);
+	ChangeFence(map, 27, false);
+	ChangeFence(map, 46, false);
+	ChangeFence(map, 53, false);
+	map->getLayer("fence1")->setVisible(false);
+	map->getLayer("fence2")->setVisible(false);
+}
+

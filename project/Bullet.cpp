@@ -60,7 +60,7 @@ Bullet* Bullet::create(int m_ID) {
 	return nullptr;
 }
 void Bullet::update(float delta) {
-	Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
+	//Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
 	Vec2 tiledPos = tileCoordForPosition(this->getPosition());
 	if (barrier->getTileGIDAt(tiledPos)) {
 		this->removeBullet();
@@ -72,18 +72,32 @@ bool Bullet::onContactBegin(PhysicsContact& contact)
 	auto nodeA = contact.getShapeA()->getBody()->getNode();
 	auto nodeB = contact.getShapeB()->getBody()->getNode();
 	
-
-	//绑定碰撞的子弹和敌人
-	Bullet* bullet = dynamic_cast<Bullet*>(nodeA);
-	Enemy* enemy = dynamic_cast<Enemy*>(nodeB);
-
 	//防止节点为nullptr闪退
 	if (nodeA == nullptr || nodeB == nullptr) {
+		CCLOG("node=nullptr");
 		return true;
 	}
 
+	Node* BulletNode = NULL;    /* 宝箱对象 */
+	Node* EnemyNode = NULL;
+
+	//判断两个碰撞对象
+	if (nodeA->getTag() == ObjectTag_Bullet) {
+		BulletNode = nodeA;
+		EnemyNode = nodeB;
+	}
+	else {
+		BulletNode = nodeB;
+		EnemyNode = nodeA;
+	}
+
+	//绑定碰撞的子弹和敌人
+	Bullet* bullet = dynamic_cast<Bullet*>(BulletNode);
+	Enemy* enemy = dynamic_cast<Enemy*>(EnemyNode);
+
+
 	//子弹碰到敌人
-	if (nodeA->getTag() == ObjectTag_Bullet && nodeB->getTag() == ObjectTag_Enemy) {
+	if (BulletNode->getTag() == ObjectTag_Bullet && (EnemyNode->getTag() >= ObjectTag_Enemy && EnemyNode->getTag() <= ObjectTag_Enemy + 10)) {
 		enemy->changeHP(-damage);
 		//射击武器
 		if (bullet->ID < SwordID) {
@@ -129,11 +143,11 @@ void Bullet::setInformation() {
 
 void Bullet::putIntoMap(Vec2 point, float rotation) {
 	/* 碰撞检测 */
-	EventListenerPhysicsContact* contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(Bullet::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+	EventListenerPhysicsContact* bulletContactListener = EventListenerPhysicsContact::create();
+	bulletContactListener->onContactBegin = CC_CALLBACK_1(Bullet::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(bulletContactListener, this);
 
-	my_map->addChild(this, 5);
+	my_map->addChild(this, 10);
 	this->setPosition(point);
 
 	Player* player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
@@ -153,7 +167,7 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 			this->runAction(MoveBy::create(static_cast <float>(2), Vec2(-4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
 		}
 		//设置障碍层
-		setBarrierLater();
+		setBarrierLayer();
 		this->scheduleUpdate();
 	}
 	//近战武器
@@ -190,8 +204,8 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 	
 }
 
-void Bullet::setBarrierLater() {
-	barrier = my_map->getLayer("enemyBarrier");
+void Bullet::setBarrierLayer() {
+	barrier = my_map->getLayer("barrier");
 }
 
 Vec2 Bullet::tileCoordForPosition(Vec2 point) {
@@ -200,8 +214,9 @@ Vec2 Bullet::tileCoordForPosition(Vec2 point) {
 
 	// 获取瓦片地图的尺寸(瓦片数量)
 	auto mapTiledNum = my_map->getMapSize();
-	///获取单个瓦片的尺寸(pixel)
+	//获取单个瓦片的尺寸(pixel)
 	auto tiledSize = my_map->getTileSize();
+
 
 	//x表示瓦片地图上第几个瓦片
 	int x = int(point.x / (tiledSize.width * 2));

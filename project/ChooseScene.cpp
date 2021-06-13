@@ -6,7 +6,7 @@ Scene* ChooseScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
-	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = ChooseScene::create();
 	scene->addChild(layer);
 	return scene;
@@ -25,23 +25,28 @@ bool ChooseScene::init()
 		return false;
 	}
 	this->scheduleUpdate();
-	//设置地图
-	this->addChild(map);
-
+	
+	setMap();
 	setButton();
 	setMusic();
 	setTreasureChest();
 	displayCoinNum();
 	choosePlayer();
 	setEnemy();
-	
-	//设置通完下一场景的门
-	Sprite* door = Sprite::create("door.png");
-	door->setContentSize(Size(32 * 8, 32));
-	door->setPosition(static_cast<float>(map->getContentSize().width / 2), static_cast<float>(map->getContentSize().height * 0.88));
-	door->setVisible(false);
-	this->addChild(door, 1, ObjectTag_Exit);
+	setDoor();
+
 	return true;
+}
+
+void ChooseScene::setMap() {
+	//设置地图
+	this->addChild(map);
+
+	//获取单个瓦片的尺寸(pixel)
+	auto tiledSize = map->getTileSize();
+	map->setPosition(-tiledSize.width * 2, -tiledSize.height * 2);
+	map->getLayer("barrier")->setVisible(false);
+	map->getLayer("enemyBarrier")->setVisible(false);
 }
 
 void ChooseScene::choosePlayer() {
@@ -51,11 +56,11 @@ void ChooseScene::choosePlayer() {
 	//设置精灵
 
 	player_rangerwb->setScale(0.2f);
-	player_rangerwb->setPosition(Vec2(visibleSize.width / 4 * 3, visibleSize.height / 3 + origin.y));
+	player_rangerwb->setPosition(Vec2(visibleSize.width / 4 * 3, visibleSize.height / 3));
 	this->addChild(player_rangerwb, 1);
 
 	player_sorcererwb->setScale(0.2f);
-	player_sorcererwb->setPosition(Vec2(visibleSize.width / 4, visibleSize.height / 3 + origin.y));
+	player_sorcererwb->setPosition(Vec2(visibleSize.width / 4, visibleSize.height / 3));
 	this->addChild(player_sorcererwb, 1);
 
 	//鼠标点击事件监听
@@ -66,18 +71,19 @@ void ChooseScene::choosePlayer() {
 		Rect rect_ranger = player_rangerwb->getBoundingBox();
 		Rect rect_sorcerer = player_sorcererwb->getBoundingBox();
 		if (rect_ranger.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
-			player_rangerwb->setVisible(false);
-			player_sorcererwb->setVisible(false);
+			player_rangerwb->removeFromParent();
+			player_sorcererwb->removeFromParent();
 			playerID = 1;
 			addPlayer();
+			_eventDispatcher->removeEventListener(listenerMouse);
 		}
 		else if (rect_sorcerer.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
-			player_rangerwb->setVisible(false);
-			player_sorcererwb->setVisible(false);
+			player_rangerwb->removeFromParent();
+			player_sorcererwb->removeFromParent();
 			playerID = 2;
 			addPlayer();
+			_eventDispatcher->removeEventListener(listenerMouse);
 		}
-
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerMouse, this);
 }
@@ -96,10 +102,10 @@ void ChooseScene::addPlayer() {
 	player->initializePlayer();
 
 	if (playerID == 1) {
-		player->setPosition(player_rangerwb->getPosition());
+		player->setPosition(visibleSize.width / 4 * 3 + 64, visibleSize.height / 3 + 64);
 	}
 	else if (playerID == 2) {
-		player->setPosition(player_sorcererwb->getPosition());
+		player->setPosition(visibleSize.width / 4 + 64, visibleSize.height / 3 + 64);
 	}
 
 	//增加playerUI
@@ -167,13 +173,12 @@ void ChooseScene::setTreasureChest() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
 	TreasureChest* chest1 = TreasureChest::create(1);
-	chest1->setPosition(visibleSize.width / 5 * 2, visibleSize.height / 10 * 7);
+	chest1->setPosition(mapWidth / 5 * 2, mapHeight / 10 * 7);
 	map->addChild(chest1, 5);
 
 	TreasureChest* chest2 = TreasureChest::create(2);
-	chest2->setPosition(visibleSize.width / 5 * 3, visibleSize.height / 10 * 7);
+	chest2->setPosition(mapWidth / 5 * 3, mapHeight / 10 * 7);
 	map->addChild(chest2, 5);
-
 
 }
 
@@ -184,14 +189,22 @@ void ChooseScene::displayCoinNum() {
 }
 
 void ChooseScene::setEnemy() {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Enemy* dummy = Enemy::create(Dummy);
-	dummy->setPosition(visibleSize.width / 5 * 4, visibleSize.height / 5 * 3);
+	dummy->setPosition(mapWidth / 5 * 4, mapHeight / 5 * 3);
 	dummy->putIntoMap(map);
 }
 
+void ChooseScene::setDoor() {
+	//设置通完下一场景的门
+	Sprite* door = Sprite::create("door.png");
+	door->setContentSize(Size(32 * 8, 32));
+	door->setPosition(static_cast<float>(mapWidth / 2), static_cast<float>(mapHeight * 0.85));
+	door->setVisible(false);
+	map->addChild(door, 1, ObjectTag_Exit);
+}
+
 void ChooseScene::update(float dt) {
-	auto exit = this->getChildByTag(ObjectTag_Exit);
+	auto exit = map->getChildByTag(ObjectTag_Exit);
 	if (player != nullptr) {
 		if (exit->getBoundingBox().containsPoint(player->getPosition())) {
 			AudioEngine::stopAll();

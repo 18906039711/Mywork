@@ -14,7 +14,11 @@ public:
 	CREATE_FUNC(Enemy);
 	virtual bool init();
 	static Enemy* create(int m_ID);
-	void putIntoMap(TMXTiledMap* map);
+
+	void getMap(TMXTiledMap* map);
+	void putIntoMap(TMXTiledMap* map, int tag = ObjectTag_Enemy);
+	
+
 	void setInformation();
 
 	void randomMove(float delta);
@@ -28,6 +32,10 @@ public:
 
 	
 	int ID;
+
+	//敌人存活标记，用于地图障碍开关
+	bool aliveMark = true;
+
 private:
 	int damage;
 	int HP;
@@ -37,7 +45,7 @@ private:
 	TMXLayer* barrier;
 
 	//获取地图的障碍层
-	void setBarrierLater();
+	void setBarrierLayer();
 
 	//将像素坐标转换为地图格子坐标
 	Vec2 tileCoordForPosition(Vec2 point);

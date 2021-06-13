@@ -20,12 +20,6 @@ bool Weapon::init()
 		this->addChild(fire);
 		fire->setOpacity(0);
 	}
-	
-
-	auto body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
-	body->setDynamic(false);
-	body->setContactTestBitmask(0xFFFFFFFF);
-	this->addComponent(body);
 
 
 	return true;
@@ -49,15 +43,15 @@ void Weapon::update(float delta) {
 	}
 	//如果在地图上上
 	else {
-		//获得武器图片的Rect
+		//获得武器图片的Rect,Rect设置的点在左下角
 		Vec2 weaponPoint = Vec2(this->getPosition().x - my_sprite->getBoundingBox().size.width / 2,
 			this->getPosition().y - my_sprite->getBoundingBox().size.height / 2);
-		Rect weapon = Rect(weaponPoint, this->my_sprite->getBoundingBox().size);
+		Rect weaponRect = Rect(weaponPoint, this->my_sprite->getBoundingBox().size);
 		Player* player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
 		auto playerSize = player->my_sprite->getBoundingBox().size;
 		auto playerRect = Rect(Vec2(player->getPosition().x - player->my_sprite->getBoundingBox().size.width / 2,
 			player->getPosition().y - player->my_sprite->getBoundingBox().size.height / 2), playerSize);
-		if (weapon.intersectsRect(playerRect)) {
+		if (weaponRect.intersectsRect(playerRect)) {
 			this->showInfomation();
 			player->getWeapon(this);
 		}
@@ -86,7 +80,7 @@ void Weapon::showInfomation() {
 
 	//信息板
 	Sprite* weaponInformation = Sprite::create("weapon/weaponInformation.png");
-	//添加在map中，运用两次getparent
+	//添加在场景中，运用两次getparent
 	this->getParent()->getParent()->addChild(weaponInformation, 10, ObjectTag_weaponInformation);;
 	weaponInformation->setScale(visibleSize.width / weaponInformation->getContentSize().width / 4);
 	weaponInformation->setPosition(visibleSize.width / 2, -weaponInformation->getBoundingBox().size.height / 2);
@@ -147,7 +141,7 @@ void Weapon::setInformation() {
 }
 
 void Weapon::putIntoMap(Vec2 point) {
-	my_map->addChild(this,5);
+	my_map->addChild(this, my_map->getLayer("player")->getLocalZOrder() + 1);
 	this->setPosition(point);
 }
 

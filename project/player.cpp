@@ -224,7 +224,7 @@ void Player::getWeapon(Weapon* weapon) {
 			nowWeapon->scheduleUpdate();
 		}
 
-		this->getParent()->removeChildByTag(ObjectTag_weaponInformation);
+		this->getParent()->getParent()->removeChildByTag(ObjectTag_weaponInformation);
 		weapon->removeChildByTag(ObjectTag_WeaponArrow);
 		weapon->retain();
 		weapon->removeFromParent();
@@ -282,18 +282,43 @@ void Player::update(float delta) {
 
 
 void Player::searchEnemy() {
-	Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
-	if (enemy == nullptr) {
-		return;
+	int enemyNumber = 0;
+	float distance, minDistance = pow(searchingRadius * 5, 2);
+	for (int i = 1; i <= 10; i++) {
+		Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy + i - 1));
+		//有敌人
+		if (enemy != nullptr) {
+			Vec2 enemyPosition = enemy->getPosition();
+			Vec2 playerPosition = this->getPosition();
+			//可以直接平方比较，无需开方
+			distance = static_cast<float>(pow(playerPosition.x - enemyPosition.x, 2) + pow(playerPosition.y - enemyPosition.y, 2));
+
+			//寻找最近的敌人
+			if (distance < minDistance) {
+				minDistance = distance;
+				enemyNumber = i;
+			}
+		}
 	}
 
+	//没有敌人
+	if (enemyNumber == 0) {
+		if (weaponID != 0) {
+			rotateWeapon(0);
+			enemyMark = false;
+		}
+		return;
+	}
+	
+	Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy + enemyNumber - 1));
 	Vec2 enemyPosition = enemy->getPosition();
 	Vec2 playerPosition = this->getPosition();
-	//可以直接平方比较，无需开方
-	float distance = static_cast<float>(pow(playerPosition.x - enemyPosition.x, 2) + pow(playerPosition.y - enemyPosition.y, 2));
+
+	distance = minDistance;
 	float rotation = atan((playerPosition.y - enemyPosition.y) / (playerPosition.x - enemyPosition.x)) * 180 / M_PI;
 
-	if (distance < pow(1000, 2)) {
+	if (distance < pow(searchingRadius, 2)) {
+		//锁定最近的敌人
 		enemy->locked();
 		enemyMark = true;
 		//如果范围内有敌人，始终面向敌人
@@ -311,9 +336,16 @@ void Player::searchEnemy() {
 				rotateWeapon(-rotation);
 			}
 		}
-		
+		//对其余敌人解除锁定
+		for (int i = 1; i <= 10; i++) {
+			Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy + i - 1));
+			if (enemy != nullptr && i != enemyNumber) {
+				enemy->unlocked();
+			}
+		}
 	}
 	else {
+		//超出索敌范围
 		enemy->unlocked();
 		enemyMark = false;
 		if (weaponID != 0) {
@@ -367,7 +399,7 @@ void Player::moving() {
 	Vec2 tiledPos_right2 = tileCoordForPosition(Vec2(px + width / 2, py + height / 2 - 10));
 
 	//设置障碍层
-	setBarrierLater();
+	setBarrierLayer();
 
 	//通过坐标获取TiledMap上格子的唯一标识
 	int tiledGid_up1 = barrier->getTileGIDAt(tiledPos_up1);
@@ -409,7 +441,10 @@ void Player::moving() {
 	Vec2 point = this->getPosition();
 	point.x += X;
 	point.y += Y;
-	this->setPosition(point.x, point.y);
+	this->setPosition(point);
+	if (playerFollowingMark) {
+		my_map->setPosition(visibleSize.width / 2 - point.x, visibleSize.height / 2 - point.y);
+	}
 
 	bool keyBoardNow = keyMap[up] + keyMap[left] + keyMap[down] + keyMap[right];
 	static bool keyBoardOrgin = 0;
@@ -433,10 +468,10 @@ void Player::setSpeed(int speed) {
 
 void Player::putIntoMap(TMXTiledMap* map) {
 	my_map = map;
-	map->addChild(this, 5, ObjectTag_Player);
+	map->addChild(this, map->getLayer("player")->getLocalZOrder(), ObjectTag_Player);
 }
 
-void Player::setBarrierLater() {
+void Player::setBarrierLayer() {
 	barrier = my_map->getLayer("barrier");
 }
 

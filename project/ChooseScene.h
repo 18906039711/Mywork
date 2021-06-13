@@ -27,6 +27,8 @@ public:
 
 	static cocos2d::Scene* createScene();
 
+	void setMap();
+
 	void setButton();
 
 	void suspendCallback(cocos2d::Ref* pSender);
@@ -39,8 +41,10 @@ public:
 
 	void setEnemy();
 
-	void update(float delta);
+	void setDoor();
 
+	void update(float delta);
+	
 
 	/*void makeEddy();
 
@@ -51,7 +55,9 @@ public:
 private:
 	Sprite* player_rangerwb = Sprite::create("character/rangerWB.png");
 	Sprite* player_sorcererwb = Sprite::create("character/sorcererWB.png");
-	TMXTiledMap* map = TMXTiledMap::create("map/chooseMap.tmx");
+	TMXTiledMap* map = TMXTiledMap::create("map/ChooseMap.tmx"); 
+	float mapWidth = (map->getMapSize().width) * map->getTileSize().width * 2;
+	float mapHeight = (map->getMapSize().height) * map->getTileSize().height * 2;
 
 	Player* player;
 

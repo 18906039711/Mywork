@@ -40,9 +40,12 @@ Enemy* Enemy::create(int m_ID) {
 	return nullptr;
 }
 
-void Enemy::putIntoMap(TMXTiledMap* map) {
+void Enemy::getMap(TMXTiledMap* map) {
 	my_map = map;
-	map->addChild(this, 4, ObjectTag_Enemy);
+}
+void Enemy::putIntoMap(TMXTiledMap* map, int tag) {
+	getMap(map);
+	map->addChild(this, map->getLayer("player")->getLocalZOrder(), tag);
 }
 
 void Enemy::setInformation() {
@@ -69,6 +72,7 @@ void Enemy::randomMove(float delta) {
 	//获取屏幕显示大小
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	
 	px = this->getPosition().x;
 	py = this->getPosition().y;
 
@@ -83,7 +87,7 @@ void Enemy::randomMove(float delta) {
 	Vec2 tiledPos_right = tileCoordForPosition(Vec2(px + width / 2, py));
 
 	//设置障碍层
-	setBarrierLater();
+	setBarrierLayer();
 
 	//通过坐标获取TiledMap上格子的唯一标识
 	int tiledGid_up = barrier->getTileGIDAt(tiledPos_up);
@@ -110,7 +114,6 @@ void Enemy::randomMove(float delta) {
 
 	//转化成单位向量
 	float e = sqrt(pow(X, 2) + pow(Y, 2));
-
 	Vec2 destination = Vec2(px + Speed * X / e * 40, py + Speed * Y / e * 40);
 
 	if (!barrier->getTileGIDAt(tileCoordForPosition(destination))) {
@@ -123,7 +126,7 @@ void Enemy::randomMove(float delta) {
 	
 }
 
-void Enemy::setBarrierLater() {
+void Enemy::setBarrierLayer() {
 	barrier = my_map->getLayer("enemyBarrier");
 }
 
@@ -172,6 +175,7 @@ void Enemy::changeHP(int changeValue) {
 		this->addChild(HPLabel);
 	}
 	if (HP <= 0) {
+		aliveMark = false;
 		this->runAction(RemoveSelf::create());
 	}
 	std::string HPstr = std::to_string(HP);

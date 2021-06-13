@@ -4,15 +4,18 @@
 
 #define ObjectTag_Player 101
 #define ObjectTag_TreasureChest 102
-#define ObjectTag_Enemy 103
+
 #define ObjectTag_lockingCircle 104
 #define ObjectTag_Bullet 105
 #define ObjectTag_BulletBackground 106
 #define ObjectTag_Coin 107
 #define ObjectTag_Weapon 108
 #define ObjectTag_WeaponArrow 109
-
 #define ObjectTag_Exit 110 //切换地图的出口，门或旋涡
+
+
+#define ObjectTag_EnemyLayer 200
+#define ObjectTag_Enemy 201
 
 /*weapon*/
 #define ObjectTag_weaponInformation 1000

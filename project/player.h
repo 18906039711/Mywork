@@ -57,9 +57,14 @@ public:
 
 	//判断范围内是否有敌人
 	void searchEnemy();
+	int searchingRadius = 700;
 
 	//攻击
 	void attack();
+
+	//视角是否跟随角色
+	bool playerFollowingMark = false;
+
 private:
 	int maxHP = 0;
 	int maxMP = 0;
@@ -79,7 +84,7 @@ private:
 	TMXLayer* barrier;
 
 	//获取地图的障碍层
-	void setBarrierLater();
+	void setBarrierLayer();
 
 	//将像素坐标转换为地图格子坐标
 	Vec2 tileCoordForPosition(Vec2 point);

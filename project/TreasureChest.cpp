@@ -18,9 +18,9 @@ bool TreasureChest::init()
 	this->addComponent(body);
 
 	/* 碰撞检测 */
-	EventListenerPhysicsContact* contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(TreasureChest::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+	EventListenerPhysicsContact* ChestContactListener = EventListenerPhysicsContact::create();
+	ChestContactListener->onContactBegin = CC_CALLBACK_1(TreasureChest::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(ChestContactListener, this);
 
 	std::srand((unsigned)time(0));
 	int null = static_cast<int>(rand_0_1());
@@ -50,32 +50,32 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 	auto nodeA = contact.getShapeA()->getBody()->getNode();
 	auto nodeB = contact.getShapeB()->getBody()->getNode();
 
-	//Node* ChestNode = NULL;    /* 宝箱对象 */
-	//Node* other = NULL;
-
-	////判断两个碰撞对象
-	//if (nodeA->getTag() == ObjectTag_TreasureChest)
-	//{
-	//	ChestNode = nodeA;
-	//	other = nodeB;
-	//}
-	//else if (nodeB->getTag() == ObjectTag_TreasureChest)
-	//{
-	//	ChestNode = nodeB;
-	//	other = nodeA;
-	//}
-
-	//绑定碰撞的玩家和宝箱
-	Player*player = dynamic_cast<Player*>(nodeA);
-	TreasureChest* Chest = dynamic_cast<TreasureChest*>(nodeB);
-	
 	//防止节点为nullptr闪退
 	if (nodeA == nullptr || nodeB == nullptr) {
+		CCLOG("node=nullptr");
 		return true;
 	}
 
+	Node* ChestNode = NULL;    /* 宝箱对象 */
+	Node* PlayerNode = NULL;
+
+	//判断两个碰撞对象
+	if (nodeA->getTag() == ObjectTag_TreasureChest){
+		ChestNode = nodeA;
+		PlayerNode = nodeB;
+	}
+	else{
+		ChestNode = nodeB;
+		PlayerNode = nodeA;
+	}
+
+	//绑定碰撞的玩家和宝箱
+	Player*player = dynamic_cast<Player*>(PlayerNode);
+	TreasureChest* Chest = dynamic_cast<TreasureChest*>(ChestNode);
+	
+	
 	//玩家碰到宝箱时才打开
-	if (nodeA->getTag() == ObjectTag_Player && nodeB->getTag() == ObjectTag_TreasureChest) {
+	if (PlayerNode->getTag() == ObjectTag_Player && ChestNode->getTag() == ObjectTag_TreasureChest) {
 		if (Chest->ID == 1) {
 			Chest->bindSprite(Sprite::create("TreasureChest/opened1.png"));
 		}
@@ -109,7 +109,7 @@ void TreasureChest::ifChestOpened(float dt) {
 		if (this->ID == 1) {
 			//随机生成武器
 			int WeaponID = rand_0_1() * 5 + AK47ID;
-			Weapon* weapon = Weapon::create(WeaponID);
+			Weapon* weapon = Weapon::create(AK47ID);
 			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
 			weapon->fireSwitch(false);
 			weapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());

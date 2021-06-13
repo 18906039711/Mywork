@@ -36,7 +36,7 @@ private:
 	TMXLayer* barrier;
 
 	//获取地图的障碍层
-	void setBarrierLater();
+	void setBarrierLayer();
 
 	//将像素坐标转换为地图格子坐标
 	Vec2 tileCoordForPosition(Vec2 point);
