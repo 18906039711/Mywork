@@ -107,6 +107,7 @@ void Weapon::showInfomation() {
 	Sprite* arrow = Sprite::create("Weapon/arrow.png");
 	arrow->setScale(static_cast<float>(0.3));
 	arrow->setPosition(0, this->showSprite()->getContentSize().height / 2 + 30);
+
 	this->addChild(arrow, 0, ObjectTag_WeaponArrow);
 	auto name = Label::createWithTTF(this->name, "fonts/arial.ttf", 120);
 	name->enableOutline(Color4B::WHITE, 2);

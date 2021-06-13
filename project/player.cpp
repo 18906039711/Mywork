@@ -213,13 +213,16 @@ void Player::getWeapon(Weapon* weapon) {
 	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
 		//如果手上有武器，先取下
 		if (weaponID != 0) {
-			//从玩家手中放入地图
-			Weapon* nowWeapon = dynamic_cast<Weapon*>(my_sprite->getChildByTag(ObjectTag_Weapon));
-			nowWeapon->retain();
-			nowWeapon->removeFromParent();
+			//从玩家手中删除
+			my_sprite->getChildByTag(ObjectTag_Weapon)->removeFromParentAndCleanup(true);
+
+			//创建一个放在地图上
+			Weapon* nowWeapon = Weapon::create(weaponID);
 			nowWeapon->setScale(1);
 			//关闭开关，防止射出子弹
 			nowWeapon->fireSwitch(false);
+			nowWeapon->setRotation(0);
+			nowWeapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
 			nowWeapon->putIntoMap(this->getPosition());
 			nowWeapon->scheduleUpdate();
 		}
@@ -231,7 +234,7 @@ void Player::getWeapon(Weapon* weapon) {
 		//如果是近战武器
 		if (weapon->ID >= SwordID) {
 			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
-			weapon->setAnchorPoint(Vec2(0, 0.5));
+			//weapon->setAnchorPoint(Vec2(0, 0.5));
 		}
 		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
 		weapon->setScale(5);
@@ -256,7 +259,8 @@ void Player::getWeapon() {
 		weaponID = weapon->ID;
 		//如果是近战武器
 		if (weapon->ID >= SwordID) {
-			weapon->setAnchorPoint(Vec2(0, 0.5));
+			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
+			//weapon->setAnchorPoint(Vec2(0, 0.5));
 		}
 		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
 		weapon->fireSwitch(true);
@@ -273,7 +277,9 @@ void Player::rotateWeapon(float rotation) {
 void Player::update(float delta) {
 	//玩家移动
 	moving();
+	//搜索锁定敌人
 	searchEnemy();
+	//攻击
 	if (weaponID != 0) {
 		attack();
 	}
@@ -362,7 +368,6 @@ void Player::attack() {
 	else {
 		weapon->attackMark = false;
 	}
-
 }
 
 //玩家移动
