@@ -25,6 +25,8 @@ bool TreasureChest::init()
 	std::srand((unsigned)time(0));
 	int null = static_cast<int>(rand_0_1());
 
+	appearAction();
+
 	return true;
 }
 
@@ -109,7 +111,7 @@ void TreasureChest::ifChestOpened(float dt) {
 		if (this->ID == 1) {
 			//随机生成武器
 			int WeaponID = rand_0_1() * 5 + AK47ID;
-			Weapon* weapon = Weapon::create(AK47ID);
+			Weapon* weapon = Weapon::create(WeaponID);
 			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
 			weapon->fireSwitch(false);
 			weapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
@@ -120,4 +122,29 @@ void TreasureChest::ifChestOpened(float dt) {
 		}
 		this->unschedule(CC_SCHEDULE_SELECTOR(TreasureChest::ifChestOpened));
 	}
+}
+
+void TreasureChest::appearAction() {
+
+	auto appearSprite = Sprite::create("appearAction/appear1.png");
+	//创建序列帧
+	auto animation = Animation::create();
+
+	if (ID != Dummy) {
+		for (int i = 1; i <= 5; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "appearAction/appear%d.png", i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+	}
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.1));
+	//设置循环1次
+	animation->setLoops(1);
+	appearSprite->runAction(Sequence::create(Animate::create(animation), RemoveSelf::create(), NULL));
+
+	//出场动画
+	my_sprite->setOpacity(0);
+	this->addChild(appearSprite);
+	my_sprite->runAction(FadeIn::create(static_cast<float>(0.5)));
 }

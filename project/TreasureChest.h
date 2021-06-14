@@ -23,6 +23,8 @@ public:
 
 	void ifChestOpened(float dt);
 	
+	void appearAction();
+
 private:
 	bool ifOpened = false;
 	int ID;

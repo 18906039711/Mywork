@@ -71,7 +71,7 @@ void Player::StandAction() {
 		}
 	}
 	//设置两帧间的时间间隔
-	animation->setDelayPerUnit(0.3f);
+	animation->setDelayPerUnit(static_cast<float>(0.3));
 	//设置循环，-1无限循环
 	animation->setLoops(-1);
 	//在最后一帧播放完恢复到第一帧
@@ -89,7 +89,7 @@ void Player::RunningAction() {
 			animation->addSpriteFrameWithFile(nameSize);
 		}
 	}
-	animation->setDelayPerUnit(0.3f);
+	animation->setDelayPerUnit(static_cast<float>(0.3));
 	animation->setLoops(-1);
 	animation->setRestoreOriginalFrame(true);
 	my_sprite->runAction(Animate::create(animation));
@@ -118,6 +118,12 @@ void Player::setPlayerAttribute() {
 }
 
 void Player::changeHP(int changeValue) {
+	//先扣护甲
+	if (Defendce > 0) {
+		changeDefendce(changeValue);
+		return;
+	}
+
 	if (HP + changeValue < 0) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerHP", 0);
 		HP = 0;
@@ -131,7 +137,7 @@ void Player::changeHP(int changeValue) {
 		HP += changeValue;
 	}
 	//数字显示
-	if(changeValue>0){
+	if (changeValue > 0) {
 		std::string Changestr = "+" + std::to_string(changeValue);
 		Label* HPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
 		HPLabel->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), RemoveSelf::create(), NULL));
@@ -170,11 +176,11 @@ void Player::changeMP(int changeValue) {
 }
 void Player::changeDefendce(int changeValue) {
 	if (Defendce + changeValue < 0) {
-		UserDefault::getInstance()->setIntegerForKey("Player Defendce", 0);
+		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", 0);
 		Defendce = 0;
 	}
-	else if (Defendce + changeValue > maxHP) {
-		UserDefault::getInstance()->setIntegerForKey("Player Defendce", maxDefendce);
+	else if (Defendce + changeValue > maxDefendce) {
+		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", maxDefendce);
 		Defendce = maxDefendce;
 	}
 	else {
@@ -218,13 +224,8 @@ void Player::getWeapon(Weapon* weapon) {
 
 			//创建一个放在地图上
 			Weapon* nowWeapon = Weapon::create(weaponID);
-			nowWeapon->setScale(1);
-			//关闭开关，防止射出子弹
-			nowWeapon->fireSwitch(false);
-			nowWeapon->setRotation(0);
 			nowWeapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
 			nowWeapon->putIntoMap(this->getPosition());
-			nowWeapon->scheduleUpdate();
 		}
 
 		this->getParent()->getParent()->removeChildByTag(ObjectTag_weaponInformation);
@@ -234,7 +235,6 @@ void Player::getWeapon(Weapon* weapon) {
 		//如果是近战武器
 		if (weapon->ID >= SwordID) {
 			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
-			//weapon->setAnchorPoint(Vec2(0, 0.5));
 		}
 		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
 		weapon->setScale(5);
@@ -260,7 +260,6 @@ void Player::getWeapon() {
 		//如果是近战武器
 		if (weapon->ID >= SwordID) {
 			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
-			//weapon->setAnchorPoint(Vec2(0, 0.5));
 		}
 		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
 		weapon->fireSwitch(true);

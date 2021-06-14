@@ -35,7 +35,8 @@ public:
 	void attack(float dt);
 	bool attackMark = false;
 	bool attackMark1 = false;
-
+	//¹¥»÷ÒôĞ§
+	void attackEffect();
 
 	int ID;
 	std::string name;

@@ -3,13 +3,14 @@
 bool Enemy::init()
 {
 
-	//this->scheduleUpdate();
+	this->scheduleUpdate();
 
 	//设置Tag
 	this->setTag(ObjectTag_Enemy);
 
-	std::string EnemyID = "Enemy/" + std::to_string(ID) + ".png";
+	std::string EnemyID = "Enemy/" + std::to_string(ID) + "/Normal.png";
 	Sprite* EnemySprite = Sprite::create(EnemyID);
+	EnemySprite->setScale(static_cast<float>(0.9));
 	this->bindSprite(EnemySprite);
 	setInformation();
 
@@ -18,26 +19,42 @@ bool Enemy::init()
 	body->setContactTestBitmask(0xFFFFFFFF);
 	this->addComponent(body);
 
-	
+	appearAction();
+	standAction();
 
 	return true;
 }
 
 Enemy* Enemy::create(int m_ID) {
 	auto enemy = new Enemy();
+	enemy->ID = m_ID;
 
 	std::srand((unsigned)time(0));
 	int null = static_cast<int>(rand_0_1());
-	//类似宝箱，每个对象分别判定，所以不能放在init里
 	enemy->schedule(CC_SCHEDULE_SELECTOR(Enemy::randomMove), static_cast<float>(2));
 
-	enemy->ID = m_ID;
 	if (enemy && enemy->init()) {
 		enemy->autorelease();
 		return enemy;
 	}
 	CC_SAFE_DELETE(enemy);
 	return nullptr;
+}
+
+void Enemy::update(float delta) {
+	Player* player= dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player));
+	if (player == nullptr) {
+		return;
+	}
+	Vec2 enemyPosition = this->getPosition();
+	Vec2 playerPosition = player->getPosition();
+	if (enemyPosition.x > playerPosition.x) {
+		my_sprite->setScaleX(-static_cast<float>(0.9));
+	}
+	else {
+		my_sprite->setScaleX(static_cast<float>(0.9));
+	}
+
 }
 
 void Enemy::getMap(TMXTiledMap* map) {
@@ -58,11 +75,13 @@ void Enemy::setInformation() {
 	char SpeedStr[50];
 	sprintf(SpeedStr, "%d_Speed", ID);
 	Speed = UserDefault::getInstance()->getFloatForKey(SpeedStr);
+
+	enemyWidth = my_sprite->getBoundingBox().size.width;
 }
 
 void Enemy::randomMove(float delta) {
 
-	if (!ID && Speed) {  //ID不存在无法移动，无法移动的敌人就无需计算 
+	if (ID == Dummy) { //无法移动的敌人就无需计算 
 		return;
 	}
 
@@ -114,16 +133,186 @@ void Enemy::randomMove(float delta) {
 
 	//转化成单位向量
 	float e = sqrt(pow(X, 2) + pow(Y, 2));
-	Vec2 destination = Vec2(px + Speed * X / e * 40, py + Speed * Y / e * 40);
+	Vec2 destination = Vec2(px + Speed * X / e * 30, py + Speed * Y / e * 30);
 
 	if (!barrier->getTileGIDAt(tileCoordForPosition(destination))) {
-		//一半概率移动
-		if (rand_0_1() < 0.5) {
-			this->runAction(MoveTo::create(static_cast<float>(2), destination));
+		if (rand_0_1() < 0.7) {
+			this->runAction(MoveTo::create(static_cast<float>(1), destination));
+		}
+		else {
+			attack();
+		}
+	}
+	else {
+		attack();
+	}
+}
+
+void Enemy::appearAction() {
+
+	auto appearSprite = Sprite::create("appearAction/appear1.png");
+	//创建序列帧
+	auto animation = Animation::create();
+
+	if (ID != Dummy) {
+		for (int i = 1; i <= 5; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "appearAction/appear%d.png", i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+	}
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.1));
+	//设置循环1次
+	animation->setLoops(1);
+	appearSprite->runAction(Sequence::create(Animate::create(animation), RemoveSelf::create(), NULL));
+
+	//出场动画
+	my_sprite->setOpacity(0);
+	this->addChild(appearSprite);
+	my_sprite->runAction(FadeIn::create(static_cast<float>(0.5)));
+}
+
+void Enemy::standAction() {
+	//创建序列帧
+	auto animation = Animation::create();
+
+	if (ID != Dummy) {
+		for (int i = 1; i <= 2; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Enemy/%d/stand%d.png", ID, i);
+			animation->addSpriteFrameWithFile(nameSize);
 		}
 	}
 
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.3));
+	//设置循环，-1无限循环
+	animation->setLoops(-1);
+	//在最后一帧播放完恢复到第一帧
+	animation->setRestoreOriginalFrame(true);
+
+	my_sprite->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.5)), Animate::create(animation), NULL));
+}
+
+void Enemy::attackAction() {
+	my_sprite->stopAllActions();
+	//创建序列帧
+	auto animation = Animation::create();
+
+	if (ID != Dummy) {
+		for (int i = 1; i <= 4; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Enemy/%d/attack%d.png", ID, i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+	}
+
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.1));
+	animation->setLoops(1);
+
+	my_sprite->runAction(Animate::create(animation));
+}
+
+void Enemy::attack() {
+	attackAction();
+	standAction();
+
+	Player* player = dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player));
+	//如果没有玩家,不攻击
+	if (player == nullptr) {
+		return;
+	}
+
+	Vec2 enemyPosition = this->getPosition();
+	Vec2 playerPosition = player->getPosition();
+
+	float rotation = atan((enemyPosition.y - playerPosition.y) / (enemyPosition.x - playerPosition.x)) * 180 / M_PI;
+
+	Vec2 point = this->getPosition();
+
+	//发射三个子弹
+	if (ID == LongRangeEnemy1) {
+		for (int i = -1; i <= 1; i++) {
+			auto bullet = EnemyBullet::create(ID);
+			bullet->my_map = this->my_map;
+			if (my_sprite->getScaleX() > 0) {
+				bullet->putIntoMap(point, rotation + i * 15);
+			}
+			else {
+				bullet->putIntoMap(point, rotation + 180 + i * 15);
+			}
+		}
+		return;
+	}
+
+	auto bullet = EnemyBullet::create(ID);
+	bullet->my_map = this->my_map;
+	if (my_sprite->getScaleX() > 0) {
+		bullet->putIntoMap(point, rotation);
+	}
+	else {
+		bullet->putIntoMap(point, rotation + 180);
+	}
 	
+}
+
+void Enemy::locked() {
+	if (this->getChildByTag(ObjectTag_lockingCircle) == nullptr) {
+		Sprite* lockingCircle = Sprite::create("Enemy/lockingCircle.png");
+		lockingCircle->setScale(enemyWidth / lockingCircle->getContentSize().width);
+		lockingCircle->setPosition(0, -my_sprite->getBoundingBox().size.height / 2);
+		this->addChild(lockingCircle, -1, ObjectTag_lockingCircle);
+	}
+}
+
+void Enemy::unlocked() {
+	this->removeChildByTag(ObjectTag_lockingCircle);
+}
+
+void Enemy::changeHP(int changeValue) {
+	HP += changeValue;
+	if (changeValue < 0) {
+		std::string Changestr = std::to_string(changeValue);
+		Label* HPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
+		HPLabel->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(0, 30)),
+			DelayTime::create(static_cast<float>(0.5)), RemoveSelf::create(), NULL));
+		HPLabel->setTextColor(Color4B::RED);
+		HPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2 - 30));
+		this->addChild(HPLabel);
+	}
+	if (HP <= 0) {
+		aliveMark = false;
+
+		//随机生成0-1个coin，以及0-1个MpFactor
+		int CoinNum = static_cast<int>(rand_0_1() * 2);
+		int MpFactorNum = static_cast<int>(rand_0_1() * 2);
+		for (int i = 0; i < CoinNum; i++) {
+			Coin* coin = Coin::create();
+			coin->setPosition(this->getPosition());
+			coin->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200,rand_0_1() * 400 - 200)),NULL));
+			my_map->addChild(coin, my_map->getLayer("player")->getLocalZOrder() - 1);
+		}
+		for (int i = 0; i < MpFactorNum; i++) {
+			Sprite* MpFactor = Sprite::create("Coin/MPFactor.png");
+			MpFactor->setScale(static_cast<float>(0.3));
+			MpFactor->setPosition(this->getPosition());
+			MpFactor->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
+				DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
+			my_map->addChild(MpFactor, my_map->getLayer("player")->getLocalZOrder() - 1);
+		}
+		dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player))->changeMP(5 * MpFactorNum);
+
+		this->runAction(RemoveSelf::create());
+	}
+	std::string HPstr = std::to_string(HP);
+	Label* HPLabel = Label::createWithTTF(HPstr, "fonts/arial.ttf", 40);
+	HPLabel->setTextColor(Color4B::RED);
+	HPLabel->setPosition(Vec2(0, my_sprite->getBoundingBox().size.height / 2));
+	this->removeChildByTag(0);
+	this->addChild(HPLabel, 1, 0);
+
 }
 
 void Enemy::setBarrierLayer() {
@@ -149,42 +338,3 @@ Vec2 Enemy::tileCoordForPosition(Vec2 point) {
 	//格子坐标从零开始
 	return Vec2(static_cast<float>(x), static_cast<float>(y));
 }
-
-void Enemy::locked() {
-	if (this->getChildByTag(ObjectTag_lockingCircle) == nullptr) {
-		Sprite* lockingCircle = Sprite::create("Enemy/lockingCircle.png");
-		lockingCircle->setScale(my_sprite->getContentSize().width / lockingCircle->getContentSize().width);
-		lockingCircle->setPosition(0, -my_sprite->getContentSize().height / 2);
-		this->addChild(lockingCircle, -1, ObjectTag_lockingCircle);
-	}
-}
-
-void Enemy::unlocked() {
-	this->removeChildByTag(ObjectTag_lockingCircle);
-}
-
-void Enemy::changeHP(int changeValue) {
-	HP += changeValue;
-	if (changeValue < 0) {
-		std::string Changestr = std::to_string(changeValue);
-		Label* HPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
-		HPLabel->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(0, 30)),
-			DelayTime::create(static_cast<float>(0.5)), RemoveSelf::create(), NULL));
-		HPLabel->setTextColor(Color4B::RED);
-		HPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2 - 30));
-		this->addChild(HPLabel);
-	}
-	if (HP <= 0) {
-		aliveMark = false;
-		this->runAction(RemoveSelf::create());
-	}
-	std::string HPstr = std::to_string(HP);
-	Label* HPLabel = Label::createWithTTF(HPstr, "fonts/arial.ttf", 40);
-	HPLabel->setTextColor(Color4B::RED);
-	HPLabel->setPosition(Vec2(0, my_sprite->getBoundingBox().size.height / 2));
-	this->removeChildByTag(0);
-	this->addChild(HPLabel, 1, 0);
-	
-
-}
-

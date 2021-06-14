@@ -8,7 +8,7 @@ bool Bullet::init()
 
 	std::string bulletID = "Weapon/" + std::to_string(ID) + "/Bullet.png";
 	Sprite* bulletSprite = Sprite::create(bulletID);
-	bulletSprite->setScale(static_cast<float>(0.5));
+	bulletSprite->setScale(static_cast<float>(0.7));
 	this->bindSprite(bulletSprite);
 	setInformation();
 
@@ -19,12 +19,6 @@ bool Bullet::init()
 		this->addChild(bulletBackgroundSprite,0, ObjectTag_BulletBackground);
 	}
 
-
-
-	//auto soundEffect = AudioEngine::play2d("Music/eatCoin.mp3", false);
-	////读取之前的音量
-	//int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
-	//AudioEngine::setVolume(soundEffect, volumePercent / 100.f);
 	PhysicsBody* body;
 	if (ID < SwordID) {
 		body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
@@ -59,8 +53,10 @@ Bullet* Bullet::create(int m_ID) {
 	CC_SAFE_DELETE(bullet);
 	return nullptr;
 }
+
+
+
 void Bullet::update(float delta) {
-	//Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy));
 	Vec2 tiledPos = tileCoordForPosition(this->getPosition());
 	if (barrier->getTileGIDAt(tiledPos)) {
 		this->removeBullet();
@@ -147,7 +143,7 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 	bulletContactListener->onContactBegin = CC_CALLBACK_1(Bullet::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(bulletContactListener, this);
 
-	my_map->addChild(this, 10);
+	my_map->addChild(this, 20);
 	this->setPosition(point);
 
 	Player* player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));

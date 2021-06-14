@@ -174,11 +174,11 @@ void ChooseScene::setTreasureChest() {
 
 	TreasureChest* chest1 = TreasureChest::create(1);
 	chest1->setPosition(mapWidth / 5 * 2, mapHeight / 10 * 7);
-	map->addChild(chest1, 5);
+	map->addChild(chest1, map->getLayer("player")->getLocalZOrder() - 1);
 
 	TreasureChest* chest2 = TreasureChest::create(2);
 	chest2->setPosition(mapWidth / 5 * 3, mapHeight / 10 * 7);
-	map->addChild(chest2, 5);
+	map->addChild(chest2, map->getLayer("player")->getLocalZOrder() - 1);
 
 }
 
@@ -189,7 +189,7 @@ void ChooseScene::displayCoinNum() {
 }
 
 void ChooseScene::setEnemy() {
-	Enemy* dummy = Enemy::create(Dummy);
+	Enemy* dummy = Enemy::create(LongRangeEnemy1);
 	dummy->setPosition(mapWidth / 5 * 4, mapHeight / 5 * 3);
 	dummy->putIntoMap(map);
 }

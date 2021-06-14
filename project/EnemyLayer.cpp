@@ -31,9 +31,18 @@ void EnemyLayer::update(float delta) {
 	}
 	//如果存在敌人
 	if (enemyNum) {
+		//当敌人全部死亡时
 		if (enemyVec.empty()) {
+			//移除栏杆阻挡
 			dynamic_cast<PlayScene1*>(my_map->getParent())->removeFence();
+
+			//生成宝箱
+			TreasureChest* chest2 = TreasureChest::create(2);
+			chest2->setPosition(this->getPosition());
+			my_map->addChild(chest2, my_map->getLayer("player")->getLocalZOrder() - 1);
+
 			this->unscheduleUpdate();
+			this->runAction(RemoveSelf::create());
 			return;
 		}
 		for (auto& enemy : enemyVec) {
@@ -56,9 +65,9 @@ void EnemyLayer::putIntoMap(TMXTiledMap* map) {
 }
 
 void EnemyLayer::createEnemies() {
-	enemyNum = rand_0_1() * 5 + 4;
+	enemyNum = rand_0_1() * 4 + 3;
 	for (int i = 0; i < enemyNum; i++) {
-		Enemy* dummy = Enemy::create(Dummy);
+		Enemy* dummy = Enemy::create(LongRangeEnemy1);
 		enemyVec.pushBack(dummy);
 	}
 	for (int i = 0; i < enemyNum; i++) {

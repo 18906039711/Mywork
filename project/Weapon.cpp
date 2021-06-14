@@ -21,7 +21,6 @@ bool Weapon::init()
 		fire->setOpacity(0);
 	}
 
-
 	return true;
 }
 
@@ -195,7 +194,6 @@ void Weapon::attack(float dt) {
 				bullet->putIntoMap(point, this->getRotation() + rand_0_1() * 0);
 			}
 
-
 			//喷射火焰及后坐动画
 			this->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.1), Vec2(-50, 0)),
 				MoveBy::create(static_cast<float>(0.1), Vec2(50, 0)), NULL));
@@ -225,7 +223,8 @@ void Weapon::attack(float dt) {
 
 		}
 		
-		
+		//攻击音效
+		attackEffect();
 		
 		//攻击间隔
 		attackMark1 = false;
@@ -234,7 +233,18 @@ void Weapon::attack(float dt) {
 
 }
 
-
+void Weapon::attackEffect() {
+	int shootSoundEffect;
+	if (ID < SwordID) {
+		shootSoundEffect = AudioEngine::play2d("Music/shoot.mp3", false);
+	}
+	else {
+		shootSoundEffect = AudioEngine::play2d("Music/chop.mp3", false);
+	}
+	//读取之前的音量
+	int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
+	AudioEngine::setVolume(shootSoundEffect, volumePercent / 100.f);
+}
 
 
 

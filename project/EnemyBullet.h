@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _BULLET_H_
-#define _BULLET_H_
+#ifndef _ENEMYBULLET_H_
+#define _ENEMYBULLET_H_
 #include "cocos2d.h"
 #include"Entity.h"
 #include"ObjectTag.h"
@@ -12,11 +12,11 @@
 USING_NS_CC;
 
 
-class Bullet :public Entity {
+class EnemyBullet :public Entity {
 public:
 	//CREATE_FUNC( Bullet);
 	virtual bool init();
-	static Bullet* Bullet::create(int m_ID);
+	static EnemyBullet* EnemyBullet::create(int m_ID);
 	void update(float delta);
 
 	bool onContactBegin(PhysicsContact& contact);
@@ -28,14 +28,9 @@ public:
 	//子弹消除的一系列动作
 	void removeBullet();
 
-	int getID() {
-		return this->ID;
-	}
-
 private:
 	int ID;
 	int damage;
-	float firingRate;
 
 	TMXLayer* barrier;
 

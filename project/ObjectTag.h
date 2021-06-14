@@ -13,7 +13,7 @@
 #define ObjectTag_WeaponArrow 109
 #define ObjectTag_Exit 110 //切换地图的出口，门或旋涡
 
-
+#define ObjectTag_EnemyBullet 199
 #define ObjectTag_EnemyLayer 200
 #define ObjectTag_Enemy 201
 
@@ -27,5 +27,7 @@
 
 /*enemy*/
 #define Dummy 10000//敌方假人
+#define LongRangeEnemy2 10001//远程敌人
+#define LongRangeEnemy1 10002//远程敌人
 
 #endif
