@@ -1,6 +1,6 @@
 #include "PlayScene1.h"
 
-extern int player_num;
+extern int playerID;
 
 Scene* PlayScene1::createScene()
 {
@@ -38,10 +38,6 @@ bool PlayScene1::init()
 	enemyLayer->putIntoMap(map);
 	enemyLayer->setPosition(mapWidth / 148 * 22, mapHeight / 2);
 	return true;
-}
-
-void PlayScene1::update(float delta) {
-
 }
 
 void PlayScene1::setMap() {
@@ -190,7 +186,6 @@ void ChangeFence(TMXTiledMap* map, int x, bool mark = false) {
 	}
 }
 
-
 void PlayScene1::setFence() {
 	ChangeFence(map, 20, true);
 	ChangeFence(map, 27, true);
@@ -209,3 +204,38 @@ void PlayScene1::removeFence() {
 	map->getLayer("fence2")->setVisible(false);
 }
 
+void PlayScene1::update(float delta) {
+	//auto exit = map->getChildByTag(ObjectTag_Exit);
+	if (player != nullptr) {
+		/*if (exit->getBoundingBox().containsPoint(player->getPosition())) {
+			AudioEngine::stopAll();
+			Director::getInstance()->pushScene(TransitionFade::create(static_cast<float>(0.5), PlayScene1::createScene()));
+		}*/
+		if (!(player->aliveMark)) {
+			gameOver();
+		}
+	}
+}
+
+void PlayScene1::gameOver() {
+	if (this->getChildByName("gameOverLabel") != nullptr) {
+		return;
+	}
+	auto tombstone = Sprite::create("character/died.png");
+	tombstone->setPosition(map->getChildByTag(ObjectTag_Player)->getPosition());
+	tombstone->setScale(static_cast<float>(0.7));
+	map->addChild(tombstone, map->getLayer("player")->getLocalZOrder());
+
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto gameOverLabel = Label::createWithTTF("Game  Over", "fonts/arial.ttf", 200);
+	gameOverLabel->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	this->addChild(gameOverLabel, 0, "gameOverLabel");
+
+	this->scheduleOnce(CC_SCHEDULE_SELECTOR(PlayScene1::returnToChoose), static_cast<float>(1));
+}
+
+void PlayScene1::returnToChoose(float dt) {
+	AudioEngine::stopAll();
+	Director::getInstance()->replaceScene(TransitionFade::create(static_cast<float>(2), ChooseScene::createScene()));
+	playerID = 0;
+}

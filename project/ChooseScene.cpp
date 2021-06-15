@@ -73,14 +73,14 @@ void ChooseScene::choosePlayer() {
 		if (rect_ranger.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
 			player_rangerwb->removeFromParent();
 			player_sorcererwb->removeFromParent();
-			playerID = 1;
+			playerID = rangerID;
 			addPlayer();
 			_eventDispatcher->removeEventListener(listenerMouse);
 		}
 		else if (rect_sorcerer.containsPoint(spriteLocatione) && playerID == 0) {//如果点击点在图片内
 			player_rangerwb->removeFromParent();
 			player_sorcererwb->removeFromParent();
-			playerID = 2;
+			playerID = sorcererID;
 			addPlayer();
 			_eventDispatcher->removeEventListener(listenerMouse);
 		}
@@ -101,10 +101,10 @@ void ChooseScene::addPlayer() {
 	//初始化
 	player->initializePlayer();
 
-	if (playerID == 1) {
+	if (playerID == rangerID) {
 		player->setPosition(visibleSize.width / 4 * 3 + 64, visibleSize.height / 3 + 64);
 	}
-	else if (playerID == 2) {
+	else if (playerID == sorcererID) {
 		player->setPosition(visibleSize.width / 4 + 64, visibleSize.height / 3 + 64);
 	}
 
@@ -189,7 +189,7 @@ void ChooseScene::displayCoinNum() {
 }
 
 void ChooseScene::setEnemy() {
-	Enemy* dummy = Enemy::create(LongRangeEnemy1);
+	Enemy* dummy = Enemy::create(piggyEnemy);
 	dummy->setPosition(mapWidth / 5 * 4, mapHeight / 5 * 3);
 	dummy->putIntoMap(map);
 }
@@ -208,10 +208,35 @@ void ChooseScene::update(float dt) {
 	if (player != nullptr) {
 		if (exit->getBoundingBox().containsPoint(player->getPosition())) {
 			AudioEngine::stopAll();
-			Director::getInstance()->pushScene(TransitionFade::create(0.5f, PlayScene1::createScene()));
+			Director::getInstance()->pushScene(TransitionFade::create(static_cast<float>(0.5), PlayScene1::createScene()));
+		}
+		if (!(player->aliveMark)) {
+			gameOver();
 		}
 	}
+}
 
+void ChooseScene::gameOver() {
+	if (this->getChildByName("gameOverLabel") != nullptr) {
+		return;
+	}
+	auto tombstone = Sprite::create("character/died.png");
+	tombstone->setPosition(map->getChildByTag(ObjectTag_Player)->getPosition());
+	tombstone->setScale(static_cast<float>(0.7));
+	map->addChild(tombstone, map->getLayer("player")->getLocalZOrder());
+
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto gameOverLabel = Label::createWithTTF("Game  Over", "fonts/arial.ttf", 200);
+	gameOverLabel->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	this->addChild(gameOverLabel, 0, "gameOverLabel");
+
+	this->scheduleOnce(CC_SCHEDULE_SELECTOR(ChooseScene::returnToChoose), static_cast<float>(1));
+}
+
+void ChooseScene::returnToChoose(float dt) {
+	AudioEngine::stopAll();
+	Director::getInstance()->replaceScene(TransitionFade::create(static_cast<float>(2), ChooseScene::createScene()));
+	playerID = 0;
 }
 
 

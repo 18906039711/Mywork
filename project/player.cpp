@@ -12,13 +12,13 @@ bool Player::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	Sprite* playerSprite = Sprite::create();
 	
-	if (playerID == 1) {
+	if (playerID == rangerID) {
 		playerSprite = Sprite::create("character/ranger_right.png");
 		playerSprite->setScale(static_cast<float>(0.2));
 		//绑定精灵图像
 		this->bindSprite(playerSprite);
 	}
-	else if (playerID == 2) {
+	else if (playerID == sorcererID) {
 		playerSprite = Sprite::create("character/sorcerer_right.png");
 		playerSprite->setScale(static_cast<float>(0.2));
 		this->bindSprite(playerSprite);
@@ -56,14 +56,14 @@ void Player::StandAction() {
 	//创建序列帧
 	auto animation = Animation::create();
 
-	if (playerID == 1) {
+	if (playerID == rangerID) {
 		for (int i = 1; i <= 2; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/ranger%d.png", i);
 			animation->addSpriteFrameWithFile(nameSize);
 		}
 	}
-	else if (playerID == 2) {
+	else if (playerID == sorcererID) {
 		for (int i = 1; i <= 2; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/sorcerer%d.png", i);
@@ -82,7 +82,7 @@ void Player::StandAction() {
 
 void Player::RunningAction() {
 	auto animation = Animation::create();
-	if (playerID == 1) {
+	if (playerID == rangerID) {
 		for (int i = 1; i <= 4; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/ranger/run%d.png", i);
@@ -101,12 +101,12 @@ void Player::stopPlayerAllActions() {
 
 //设置面板属性
 void Player::setPlayerAttribute() {
-	if (playerID == 1) {
+	if (playerID == rangerID) {
 		maxHP = UserDefault::getInstance()->getIntegerForKey("RangerHP", 6);
 		maxDefendce = UserDefault::getInstance()->getIntegerForKey("RangerDefendce", 3);
 		maxMP = UserDefault::getInstance()->getIntegerForKey("RangerMP", 180);
 	}
-	else if (playerID == 2) {
+	else if (playerID == sorcererID) {
 		maxHP = UserDefault::getInstance()->getIntegerForKey("SorcererHP", 3);
 		maxDefendce = UserDefault::getInstance()->getIntegerForKey("SorcererDefendce", 5);
 		maxMP = UserDefault::getInstance()->getIntegerForKey("SorcererMP", 240);
@@ -149,6 +149,14 @@ void Player::changeHP(int changeValue) {
 	if (changeValue < 0) {
 		my_sprite->runAction(Sequence::create(TintTo::create(static_cast<float>(0.1), Color3B::RED),
 			TintTo::create(static_cast<float>(0.1), Color3B::WHITE), NULL));
+	}
+
+	if (HP <= 0) {
+		aliveMark = false; 
+		my_sprite->removeAllChildren();
+		this->removeAllComponents();
+		this->unscheduleUpdate();
+		this->setVisible(false);
 	}
 }
 void Player::changeMP(int changeValue) {
@@ -479,7 +487,7 @@ void Player::setBarrierLayer() {
 	barrier = my_map->getLayer("barrier");
 }
 
-Vec2  Player::tileCoordForPosition(Vec2 point) {
+Vec2 Player::tileCoordForPosition(Vec2 point) {
 	//获取屏幕显示大小
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -498,3 +506,4 @@ Vec2  Player::tileCoordForPosition(Vec2 point) {
 	//格子坐标从零开始
 	return Vec2(static_cast<float>(x), static_cast<float>(y));
 }
+

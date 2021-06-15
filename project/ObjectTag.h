@@ -2,6 +2,9 @@
 #ifndef ObjectTag_H
 #define ObjectTag_H
 
+/*player*/
+#define rangerID 1
+#define sorcererID 2
 #define ObjectTag_Player 101
 #define ObjectTag_TreasureChest 102
 
@@ -27,7 +30,8 @@
 
 /*enemy*/
 #define Dummy 10000//敌方假人
-#define LongRangeEnemy2 10001//远程敌人
-#define LongRangeEnemy1 10002//远程敌人
+#define LongRangeEnemy1 10001//远程敌人
+#define LongRangeEnemy2 10002//远程敌人
+#define piggyEnemy 10003
 
 #endif

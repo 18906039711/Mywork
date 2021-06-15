@@ -48,7 +48,8 @@ public:
 
 	//敌人存活标记，用于地图障碍开关
 	bool aliveMark = true;
-
+	//困难标记
+	bool hardMark = UserDefault::getInstance()->getBoolForKey("hardMark", false);
 private:
 	int damage;
 	int HP;
@@ -56,6 +57,7 @@ private:
 
 	//原始宽度，用来设置标记圆圈的大小
 	float enemyWidth;
+	float enemyHeight;
 
 	TMXTiledMap* my_map;
 	TMXLayer* barrier;

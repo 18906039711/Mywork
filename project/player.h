@@ -65,6 +65,9 @@ public:
 	//视角是否跟随角色
 	bool playerFollowingMark = false;
 
+	//HP归零，游戏结束
+	bool aliveMark = true;
+
 private:
 	int maxHP = 0;
 	int maxMP = 0;

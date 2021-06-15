@@ -76,7 +76,8 @@ void Enemy::setInformation() {
 	sprintf(SpeedStr, "%d_Speed", ID);
 	Speed = UserDefault::getInstance()->getFloatForKey(SpeedStr);
 
-	enemyWidth = my_sprite->getBoundingBox().size.width;
+	enemyWidth = my_sprite->getBoundingBox().size.width; 
+	enemyHeight = my_sprite->getBoundingBox().size.height;
 }
 
 void Enemy::randomMove(float delta) {
@@ -140,10 +141,18 @@ void Enemy::randomMove(float delta) {
 			this->runAction(MoveTo::create(static_cast<float>(1), destination));
 		}
 		else {
-			attack();
+			if (!hardMark) {
+				attack();
+			}
 		}
 	}
 	else {
+		if (!hardMark) {
+			attack();
+		}
+	}
+	//困难模式下，攻击频率变高
+	if (hardMark) {
 		attack();
 	}
 }
@@ -238,10 +247,10 @@ void Enemy::attack() {
 			auto bullet = EnemyBullet::create(ID);
 			bullet->my_map = this->my_map;
 			if (my_sprite->getScaleX() > 0) {
-				bullet->putIntoMap(point, rotation + i * 15);
+				bullet->putIntoMap(point, rotation + i * 30);
 			}
 			else {
-				bullet->putIntoMap(point, rotation + 180 + i * 15);
+				bullet->putIntoMap(point, rotation + 180 + i * 30);
 			}
 		}
 		return;
@@ -249,11 +258,32 @@ void Enemy::attack() {
 
 	auto bullet = EnemyBullet::create(ID);
 	bullet->my_map = this->my_map;
-	if (my_sprite->getScaleX() > 0) {
-		bullet->putIntoMap(point, rotation);
+	//远程
+	if (ID < piggyEnemy) {
+		if (my_sprite->getScaleX() > 0) {
+			bullet->putIntoMap(point, rotation);
+		}
+		else {
+			bullet->putIntoMap(point, rotation + 180);
+		}
 	}
+	//近战，攻击效果直接加在图像上，由于怪物tag各不同，不好将其放在地图上
 	else {
-		bullet->putIntoMap(point, rotation + 180);
+		this->addChild(bullet);
+		if (my_sprite->getScaleX() > 0) {
+			bullet->setScale(1);
+			bullet->setRotation(-rotation);
+			bullet->setPosition(enemyWidth / 2 * cos(rotation / 180 * M_PI), enemyHeight / 2 * sin(rotation / 180 * M_PI));
+		}
+		else {
+			bullet->setScale(-1);
+			bullet->setRotation(-rotation);
+			bullet->setPosition(-enemyWidth / 2 * cos(rotation / 180 * M_PI), -enemyHeight / 2 * sin(rotation / 180 * M_PI));
+		}
+		//目的是为了获取监听，跟地点角度无关
+		bullet->putIntoMap();
+		
+		bullet->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.5)), RemoveSelf::create(), NULL));
 	}
 	
 }
@@ -262,7 +292,7 @@ void Enemy::locked() {
 	if (this->getChildByTag(ObjectTag_lockingCircle) == nullptr) {
 		Sprite* lockingCircle = Sprite::create("Enemy/lockingCircle.png");
 		lockingCircle->setScale(enemyWidth / lockingCircle->getContentSize().width);
-		lockingCircle->setPosition(0, -my_sprite->getBoundingBox().size.height / 2);
+		lockingCircle->setPosition(0, -enemyHeight / 2); 
 		this->addChild(lockingCircle, -1, ObjectTag_lockingCircle);
 	}
 }
@@ -273,6 +303,42 @@ void Enemy::unlocked() {
 
 void Enemy::changeHP(int changeValue) {
 	HP += changeValue;
+
+	if (HP <= 0) {
+		aliveMark = false;
+		//死亡图像
+		std::string deadStr = "Enemy/" + std::to_string(ID) + "/dead.png";
+		auto deadSprite = Sprite::create(deadStr);
+		if (deadSprite != nullptr) {
+			deadSprite->setPosition(this->getPosition());
+			my_map->addChild(deadSprite, my_map->getLayer("player")->getLocalZOrder());
+			if (my_sprite->getScaleX() < 0) {
+				deadSprite->setScaleX(-1);
+			}
+		}
+
+		//随机生成0-1个coin，以及0-1个MpFactor
+		int CoinNum = static_cast<int>(rand_0_1() * 2);
+		int MpFactorNum = static_cast<int>(rand_0_1() * 2);
+		for (int i = 0; i < CoinNum; i++) {
+			Coin* coin = Coin::create();
+			coin->setPosition(this->getPosition());
+			coin->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)), NULL));
+			my_map->addChild(coin, my_map->getLayer("player")->getLocalZOrder());
+		}
+		for (int i = 0; i < MpFactorNum; i++) {
+			Sprite* MpFactor = Sprite::create("Coin/MPFactor.png");
+			MpFactor->setScale(static_cast<float>(0.3));
+			MpFactor->setPosition(this->getPosition());
+			MpFactor->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
+				DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
+			my_map->addChild(MpFactor, my_map->getLayer("player")->getLocalZOrder());
+		}
+		dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player))->changeMP(5 * MpFactorNum);
+
+		this->runAction(RemoveSelf::create());
+	}
+
 	if (changeValue < 0) {
 		std::string Changestr = std::to_string(changeValue);
 		Label* HPLabel = Label::createWithTTF(Changestr, "fonts/arial.ttf", 40);
@@ -282,30 +348,7 @@ void Enemy::changeHP(int changeValue) {
 		HPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2 - 30));
 		this->addChild(HPLabel);
 	}
-	if (HP <= 0) {
-		aliveMark = false;
 
-		//随机生成0-1个coin，以及0-1个MpFactor
-		int CoinNum = static_cast<int>(rand_0_1() * 2);
-		int MpFactorNum = static_cast<int>(rand_0_1() * 2);
-		for (int i = 0; i < CoinNum; i++) {
-			Coin* coin = Coin::create();
-			coin->setPosition(this->getPosition());
-			coin->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200,rand_0_1() * 400 - 200)),NULL));
-			my_map->addChild(coin, my_map->getLayer("player")->getLocalZOrder() - 1);
-		}
-		for (int i = 0; i < MpFactorNum; i++) {
-			Sprite* MpFactor = Sprite::create("Coin/MPFactor.png");
-			MpFactor->setScale(static_cast<float>(0.3));
-			MpFactor->setPosition(this->getPosition());
-			MpFactor->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
-				DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
-			my_map->addChild(MpFactor, my_map->getLayer("player")->getLocalZOrder() - 1);
-		}
-		dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player))->changeMP(5 * MpFactorNum);
-
-		this->runAction(RemoveSelf::create());
-	}
 	std::string HPstr = std::to_string(HP);
 	Label* HPLabel = Label::createWithTTF(HPstr, "fonts/arial.ttf", 40);
 	HPLabel->setTextColor(Color4B::RED);

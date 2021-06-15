@@ -4,11 +4,7 @@
 #define _PLAY_SCENE1_H_
 
 #include "cocos2d.h"
-#include "SuspendScene.h"
-#include "player.h"
-#include "PlayerUI.h"
-#include "CoinUI.h"
-#include "TreasureChest.h"
+#include "ChooseScene.h"
 #include "EnemyLayer.h"
 #include "AudioEngine.h"
 
@@ -53,6 +49,10 @@ private:
 	Player* player;
 	void addPlayer();
 	int backGroundMusic1;
+
+	//HP归零，游戏结束，返回选择界面
+	void gameOver();
+	void returnToChoose(float dt);
 };
 
 #endif _PLAY_SCENE1_H_

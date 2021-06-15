@@ -12,6 +12,7 @@
 #include"TreasureChest.h"
 #include"Weapon.h"
 #include"Enemy.h"
+#include "ObjectTag.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;
@@ -44,7 +45,6 @@ public:
 	void setDoor();
 
 	void update(float delta);
-	
 
 	/*void makeEddy();
 
@@ -64,6 +64,10 @@ private:
 	void choosePlayer();
 	void addPlayer();
 	int backGroundMusic;
+
+	//HP归零，游戏结束，返回选择界面
+	void gameOver();
+	void returnToChoose(float dt);
 };
 
 

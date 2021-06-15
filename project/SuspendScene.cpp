@@ -141,6 +141,7 @@ void SuspendScene::sliderCallback(cocos2d::Ref* pSender, ui::Slider::EventType t
         AudioEngine::setVolume(backGroundMusic, volumePercent / static_cast<float>(100));
     }
 }
+
 void SuspendScene::setCallback(cocos2d::Ref* pSender) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -173,11 +174,11 @@ Scene* SuspendScene::scene(RenderTexture* sqr) {
 
   //得到窗口的大小
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    Sprite* back_spr = Sprite::createWithTexture(sqr->getSprite()->getTexture());
-    back_spr->setPosition(visibleSize.width / 2, visibleSize.height / 2); //放置位置,这个相对于中心位置。
-    back_spr->setFlippedY(true);            //翻转，因为UI坐标和OpenGL坐标不同
-    back_spr->setColor(Color3B::GRAY); //图片颜色变灰色
-    scene->addChild(back_spr);
+    Sprite* backSpr = Sprite::createWithTexture(sqr->getSprite()->getTexture());
+    backSpr->setPosition(visibleSize.width / 2, visibleSize.height / 2); //放置位置,这个相对于中心位置。
+    backSpr->setFlippedY(true);            //翻转，因为UI坐标和OpenGL坐标不同
+    backSpr->setColor(Color3B::GRAY); //图片颜色变灰色
+    scene->addChild(backSpr);
     return scene;
 }
 

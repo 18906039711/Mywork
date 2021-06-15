@@ -14,7 +14,7 @@ USING_NS_CC;
 
 class EnemyBullet :public Entity {
 public:
-	//CREATE_FUNC( Bullet);
+	//CREATE_FUNC(Bullet);
 	virtual bool init();
 	static EnemyBullet* EnemyBullet::create(int m_ID);
 	void update(float delta);
@@ -23,7 +23,7 @@ public:
 	void setInformation();
 
 	//将子弹放入地图中
-	void putIntoMap(Vec2 point, float rotation);
+	void putIntoMap(Vec2 point = Vec2::ZERO, float rotation = 0);
 
 	//子弹消除的一系列动作
 	void removeBullet();

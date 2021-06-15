@@ -13,7 +13,7 @@ bool EnemyBullet::init()
 
 
 	PhysicsBody* body;
-	if (ID <= LongRangeEnemy1) {
+	if (ID < piggyEnemy) {
 		body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
 	}
 	else {
@@ -45,6 +45,9 @@ EnemyBullet* EnemyBullet::create(int m_ID) {
 }
 void EnemyBullet::update(float delta) {
 	Vec2 tiledPos = tileCoordForPosition(this->getPosition());
+	if (barrier == nullptr) {
+		return;
+	}
 	if (barrier->getTileGIDAt(tiledPos)) {
 		this->removeBullet();
 	}
@@ -77,26 +80,26 @@ bool EnemyBullet::onContactBegin(PhysicsContact& contact)
 	//绑定碰撞的子弹和敌人
 	EnemyBullet* bullet = dynamic_cast<EnemyBullet*>(EnemyBulletNode);
 	
-
+	//子弹碰到玩家的近战武器
+	if (EnemyBulletNode->getTag() == ObjectTag_EnemyBullet && otherNode->getTag() == ObjectTag_Bullet) {
+		Bullet* swordBullet = dynamic_cast<Bullet*>(otherNode);
+		//远程且碰到近战武器的子弹
+		if (bullet->ID < piggyEnemy && swordBullet->getID() >= SwordID) {
+			bullet->removeBullet();
+		}
+	}
 
 	//子弹碰到玩家
 	if (EnemyBulletNode->getTag() == ObjectTag_EnemyBullet && otherNode->getTag() == ObjectTag_Player) {
 		Player* player = dynamic_cast<Player*>(otherNode);
 		player->changeHP(-damage);
 		//远程
-		if (bullet->ID <= LongRangeEnemy1) {
+		if (bullet->ID < piggyEnemy) {
 			bullet->removeBullet();
 		}
 	}
 
-	//子弹碰到玩家的近战武器
-	if (EnemyBulletNode->getTag() == ObjectTag_EnemyBullet && otherNode->getTag() == ObjectTag_Bullet) {
-		Bullet* swordBullet = dynamic_cast<Bullet*>(otherNode);
-		//远程且碰到近战武器的子弹
-		if (bullet->ID <= LongRangeEnemy1 && swordBullet->getID() >= SwordID) {
-			bullet->removeBullet();
-		}
-	}
+	
 
 	return true;
 }
@@ -136,50 +139,19 @@ void EnemyBullet::putIntoMap(Vec2 point, float rotation) {
 	bulletContactListener->onContactBegin = CC_CALLBACK_1(EnemyBullet::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(bulletContactListener, this);
 
-	my_map->addChild(this, 20);
-	this->setPosition(point);
-
 	//远程
-	if (ID <=LongRangeEnemy1) {
+	if (ID < piggyEnemy) {
+		my_map->addChild(this, 20);
+		this->setPosition(point);
 
-		this->runAction(MoveBy::create(static_cast <float>(4), Vec2(4000 * cos(rotation / 180 * M_PI), 4000 * sin(rotation / 180 * M_PI))));
-	
 		//设置障碍层
 		setBarrierLayer();
+
+		//监听判断障碍
 		this->scheduleUpdate();
+		this->setRotation(-rotation);
+		this->runAction(MoveBy::create(static_cast <float>(5), Vec2(4000 * cos(rotation / 180 * M_PI), 4000 * sin(rotation / 180 * M_PI))));
 	}
-	////近战武器
-	//else {
-	//	//近战武器无需监听，判断障碍
-	//	this->unscheduleUpdate();
-
-	//	if (player->showSprite()->getScaleX() > 0) {
-	//		//人物朝右
-	//		this->setScaleX(1);
-	//		this->setRotation(rotation);
-	//	}
-	//	else {
-	//		//人物朝左
-	//		this->setScaleX(-1);
-	//		this->setRotation(-rotation);
-	//	}
-
-	//	//创建序列帧
-	//	auto animation = Animation::create();
-	//	for (int i = 1; i <= 2; i++) {
-	//		char nameSize[100] = { 0 };
-	//		sprintf(nameSize, "Enemy/%d/Bullet%d.png", ID, i);
-	//		animation->addSpriteFrameWithFile(nameSize);
-	//	}
-	//	//设置两帧间的时间间隔
-	//	animation->setDelayPerUnit(static_cast<float>(0.1));
-	//	animation->setLoops(1);
-
-	//	//播放动画
-	//	my_sprite->runAction(Animate::create(animation));
-	//	this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.3)), RemoveSelf::create(), NULL));
-	//}
-
 }
 
 void EnemyBullet::setBarrierLayer() {
