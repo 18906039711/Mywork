@@ -37,6 +37,11 @@ bool PlayScene1::init()
 	auto enemyLayer = EnemyLayer::create();
 	enemyLayer->putIntoMap(map);
 	enemyLayer->setPosition(mapWidth / 148 * 22, mapHeight / 2);
+	
+
+	auto vend = Merchant::create(601);
+	vend->putIntoMap(map);
+	vend->setPosition(mapWidth / 148 * 59, mapHeight / 148 * 93);
 	return true;
 }
 
@@ -52,8 +57,8 @@ void PlayScene1::setMap() {
 	map->getLayer("fence1")->setPosition(0, -32);
 	map->getLayer("fence2")->setPosition(0, 32);
 
-	//map->getLayer("barrier")->setVisible(false);
-	//map->getLayer("enemyBarrier")->setVisible(false);
+	map->getLayer("barrier")->setVisible(false);
+	map->getLayer("enemyBarrier")->setVisible(false);
 
 }
 

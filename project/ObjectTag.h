@@ -15,7 +15,8 @@
 #define ObjectTag_Weapon 108
 #define ObjectTag_WeaponArrow 109
 #define ObjectTag_Exit 110 //切换地图的出口，门或旋涡
-#define ObjectTag_Information 111//物品
+#define ObjectTag_Information 111//物品信息
+#define ObjectTag_Merchant 112
 
 #define ObjectTag_EnemyBullet 199
 #define ObjectTag_EnemyLayer 200
@@ -24,6 +25,8 @@
 
 #define ObjectTag_HPPotion 501
 #define ObjectTag_MPPotion 502
+
+#define ObjectTag_VendingMachine 601
 
 /*weapon*/
 #define AK47ID 1001 //AR

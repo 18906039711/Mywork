@@ -27,7 +27,7 @@ Potion* Potion::create(int m_ID) {
 	return nullptr;
 }
 void Potion::update(float delta) {
-	//获得武器图片的Rect,Rect设置的点在左下角
+	//获得图片的Rect,Rect设置的点在左下角
 	Vec2 potionPoint = Vec2(this->getPosition().x - my_sprite->getBoundingBox().size.width / 2,
 		this->getPosition().y - my_sprite->getBoundingBox().size.height / 2);
 	Rect potionRect = Rect(potionPoint, this->my_sprite->getBoundingBox().size);

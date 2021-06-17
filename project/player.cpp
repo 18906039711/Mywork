@@ -187,11 +187,12 @@ void Player::changeMP(int changeValue) {
 }
 void Player::changeDefendce(int changeValue) {
 	if (Defendce + changeValue < 0) {
+		int additionalDamage = Defendce + changeValue;
 		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", 0);
 		Defendce = 0;
 
 		//¶àÓàÉËº¦¿ÛÑª
-		changeHP(Defendce - changeValue);
+		changeHP(additionalDamage);
 	}
 	else if (Defendce + changeValue > maxDefendce) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", maxDefendce);

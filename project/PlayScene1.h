@@ -6,6 +6,7 @@
 #include "cocos2d.h"
 #include "ChooseScene.h"
 #include "EnemyLayer.h"
+#include"Merchant.h"
 #include "AudioEngine.h"
 
 USING_NS_CC;

@@ -41,7 +41,8 @@ public:
 
 	int ID;
 	std::string name;
-	//键盘移动事件监听
+
+	//键盘事件监听
 	EventListenerKeyboard* getWeapon = EventListenerKeyboard::create();
 	Player* player;
 private:

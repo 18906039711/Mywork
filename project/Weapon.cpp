@@ -66,6 +66,7 @@ void Weapon::update(float delta) {
 		}
 		else {
 			this->removeInfomation();
+			//依然有监听，但监听无内容
 			getWeapon->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
 		}
 	}
