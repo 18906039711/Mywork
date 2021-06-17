@@ -21,6 +21,9 @@ bool Weapon::init()
 		fire->setOpacity(0);
 	}
 
+	getWeapon->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(getWeapon, this);
+	
 	return true;
 }
 
@@ -46,16 +49,24 @@ void Weapon::update(float delta) {
 		Vec2 weaponPoint = Vec2(this->getPosition().x - my_sprite->getBoundingBox().size.width / 2,
 			this->getPosition().y - my_sprite->getBoundingBox().size.height / 2);
 		Rect weaponRect = Rect(weaponPoint, this->my_sprite->getBoundingBox().size);
-		Player* player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
+		player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
 		auto playerSize = player->my_sprite->getBoundingBox().size;
 		auto playerRect = Rect(Vec2(player->getPosition().x - player->my_sprite->getBoundingBox().size.width / 2,
 			player->getPosition().y - player->my_sprite->getBoundingBox().size.height / 2), playerSize);
 		if (weaponRect.intersectsRect(playerRect)) {
 			this->showInfomation();
-			player->getWeapon(this);
+			getWeapon->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
+			{
+				if (code == EventKeyboard::KeyCode::KEY_J && player != nullptr) {
+					player->getWeapon(this);
+					//解除监听
+					_eventDispatcher->removeEventListener(getWeapon);
+				}
+			};
 		}
 		else {
 			this->removeInfomation();
+			getWeapon->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
 		}
 	}
 }
@@ -71,7 +82,7 @@ void Weapon::fireSwitch(bool mark = false) {
 
 void Weapon::showInfomation() {
 	//如果已经存在直接返回
-	if (this->getParent()->getParent()->getChildByTag(ObjectTag_weaponInformation) != nullptr) {
+	if (this->getParent()->getParent()->getChildByTag(ObjectTag_Information) != nullptr) {
 		return;
 	}
 	//获取屏幕显示大小
@@ -80,7 +91,7 @@ void Weapon::showInfomation() {
 	//信息板
 	Sprite* weaponInformation = Sprite::create("weapon/weaponInformation.png");
 	//添加在场景中，运用两次getparent
-	this->getParent()->getParent()->addChild(weaponInformation, 10, ObjectTag_weaponInformation);;
+	this->getParent()->getParent()->addChild(weaponInformation, 10, ObjectTag_Information);;
 	weaponInformation->setScale(visibleSize.width / weaponInformation->getContentSize().width / 4);
 	weaponInformation->setPosition(visibleSize.width / 2, -weaponInformation->getBoundingBox().size.height / 2);
 	weaponInformation->runAction(MoveBy::create(static_cast<float>(0.2), Vec2(0, weaponInformation->getBoundingBox().size.height)));
@@ -115,7 +126,7 @@ void Weapon::showInfomation() {
 }
 
 void Weapon::removeInfomation() {
-	Sprite* weaponInformation = dynamic_cast<Sprite*>(this->getParent()->getParent()->getChildByTag(ObjectTag_weaponInformation));
+	Sprite* weaponInformation = dynamic_cast<Sprite*>(this->getParent()->getParent()->getChildByTag(ObjectTag_Information));
 	if (weaponInformation != nullptr) {
 		weaponInformation->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(0, -weaponInformation->getBoundingBox().size.height))
 			, RemoveSelf::create(), NULL));

@@ -33,6 +33,8 @@ public:
 
 	//随机移动
 	void randomMove(float delta);
+	//朝玩家移动
+	void towardsPlayerMove(float delta);
 	//攻击
 	void attack();
 

@@ -5,6 +5,7 @@
 #include"Entity.h"
 #include"PlayerUI.h"
 #include"Weapon.h"
+#include"Potion.h"
 #include"Enemy.h"
 #include"ObjectTag.h"
 
@@ -14,6 +15,7 @@ extern int playerID;
 
 class PlayerUI;
 class Weapon;
+class Potion;
 
 class Player :public Entity {
 public:
@@ -46,8 +48,8 @@ public:
 	void setSpeed(int speed);
 	void putIntoMap(TMXTiledMap* map);
 
-	//捡道具、武器
-	void pickUp(Weapon* weapon);
+	//捡药水
+	void getPotion(Potion* potion);
 
 	//佩戴武器
 	void getWeapon(Weapon* weapon);
@@ -62,13 +64,19 @@ public:
 	//攻击
 	void attack();
 
+	//护甲自动回复
+	void recoverDefendce(float dt);
+
 	//视角是否跟随角色
 	bool playerFollowingMark = false;
 
 	//HP归零，游戏结束
 	bool aliveMark = true;
 
+
 private:
+
+
 	int maxHP = 0;
 	int maxMP = 0;
 	int maxDefendce = 0;
@@ -77,6 +85,8 @@ private:
 	int Defendce = 0;
 	int Speed = 7;
 	int weaponID = 0;
+	//记录护甲回复时间
+	int recoverDefenceTime = 0;
 	friend class PlayerUI;
 	friend class Weapon;
 

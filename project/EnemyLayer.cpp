@@ -67,8 +67,9 @@ void EnemyLayer::putIntoMap(TMXTiledMap* map) {
 void EnemyLayer::createEnemies() {
 	enemyNum = rand_0_1() * 4 + 3;
 	for (int i = 0; i < enemyNum; i++) {
-		Enemy* dummy = Enemy::create(LongRangeEnemy1);
-		enemyVec.pushBack(dummy);
+		int enemyType = static_cast<int>(rand_0_1() * 1000 + i) % 4 + longRangeEnemy1;
+		Enemy* enemy = Enemy::create(enemyType);
+		enemyVec.pushBack(enemy);
 	}
 	for (int i = 0; i < enemyNum; i++) {
 		//给每个敌人定义不同的tag

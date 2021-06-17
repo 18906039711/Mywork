@@ -31,7 +31,13 @@ Enemy* Enemy::create(int m_ID) {
 
 	std::srand((unsigned)time(0));
 	int null = static_cast<int>(rand_0_1());
-	enemy->schedule(CC_SCHEDULE_SELECTOR(Enemy::randomMove), static_cast<float>(2));
+	if (enemy->ID < piggyEnemy) {
+		enemy->schedule(CC_SCHEDULE_SELECTOR(Enemy::randomMove), static_cast<float>(2));
+	}
+	else {
+		enemy->schedule(CC_SCHEDULE_SELECTOR(Enemy::towardsPlayerMove), static_cast<float>(2));
+	}
+
 
 	if (enemy && enemy->init()) {
 		enemy->autorelease();
@@ -81,11 +87,9 @@ void Enemy::setInformation() {
 }
 
 void Enemy::randomMove(float delta) {
-
 	if (ID == Dummy) { //无法移动的敌人就无需计算 
 		return;
 	}
-
 
 	float X = 0, Y = 0, px, py, width, height;
 
@@ -154,6 +158,94 @@ void Enemy::randomMove(float delta) {
 	//困难模式下，攻击频率变高
 	if (hardMark) {
 		attack();
+	}
+}
+
+void Enemy::towardsPlayerMove(float delta) {
+	if (ID == Dummy) { //无法移动的敌人就无需计算 
+		return;
+	}
+
+	float X = 0, Y = 0, px, py, width, height;
+
+	//获取屏幕显示大小
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	Player* player = dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player));
+	if (player == nullptr) {
+		return;
+	}
+	px = player->getPosition().x;
+	py = player->getPosition().y;
+
+	//获得缩放后的长宽
+	width = (this->showSprite())->getBoundingBox().size.width;
+	height = (this->showSprite())->getBoundingBox().size.height;
+
+	//获取上下左右四条边的点
+	Vec2 tiledPos_up = tileCoordForPosition(Vec2(px, py + height / 2));
+	Vec2 tiledPos_down = tileCoordForPosition(Vec2(px, py - height / 2));
+	Vec2 tiledPos_left = tileCoordForPosition(Vec2(px - width / 2, py));
+	Vec2 tiledPos_right = tileCoordForPosition(Vec2(px + width / 2, py));
+
+	//设置障碍层
+	setBarrierLayer();
+
+	//通过坐标获取TiledMap上格子的唯一标识
+	int tiledGid_up = barrier->getTileGIDAt(tiledPos_up);
+	int tiledGid_down = barrier->getTileGIDAt(tiledPos_down);
+	int tiledGid_left = barrier->getTileGIDAt(tiledPos_left);
+	int tiledGid_right = barrier->getTileGIDAt(tiledPos_right);
+
+
+	//按键被按下，且精灵的边不在障碍层中
+	if (!tiledGid_up) {
+		Y += rand_0_1();
+	}
+	if (!tiledGid_down) {
+		Y -= rand_0_1();
+	}
+	if (!tiledGid_left) {
+		//my_sprite->setScaleX(-static_cast<float>(0.2));
+		X -= rand_0_1();
+	}
+	if (!tiledGid_right) {
+		//my_sprite->setScaleX(static_cast<float>(0.2));
+		X += rand_0_1();
+	}
+
+	//计算距离
+	float distance = pow(this->getPosition().x - px, 2) + pow(this->getPosition().y - py, 2);
+	Vec2 destination;
+
+	//如果角色不在攻击范围内随机移动
+	if (distance > pow(700, 2)) {
+		//转化成单位向量
+		float e = sqrt(pow(X, 2) + pow(Y, 2));
+		destination = Vec2(this->getPosition().x + Speed * X / e * 30, this->getPosition().y + Speed * Y / e * 30);
+		CCLOG("%f,%f", destination.x, destination.y);
+	}
+	else {
+		destination = Vec2(px + 15 * X, py + 15 * Y);
+	}
+	
+	distance = pow(this->getPosition().x - destination.x, 2) + pow(this->getPosition().y - destination.y, 2);
+
+	if (!barrier->getTileGIDAt(tileCoordForPosition(destination))) {
+		if (rand_0_1() < 0.7) {
+			this->runAction(MoveTo::create(static_cast<float>(sqrt(distance) / (Speed * 30)), destination));
+		}
+		//可移动时攻击
+	    //困难模式下，攻击频率变高
+		if (!hardMark) {
+			if (rand_0_1() < 0.7) {
+				attack();
+			}
+		}
+		else {
+			attack();
+		}
 	}
 }
 
@@ -242,7 +334,7 @@ void Enemy::attack() {
 	Vec2 point = this->getPosition();
 
 	//发射三个子弹
-	if (ID == LongRangeEnemy1) {
+	if (ID ==longRangeEnemy1) {
 		for (int i = -1; i <= 1; i++) {
 			auto bullet = EnemyBullet::create(ID);
 			bullet->my_map = this->my_map;
@@ -271,12 +363,12 @@ void Enemy::attack() {
 	else {
 		this->addChild(bullet);
 		if (my_sprite->getScaleX() > 0) {
-			bullet->setScale(1);
+			bullet->setScaleX(1);
 			bullet->setRotation(-rotation);
 			bullet->setPosition(enemyWidth / 2 * cos(rotation / 180 * M_PI), enemyHeight / 2 * sin(rotation / 180 * M_PI));
 		}
 		else {
-			bullet->setScale(-1);
+			bullet->setScaleX(-1);
 			bullet->setRotation(-rotation);
 			bullet->setPosition(-enemyWidth / 2 * cos(rotation / 180 * M_PI), -enemyHeight / 2 * sin(rotation / 180 * M_PI));
 		}
@@ -311,7 +403,7 @@ void Enemy::changeHP(int changeValue) {
 		auto deadSprite = Sprite::create(deadStr);
 		if (deadSprite != nullptr) {
 			deadSprite->setPosition(this->getPosition());
-			my_map->addChild(deadSprite, my_map->getLayer("player")->getLocalZOrder());
+			my_map->addChild(deadSprite, my_map->getLayer("player")->getLocalZOrder() - 2);
 			if (my_sprite->getScaleX() < 0) {
 				deadSprite->setScaleX(-1);
 			}

@@ -110,7 +110,7 @@ void TreasureChest::ifChestOpened(float dt) {
 	if (this->ifOpened) {
 		if (this->ID == 1) {
 			//随机生成武器
-			int WeaponID = rand_0_1() * 5 + AK47ID;
+			int WeaponID = static_cast<int>(rand_0_1() * 1000) % 5 + AK47ID;
 			Weapon* weapon = Weapon::create(WeaponID);
 			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
 			weapon->fireSwitch(false);

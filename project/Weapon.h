@@ -11,6 +11,7 @@
 
 USING_NS_CC;
 class Bullet;
+class Player;
 
 class Weapon :public Entity {
 public:
@@ -40,6 +41,9 @@ public:
 
 	int ID;
 	std::string name;
+	//¼üÅÌÒÆ¶¯ÊÂ¼ş¼àÌı
+	EventListenerKeyboard* getWeapon = EventListenerKeyboard::create();
+	Player* player;
 private:
 	Sprite* fire;
 	int damage;

@@ -36,6 +36,7 @@ bool Player::init()
 
 
 	this->scheduleUpdate();
+
 	//键盘移动事件监听
 	EventListenerKeyboard* playerMove = EventListenerKeyboard::create();
 	playerMove->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
@@ -47,7 +48,7 @@ bool Player::init()
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(playerMove, this);
 
-
+	this->schedule(CC_SCHEDULE_SELECTOR(Player::recoverDefendce), static_cast<float>(1));
 	return true;
 }
 
@@ -119,7 +120,7 @@ void Player::setPlayerAttribute() {
 
 void Player::changeHP(int changeValue) {
 	//先扣护甲
-	if (Defendce > 0) {
+	if (Defendce > 0&& changeValue < 0) {
 		changeDefendce(changeValue);
 		return;
 	}
@@ -145,10 +146,12 @@ void Player::changeHP(int changeValue) {
 		HPLabel->setPosition(Vec2(my_sprite->getBoundingBox().size.width / 2, my_sprite->getBoundingBox().size.height / 2));
 		this->addChild(HPLabel);
 	}
-	
-	if (changeValue < 0) {
+	else if(changeValue < 0) {
+		//闪红
 		my_sprite->runAction(Sequence::create(TintTo::create(static_cast<float>(0.1), Color3B::RED),
 			TintTo::create(static_cast<float>(0.1), Color3B::WHITE), NULL));
+		//设置护甲回复冷却时间,5s
+		recoverDefenceTime = 5;
 	}
 
 	if (HP <= 0) {
@@ -186,6 +189,9 @@ void Player::changeDefendce(int changeValue) {
 	if (Defendce + changeValue < 0) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", 0);
 		Defendce = 0;
+
+		//多余伤害扣血
+		changeHP(Defendce - changeValue);
 	}
 	else if (Defendce + changeValue > maxDefendce) {
 		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", maxDefendce);
@@ -194,6 +200,10 @@ void Player::changeDefendce(int changeValue) {
 	else {
 		UserDefault::getInstance()->setIntegerForKey("PlayerDefendce", Defendce + changeValue);
 		Defendce += changeValue;
+	}
+	if (changeValue < 0) {
+		//设置护甲回复冷却时间,5s
+		recoverDefenceTime = 5;
 	}
 	
 }
@@ -215,46 +225,43 @@ void Player::updatePlayerAttribute() {
 	
 }
 
-
-void Player::pickUp(Weapon* weapon) {
-	
-
-
+void Player::getPotion(Potion* potion) {
+	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
+		potion->removeChildByTag(ObjectTag_Information);
+		potion->recover(this);
+		potion->runAction(RemoveSelf::create());
+	}
 }
 
 //武器
 void Player::getWeapon(Weapon* weapon) {
-	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
-		//如果手上有武器，先取下
-		if (weaponID != 0) {
-			//从玩家手中删除
-			my_sprite->getChildByTag(ObjectTag_Weapon)->removeFromParentAndCleanup(true);
+	//如果手上有武器，先取下
+	if (weaponID != 0) {
+		//从玩家手中删除
+		my_sprite->getChildByTag(ObjectTag_Weapon)->removeFromParentAndCleanup(true);
 
-			//创建一个放在地图上
-			Weapon* nowWeapon = Weapon::create(weaponID);
-			nowWeapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
-			nowWeapon->putIntoMap(this->getPosition());
-		}
-
-		this->getParent()->getParent()->removeChildByTag(ObjectTag_weaponInformation);
-		weapon->removeChildByTag(ObjectTag_WeaponArrow);
-		weapon->retain();
-		weapon->removeFromParent();
-		//如果是近战武器
-		if (weapon->ID >= SwordID) {
-			weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
-		}
-		weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
-		weapon->setScale(5);
-		UserDefault::getInstance()->setIntegerForKey("weaponID", weapon->ID);
-		weaponID = weapon->ID;
-		my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
-		weapon->fireSwitch(true);
-		//将玩家所在地图传给武器，以便传给子弹
-		weapon->my_map = this->my_map;
+		//创建一个放在地图上
+		Weapon* nowWeapon = Weapon::create(weaponID);
+		nowWeapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());
+		nowWeapon->putIntoMap(this->getPosition());
 	}
 
-	
+	this->getParent()->getParent()->removeChildByTag(ObjectTag_Information);
+	weapon->removeChildByTag(ObjectTag_WeaponArrow);
+	weapon->retain();
+	weapon->removeFromParent();
+	//如果是近战武器
+	if (weapon->ID >= SwordID) {
+		weapon->showSprite()->setAnchorPoint(Vec2(0, 0.5));
+	}
+	weapon->setPosition(Vec2(my_sprite->getContentSize().width / 5 * 4, my_sprite->getContentSize().height / 4));
+	weapon->setScale(5);
+	UserDefault::getInstance()->setIntegerForKey("weaponID", weapon->ID);
+	weaponID = weapon->ID;
+	my_sprite->addChild(weapon, 0, ObjectTag_Weapon);
+	weapon->fireSwitch(true);
+	//将玩家所在地图传给武器，以便传给子弹
+	weapon->my_map = this->my_map;
 }
 
 void Player::getWeapon() {
@@ -291,8 +298,6 @@ void Player::update(float delta) {
 		attack();
 	}
 }
-
-
 
 void Player::searchEnemy() {
 	int enemyNumber = 0;
@@ -374,6 +379,15 @@ void Player::attack() {
 	}
 	else {
 		weapon->attackMark = false;
+	}
+}
+
+void Player::recoverDefendce(float dt) {
+	if (recoverDefenceTime != 0) {
+		recoverDefenceTime--;
+	}
+	else {
+		changeDefendce(1);
 	}
 }
 
