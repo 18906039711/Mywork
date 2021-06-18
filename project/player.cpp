@@ -227,11 +227,9 @@ void Player::updatePlayerAttribute() {
 }
 
 void Player::getPotion(Potion* potion) {
-	if (keyMap[EventKeyboard::KeyCode::KEY_J]) {
-		potion->removeChildByTag(ObjectTag_Information);
-		potion->recover(this);
-		potion->runAction(RemoveSelf::create());
-	}
+	potion->removeChildByTag(ObjectTag_Information);
+	potion->recover(this);
+	potion->runAction(RemoveSelf::create());
 }
 
 //ÎäÆ÷

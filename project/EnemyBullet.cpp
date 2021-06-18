@@ -84,7 +84,7 @@ bool EnemyBullet::onContactBegin(PhysicsContact& contact)
 	if (EnemyBulletNode->getTag() == ObjectTag_EnemyBullet && otherNode->getTag() == ObjectTag_Bullet) {
 		Bullet* swordBullet = dynamic_cast<Bullet*>(otherNode);
 		//远程且碰到近战武器的子弹
-		if (bullet->ID < piggyEnemy && swordBullet->getID() >= SwordID) {
+		if ((bullet->ID < piggyEnemy || ID >= GoblinPriest) && swordBullet->getID() >= SwordID) {
 			bullet->removeBullet();
 		}
 	}
@@ -94,8 +94,12 @@ bool EnemyBullet::onContactBegin(PhysicsContact& contact)
 		Player* player = dynamic_cast<Player*>(otherNode);
 		player->changeHP(-damage);
 		//远程
-		if (bullet->ID < piggyEnemy) {
+		if (bullet->ID < piggyEnemy || ID >= GoblinPriest) {
 			bullet->removeBullet();
+		}
+		else {
+			//同角色子弹一样，否则会出现重复伤害，直接秒杀
+			bullet->removeAllComponents();
 		}
 	}
 
@@ -140,7 +144,7 @@ void EnemyBullet::putIntoMap(Vec2 point, float rotation) {
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(bulletContactListener, this);
 
 	//远程
-	if (ID < piggyEnemy) {
+	if (ID < piggyEnemy || ID >= GoblinPriest) {
 		my_map->addChild(this, 20);
 		this->setPosition(point);
 

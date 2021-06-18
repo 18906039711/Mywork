@@ -189,7 +189,7 @@ void ChooseScene::displayCoinNum() {
 }
 
 void ChooseScene::setEnemy() {
-	Enemy* dummy = Enemy::create(Dummy);
+	Enemy* dummy = Enemy::create(GoblinPriest);
 	dummy->setPosition(mapWidth / 5 * 4, mapHeight / 5 * 3);
 	dummy->putIntoMap(map);
 }

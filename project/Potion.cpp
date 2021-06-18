@@ -12,6 +12,9 @@ bool Potion::init()
 	this->bindSprite(potionSprite);
 	setInformation();
 
+	getPotion->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(getPotion, this);
+
 	return true;
 }
 
@@ -40,10 +43,17 @@ void Potion::update(float delta) {
 		player->getPosition().y - player->showSprite()->getBoundingBox().size.height / 2), playerSize);
 	if (potionRect.intersectsRect(playerRect)) {
 		this->showInfomation();
-		player->getPotion(this);
+		getPotion->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
+		{
+			if (code == EventKeyboard::KeyCode::KEY_J && player != nullptr) {
+				player->getPotion(this);
+			}
+		};
 	}
 	else {
 		this->removeInfomation();
+		//依然有监听，但监听无内容
+		getPotion->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
 	}
 }
 

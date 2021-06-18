@@ -51,22 +51,7 @@ void Merchant::update(float delta) {
 					priceMark = true;
 				}
 				else{
-					//Ç®¹»
-					if (UserDefault::getInstance()->getIntegerForKey("CoinNumber", 0) >= price) {
-						givePotion();
-						int coinNumber = UserDefault::getInstance()->getIntegerForKey("CoinNumber") - price;
-						UserDefault::getInstance()->setIntegerForKey("CoinNumber", coinNumber);
-					}
-					//Ç®²»¹»
-					else {
-						this->getChildByTag(ObjectTag_Information)->removeAllChildren();
-						auto talk = Label::createWithTTF("You coin are not enough", "fonts/arial.ttf", 120);
-						talk->enableOutline(Color4B::WHITE, 2);
-						talk->setPosition(this->getChildByTag(ObjectTag_Information)->getContentSize().width / 2,
-							this->getChildByTag(ObjectTag_Information)->getContentSize().height * 2);
-						this->getChildByTag(ObjectTag_Information)->addChild(talk);
-						talk->runAction(Sequence::create(DelayTime::create(static_cast<float>(2)), RemoveSelf::create(), NULL));
-					}
+					deal();
 					priceMark = false;
 				}
 			}
@@ -77,6 +62,15 @@ void Merchant::update(float delta) {
 		this->removeInfomation();
 		buyThing->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
 	}
+}
+
+void Merchant::setInformation() {
+	char priceStr[50];
+	sprintf(priceStr, "%d_price", ID);
+	price = UserDefault::getInstance()->getIntegerForKey(priceStr);
+	char nameStr[50];
+	sprintf(nameStr, "%d_name", ID);
+	name = UserDefault::getInstance()->getStringForKey(nameStr);
 }
 
 void Merchant::showInfomation() {
@@ -98,6 +92,13 @@ void Merchant::showInfomation() {
 	arrow->addChild(name);
 }
 
+void Merchant::removeInfomation() {
+	Sprite* potionInformation = dynamic_cast<Sprite*>(this->getChildByTag(ObjectTag_Information));
+	if (potionInformation != nullptr) {
+		potionInformation->runAction(RemoveSelf::create());
+	}
+}
+
 void Merchant::showPrice() {
 	this->getChildByTag(ObjectTag_Information)->removeAllChildren();
 	auto price = Label::createWithTTF(std::to_string(this->price), "fonts/arial.ttf", 120);
@@ -115,20 +116,29 @@ void Merchant::givePotion() {
 	potion->putIntoMap(my_map);
 }
 
-void Merchant::removeInfomation() {
-	Sprite* potionInformation = dynamic_cast<Sprite*>(this->getChildByTag(ObjectTag_Information));
-	if (potionInformation != nullptr) {
-		potionInformation->runAction(RemoveSelf::create());
-	}
-}
+void Merchant::deal() {
+	//Ç®¹»
+	if (UserDefault::getInstance()->getIntegerForKey("CoinNumber", 0) >= price) {
+		givePotion();
+		int coinNumber = UserDefault::getInstance()->getIntegerForKey("CoinNumber") - price;
+		UserDefault::getInstance()->setIntegerForKey("CoinNumber", coinNumber);
 
-void Merchant::setInformation() {
-	char priceStr[50];
-	sprintf(priceStr, "%d_price", ID);
-	price = UserDefault::getInstance()->getIntegerForKey(priceStr);
-	char nameStr[50];
-	sprintf(nameStr, "%d_name", ID);
-	name = UserDefault::getInstance()->getStringForKey(nameStr);
+		this->getChildByTag(ObjectTag_Information)->removeAllChildren();
+		auto talk = Label::createWithTTF("Good Luck!", "fonts/arial.ttf", 120);
+		talk->enableOutline(Color4B::WHITE, 2);
+		talk->setPosition(this->getChildByTag(ObjectTag_Information)->getContentSize().width / 2,
+			this->getChildByTag(ObjectTag_Information)->getContentSize().height * 2);
+		this->getChildByTag(ObjectTag_Information)->addChild(talk);
+	}
+	//Ç®²»¹»
+	else {
+		this->getChildByTag(ObjectTag_Information)->removeAllChildren();
+		auto talk = Label::createWithTTF("You coins are not enough", "fonts/arial.ttf", 120);
+		talk->enableOutline(Color4B::WHITE, 2);
+		talk->setPosition(this->getChildByTag(ObjectTag_Information)->getContentSize().width / 2,
+			this->getChildByTag(ObjectTag_Information)->getContentSize().height * 2);
+		this->getChildByTag(ObjectTag_Information)->addChild(talk);
+	}
 }
 
 void Merchant::putIntoMap(TMXTiledMap* map) {

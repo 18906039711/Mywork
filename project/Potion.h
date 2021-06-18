@@ -30,6 +30,10 @@ public:
 
 	int ID;
 	std::string name;
+
+	//¼üÅÌÊÂ¼ş¼àÌı
+	EventListenerKeyboard* getPotion = EventListenerKeyboard::create();
+	Player* player;
 private:
 	int HPRecoveryVolume;
 	int MPRecoveryVolume;

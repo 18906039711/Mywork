@@ -31,6 +31,9 @@ public:
 	//记录对话程度
 	bool priceMark = false;
 
+	//交易并对话
+	void deal();
+
 	//生成恢复药水
 	void givePotion();
 

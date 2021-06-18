@@ -19,7 +19,7 @@ public:
 
 	//用于搜索角色
 	void update(float delta);
-	int searchingRadius = 700;
+	int searchingRadius = 1000;
 
 	void getMap(TMXTiledMap* map);
 	void putIntoMap(TMXTiledMap* map, int tag = ObjectTag_Enemy);
@@ -37,6 +37,7 @@ public:
 	void towardsPlayerMove(float delta);
 	//攻击
 	void attack();
+	void bossAttack();
 
 	//进入角色搜索范围，被锁定成为攻击对象
 	void locked();
@@ -45,14 +46,14 @@ public:
 	//扣血
 	void changeHP(int changeValue);
 
-	
 	int ID;
 
 	//敌人存活标记，用于地图障碍开关
 	bool aliveMark = true;
 	//困难标记
-	bool hardMark = UserDefault::getInstance()->getBoolForKey("hardMark", false);
-private:
+	bool hardMark = UserDefault::getInstance()->getBoolForKey("hardMark", false);\
+
+protected:
 	int damage;
 	int HP;
 	int Speed;

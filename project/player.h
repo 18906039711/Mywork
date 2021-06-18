@@ -59,7 +59,7 @@ public:
 
 	//判断范围内是否有敌人
 	void searchEnemy();
-	int searchingRadius = 700;
+	int searchingRadius = 1000;
 
 	//攻击
 	void attack();

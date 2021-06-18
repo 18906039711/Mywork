@@ -121,6 +121,9 @@ void Weapon::showInfomation() {
 
 	this->addChild(arrow, 0, ObjectTag_WeaponArrow);
 	auto name = Label::createWithTTF(this->name, "fonts/arial.ttf", 120);
+	if (ID == ExcaliburID) {
+		name->setColor(Color3B::RED);
+	}
 	name->enableOutline(Color4B::WHITE, 2);
 	name->setPosition(arrow->getContentSize().width / 2, arrow->getContentSize().height * 2);
 	arrow->addChild(name);

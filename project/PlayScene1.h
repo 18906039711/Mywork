@@ -37,6 +37,8 @@ public:
 	void setFence();
 	void removeFence();
 
+	void setEnemyLayer();
+
 
 	//void ifChestOpened(float dt);
 
@@ -46,6 +48,8 @@ private:
 	TMXTiledMap* map = TMXTiledMap::create("map/PlayMap2.tmx");
 	float mapWidth = (map->getMapSize().width) * map->getTileSize().width * 2;
 	float mapHeight = (map->getMapSize().height) * map->getTileSize().height * 2;
+
+	Vec2 mapPoint[9];
 
 	Player* player;
 	void addPlayer();

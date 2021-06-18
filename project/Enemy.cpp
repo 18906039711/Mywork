@@ -31,7 +31,7 @@ Enemy* Enemy::create(int m_ID) {
 
 	std::srand((unsigned)time(0));
 	int null = static_cast<int>(rand_0_1());
-	if (enemy->ID < piggyEnemy) {
+	if (enemy->ID < piggyEnemy || enemy->ID >= GoblinPriest) {
 		enemy->schedule(CC_SCHEDULE_SELECTOR(Enemy::randomMove), static_cast<float>(2));
 	}
 	else {
@@ -145,18 +145,18 @@ void Enemy::randomMove(float delta) {
 			this->runAction(MoveTo::create(static_cast<float>(1), destination));
 		}
 		else {
-			if (!hardMark) {
+			if (!(hardMark || ID == GoblinPriest)) {
 				attack();
 			}
 		}
 	}
 	else {
-		if (!hardMark) {
+		if (!(hardMark || ID == GoblinPriest)) {
 			attack();
 		}
 	}
-	//困难模式下，攻击频率变高
-	if (hardMark) {
+	//困难模式下或boos，攻击频率变高
+	if (hardMark || ID == GoblinPriest) {
 		attack();
 	}
 }
@@ -224,12 +224,12 @@ void Enemy::towardsPlayerMove(float delta) {
 		//转化成单位向量
 		float e = sqrt(pow(X, 2) + pow(Y, 2));
 		destination = Vec2(this->getPosition().x + Speed * X / e * 30, this->getPosition().y + Speed * Y / e * 30);
-		CCLOG("%f,%f", destination.x, destination.y);
 	}
 	else {
 		destination = Vec2(px + 15 * X, py + 15 * Y);
 	}
 	
+	CCLOG("%d,%d", tileCoordForPosition(destination).x, tileCoordForPosition(destination).y);
 	distance = pow(this->getPosition().x - destination.x, 2) + pow(this->getPosition().y - destination.y, 2);
 
 	if (!barrier->getTileGIDAt(tileCoordForPosition(destination))) {
@@ -317,14 +317,19 @@ void Enemy::attackAction() {
 }
 
 void Enemy::attack() {
-	attackAction();
-	standAction();
-
+	//如果是boss，有独特的攻击模式
+	if (ID >= GoblinPriest) {
+		bossAttack();
+		return;
+	}
 	Player* player = dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player));
 	//如果没有玩家,不攻击
 	if (player == nullptr) {
 		return;
 	}
+
+	attackAction();
+	standAction();
 
 	Vec2 enemyPosition = this->getPosition();
 	Vec2 playerPosition = player->getPosition();
@@ -380,6 +385,85 @@ void Enemy::attack() {
 	
 }
 
+void Enemy::bossAttack() {
+	static int timeCounter = 0;
+	timeCounter++;
+	Player* player = dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player));
+	//如果没有玩家,不攻击
+	if (player == nullptr) {
+		return;
+	}
+
+	Vec2 enemyPosition = this->getPosition();
+	Vec2 playerPosition = player->getPosition();
+
+	float rotation = atan((enemyPosition.y - playerPosition.y) / (enemyPosition.x - playerPosition.x)) * 180 / M_PI;
+
+	Vec2 point = this->getPosition();
+
+	//攻击模式的切换，以及小怪的召唤
+	if (timeCounter < 10) {
+		attackAction();
+		standAction();
+		char HPStr[50];
+		sprintf(HPStr, "%d_HP", ID);
+		int MaxHP = UserDefault::getInstance()->getIntegerForKey(HPStr);
+		if (HP > MaxHP / 2) {
+			for (int i = -1; i <= 1; i++) {
+				auto bullet = EnemyBullet::create(ID);
+				bullet->my_map = this->my_map;
+				if (my_sprite->getScaleX() > 0) {
+					bullet->putIntoMap(point, rotation + i * 30);
+				}
+				else {
+					bullet->putIntoMap(point, rotation + 180 + i * 30);
+				}
+			}
+		}
+		else {
+			for (int i = -3; i <= 3; i++) {
+				auto bullet = EnemyBullet::create(ID);
+				bullet->my_map = this->my_map;
+				if (my_sprite->getScaleX() > 0) {
+					bullet->putIntoMap(point, rotation + i * 15);
+				}
+				else {
+					bullet->putIntoMap(point, rotation + 180 + i * 15);
+				}
+			}
+		}
+
+	}
+	//召唤小怪
+	else {
+		//召唤动画
+		my_sprite->stopAllActions();
+		//创建序列帧
+		auto summon = Animation::create();
+		for (int i = 5; i <= 6; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Enemy/%d/attack%d.png", ID, i);
+			summon->addSpriteFrameWithFile(nameSize);
+		}
+		//设置两帧间的时间间隔
+		summon->setDelayPerUnit(static_cast<float>(0.3));
+		summon->setLoops(1);
+		my_sprite->runAction(Animate::create(summon));
+		standAction();
+
+		timeCounter = 0;
+		Enemy* enemy = Enemy::create(longRangeEnemy1);
+		enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
+			this->getPosition().y + rand_0_1() * 500 - 500 / 2);
+		//如果生成在障碍中，重新生成
+		while (barrier->getTileGIDAt(tileCoordForPosition(enemy->getPosition()))) {
+			enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
+				this->getPosition().y + rand_0_1() * 500 - 500 / 2);
+		}
+		enemy->putIntoMap(my_map, ObjectTag_Enemy + 1);
+	}
+}
+
 void Enemy::locked() {
 	if (this->getChildByTag(ObjectTag_lockingCircle) == nullptr) {
 		Sprite* lockingCircle = Sprite::create("Enemy/lockingCircle.png");
@@ -390,7 +474,9 @@ void Enemy::locked() {
 }
 
 void Enemy::unlocked() {
-	this->removeChildByTag(ObjectTag_lockingCircle);
+	if (this->getChildByTag(ObjectTag_lockingCircle) != nullptr) {
+		this->removeChildByTag(ObjectTag_lockingCircle);
+	}
 }
 
 void Enemy::changeHP(int changeValue) {
@@ -469,6 +555,13 @@ Vec2 Enemy::tileCoordForPosition(Vec2 point) {
 
 	//cocos2dx与tiledmap坐标不同
 	y = static_cast<int>(mapTiledNum.height - y - 1);
+
+	if (x<0 || x>mapTiledNum.width) {
+		x = 0;
+	}
+	if (y<0 || y>mapTiledNum.height) {
+		y = 0;
+	}
 
 	//格子坐标从零开始
 	return Vec2(static_cast<float>(x), static_cast<float>(y));

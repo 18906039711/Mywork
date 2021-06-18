@@ -8,15 +8,15 @@ bool EnemyLayer::init()
 	this->setTag(ObjectTag_EnemyLayer);
 
 	/*this->bindSprite(Sprite::create("door.png"));
-	my_sprite->setContentSize(Size(1000, 1000));*/
+	my_sprite->setContentSize(Size(borderLength, borderLength));*/
 
 	return true;
 }
 
 void EnemyLayer::update(float delta) {
-	if (player == nullptr) {
+	/*if (player == nullptr) {
 		return;
-	}
+	}*/
 
 	Vec2 Point = Vec2(this->getPosition().x - borderLength / 2,
 		this->getPosition().y - borderLength / 2);

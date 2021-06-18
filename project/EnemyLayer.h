@@ -23,7 +23,7 @@ public:
 	void createEnemies();
 private:
 	int enemyNum;
-	int borderLength = 1000;
+	int borderLength = 950;
 
 	TMXTiledMap* my_map;
 	TMXLayer* barrier;

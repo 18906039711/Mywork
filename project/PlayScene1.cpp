@@ -6,7 +6,7 @@ Scene* PlayScene1::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = PlayScene1::create();
 	scene->addChild(layer);
 	return scene;
@@ -32,12 +32,8 @@ bool PlayScene1::init()
 	setTreasureChest();
 	displayCoinNum();
 	addPlayer();
+	setEnemyLayer();
 	removeFence();
-
-	auto enemyLayer = EnemyLayer::create();
-	enemyLayer->putIntoMap(map);
-	enemyLayer->setPosition(mapWidth / 148 * 22, mapHeight / 2);
-	
 
 	auto vend = Merchant::create(601);
 	vend->putIntoMap(map);
@@ -60,7 +56,19 @@ void PlayScene1::setMap() {
 	map->getLayer("barrier")->setVisible(false);
 	map->getLayer("enemyBarrier")->setVisible(false);
 
+	//设置各小块中心点
+	mapPoint[0] = Vec2(mapWidth / 74 * 11, mapHeight / 74 * 63);
+	mapPoint[1] = Vec2(mapWidth / 2, mapHeight / 74 * 63);
+	mapPoint[2] = Vec2(mapWidth / 74 * 63, mapHeight / 74 * 63);
+	mapPoint[3] = Vec2(mapWidth / 74 * 11, mapHeight / 2);
+	mapPoint[4] = Vec2(mapWidth / 2, mapHeight / 2);
+	mapPoint[5] = Vec2(mapWidth / 74 * 63, mapHeight / 2);
+	mapPoint[6] = Vec2(mapWidth / 74 * 11, mapHeight / 74 * 11);
+	mapPoint[7] = Vec2(mapWidth / 2, mapHeight / 74 * 11);
+	mapPoint[8] = Vec2(mapWidth / 74 * 63, mapHeight / 74 * 11);
+
 }
+	
 
 void PlayScene1::setMusic() {
 
@@ -156,6 +164,16 @@ void PlayScene1::setTreasureChest() {
 	chest2->setPosition(mapWidth / 2-256, mapHeight / 2);
 	map->addChild(chest2, map->getLayer("player")->getLocalZOrder() - 1);
 
+}
+
+void PlayScene1::setEnemyLayer() {
+	for (int i = 0; i < 9; i++) {
+		if (i != 4) {
+			EnemyLayer* enemyLayer = EnemyLayer::create();
+			enemyLayer->putIntoMap(map);
+			enemyLayer->setPosition(mapPoint[i]);
+		}
+	}
 }
 
 /*mark = true,set the fence. 

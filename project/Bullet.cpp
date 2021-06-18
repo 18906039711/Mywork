@@ -110,6 +110,10 @@ void Bullet::removeBullet() {
 	this->stopAllActions();
 	this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.15)), RemoveSelf::create(), NULL));
 
+	//近战武器无撞击动画
+	if (ID > SwordID) {
+		return;
+	}
 	//创建子弹撞击动画
 	auto animation = Animation::create();
 
@@ -154,13 +158,15 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 		if (player->showSprite()->getScaleX() > 0) {
 			this->setScaleX(1);
 			this->setRotation(rotation);
-			this->runAction(MoveBy::create(static_cast <float>(2), Vec2(4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+			this->runAction(RepeatForever::create(MoveBy::create(static_cast <float>(1),
+				Vec2(2000 * cos(rotation / 180 * M_PI), -2000 * sin(rotation / 180 * M_PI)))));
 		}
 		//人物朝左
 		else {
 			this->setScaleX(-1);
 			this->setRotation(-rotation);
-			this->runAction(MoveBy::create(static_cast <float>(2), Vec2(-4000 * cos(rotation / 180 * M_PI), -4000 * sin(rotation / 180 * M_PI))));
+			this->runAction(RepeatForever::create(MoveBy::create(static_cast <float>(1), 
+				Vec2(-2000 * cos(rotation / 180 * M_PI), -2000 * sin(rotation / 180 * M_PI)))));
 		}
 		//设置障碍层
 		setBarrierLayer();
@@ -195,7 +201,22 @@ void Bullet::putIntoMap(Vec2 point, float rotation) {
 
 		//播放动画
 		my_sprite->runAction(Animate::create(animation));
-		this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.3)), RemoveSelf::create(), NULL));
+		if (ID != ExcaliburID) {
+			this->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.3)), RemoveSelf::create(), NULL));
+		}
+		else {
+			if (player->showSprite()->getScaleX() > 0) {
+				this->runAction(RepeatForever::create(MoveBy::create(static_cast <float>(2),
+					Vec2(2000 * cos(rotation / 180 * M_PI), -2000 * sin(rotation / 180 * M_PI)))));
+			}
+			else {
+				this->runAction(RepeatForever::create(MoveBy::create(static_cast <float>(2),
+					Vec2(-2000 * cos(rotation / 180 * M_PI), -2000 * sin(rotation / 180 * M_PI)))));
+			}
+			//设置障碍层
+			setBarrierLayer();
+			this->scheduleUpdate();
+		}
 	}
 	
 }

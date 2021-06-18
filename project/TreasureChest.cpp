@@ -111,7 +111,7 @@ void TreasureChest::ifChestOpened(float dt) {
 		if (this->ID == 1) {
 			//随机生成武器
 			int WeaponID = static_cast<int>(rand_0_1() * 1000) % 5 + AK47ID;
-			Weapon* weapon = Weapon::create(WeaponID);
+			Weapon* weapon = Weapon::create(ExcaliburID);
 			weapon->runAction(MoveBy::create(static_cast<float>(0.3), Vec2(0, weapon->showSprite()->getContentSize().height)));
 			weapon->fireSwitch(false);
 			weapon->my_map = dynamic_cast<TMXTiledMap*>(this->getParent());

@@ -34,6 +34,7 @@
 #define ShootGunID 1003
 #define SwordID 1004
 #define LongSwordID 1005
+#define ExcaliburID 1006
 
 /*enemy*/
 #define Dummy 10000//敌方假人
@@ -41,5 +42,7 @@
 #define longRangeEnemy2 10002//吹箭手
 #define piggyEnemy 10003
 #define shortRangeEnemy1 10004//斧兵
+
+#define GoblinPriest 20001 //哥布林祭师
 
 #endif
