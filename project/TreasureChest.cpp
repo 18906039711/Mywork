@@ -95,7 +95,7 @@ bool TreasureChest::onContactBegin(PhysicsContact & contact)
 				Sprite* MpFactor = Sprite::create("Coin/MPFactor.png");
 				MpFactor->setScale(static_cast<float>(0.3));
 				MpFactor->runAction(Sequence::create(MoveTo::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
-					DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
+					DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(0.5)), NULL));
 				Chest->addChild(MpFactor);
 			}
 			player->changeMP(5 * MpFactorNum);

@@ -1,0 +1,933 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|win32">
+      <Configuration>Debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|win32">
+      <Configuration>Release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1836863F-73D7-3B66-B42B-C4AD24FE2827}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>win32</Platform>
+    <ProjectName>SoulKnight</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\bin\SoulKnight\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">SoulKnight.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">SoulKnight</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\bin\SoulKnight\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">SoulKnight.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|win32'">SoulKnight</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\bin\SoulKnight\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">SoulKnight.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">SoulKnight</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\bin\SoulKnight\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">SoulKnight.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">SoulKnight</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
+    <ExecutablePath>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\bin\SoulKnight\Debug\Resources;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;COCOS2D_DEBUG=1;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;COCOS2D_DEBUG=1;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>
+      </Message>
+      <Command>setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libssl-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libcrypto-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libcrypto-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/uv/prebuilt/win32/uv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/uv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/websockets/prebuilt/win32/websockets.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/websockets.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/curl/prebuilt/win32/libcurl.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libcurl.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/gles/prebuilt/glew32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/glew32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/icon/prebuilt/iconv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/iconv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/MP3Decoder/prebuilt/libmpg123.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libmpg123.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libogg.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libogg.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbis.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libvorbis.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbisfile.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/libvorbisfile.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OpenalSoft/prebuilt/OpenAL32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/OpenAL32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/zlib/../win32-specific/zlib/prebuilt/zlib1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/zlib1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\Debug\cocos2d.lib;lib\Debug\external.lib;..\cocos2d\external\Box2D\prebuilt\win32\debug\libbox2d.lib;..\cocos2d\external\chipmunk\prebuilt\win32\debug-lib\libchipmunk.lib;..\cocos2d\external\freetype2\prebuilt\win32\freetype.lib;lib\Debug\ext_recast.lib;..\cocos2d\external\bullet\prebuilt\win32\debug\libbullet.lib;..\cocos2d\external\jpeg\prebuilt\win32\libjpeg.lib;..\cocos2d\external\webp\prebuilt\win32\libwebp.lib;..\cocos2d\external\websockets\prebuilt\win32\websockets.lib;..\cocos2d\external\openssl\prebuilt\win32\libssl.lib;..\cocos2d\external\openssl\prebuilt\win32\libcrypto.lib;..\cocos2d\external\uv\prebuilt\win32\uv_a.lib;lib\Debug\ext_tinyxml2.lib;lib\Debug\ext_xxhash.lib;lib\Debug\ext_xxtea.lib;lib\Debug\ext_clipper.lib;lib\Debug\ext_edtaa3func.lib;lib\Debug\ext_convertUTF.lib;lib\Debug\ext_poly2tri.lib;lib\Debug\ext_md5.lib;..\cocos2d\external\curl\prebuilt\win32\libcurl.lib;..\cocos2d\external\png\prebuilt\win32\libpng.lib;..\cocos2d\external\win32-specific\gles\prebuilt\glew32.lib;..\cocos2d\external\win32-specific\icon\prebuilt\libiconv.lib;..\cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.lib;..\cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.lib;..\cocos2d\external\glfw3\prebuilt\win32\glfw3.lib;..\cocos2d\external\zlib\..\win32-specific\zlib\prebuilt\libzlib.lib;lib\Debug\ext_unzip.lib;ws2_32.lib;userenv.lib;psapi.lib;winmm.lib;Version.lib;Iphlpapi.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/Debug/SoulKnight.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Debug/SoulKnight.pdb</ProgramDataBaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>
+      </Message>
+      <Command>setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libssl-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libcrypto-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libcrypto-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/uv/prebuilt/win32/uv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/uv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/websockets/prebuilt/win32/websockets.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/websockets.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/curl/prebuilt/win32/libcurl.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libcurl.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/gles/prebuilt/glew32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/glew32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/icon/prebuilt/iconv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/iconv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/MP3Decoder/prebuilt/libmpg123.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libmpg123.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libogg.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libogg.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbis.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libvorbis.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbisfile.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/libvorbisfile.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OpenalSoft/prebuilt/OpenAL32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/OpenAL32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/zlib/../win32-specific/zlib/prebuilt/zlib1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/zlib1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\Release\cocos2d.lib;lib\Release\external.lib;..\cocos2d\external\Box2D\prebuilt\win32\release\libbox2d.lib;..\cocos2d\external\chipmunk\prebuilt\win32\release-lib\libchipmunk.lib;..\cocos2d\external\freetype2\prebuilt\win32\freetype.lib;lib\Release\ext_recast.lib;..\cocos2d\external\bullet\prebuilt\win32\release\libbullet.lib;..\cocos2d\external\jpeg\prebuilt\win32\libjpeg.lib;..\cocos2d\external\webp\prebuilt\win32\libwebp.lib;..\cocos2d\external\websockets\prebuilt\win32\websockets.lib;..\cocos2d\external\openssl\prebuilt\win32\libssl.lib;..\cocos2d\external\openssl\prebuilt\win32\libcrypto.lib;..\cocos2d\external\uv\prebuilt\win32\uv_a.lib;lib\Release\ext_tinyxml2.lib;lib\Release\ext_xxhash.lib;lib\Release\ext_xxtea.lib;lib\Release\ext_clipper.lib;lib\Release\ext_edtaa3func.lib;lib\Release\ext_convertUTF.lib;lib\Release\ext_poly2tri.lib;lib\Release\ext_md5.lib;..\cocos2d\external\curl\prebuilt\win32\libcurl.lib;..\cocos2d\external\png\prebuilt\win32\libpng.lib;..\cocos2d\external\win32-specific\gles\prebuilt\glew32.lib;..\cocos2d\external\win32-specific\icon\prebuilt\libiconv.lib;..\cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.lib;..\cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.lib;..\cocos2d\external\glfw3\prebuilt\win32\glfw3.lib;..\cocos2d\external\zlib\..\win32-specific\zlib\prebuilt\libzlib.lib;lib\Release\ext_unzip.lib;ws2_32.lib;userenv.lib;psapi.lib;winmm.lib;Version.lib;Iphlpapi.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/Release/SoulKnight.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/Release/SoulKnight.pdb</ProgramDataBaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>
+      </Message>
+      <Command>setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libssl-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libcrypto-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libcrypto-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/uv/prebuilt/win32/uv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/uv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/websockets/prebuilt/win32/websockets.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/websockets.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/curl/prebuilt/win32/libcurl.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libcurl.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/gles/prebuilt/glew32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/glew32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/icon/prebuilt/iconv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/iconv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/MP3Decoder/prebuilt/libmpg123.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libmpg123.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libogg.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libogg.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbis.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libvorbis.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbisfile.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/libvorbisfile.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OpenalSoft/prebuilt/OpenAL32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/OpenAL32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/zlib/../win32-specific/zlib/prebuilt/zlib1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/zlib1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\MinSizeRel\cocos2d.lib;lib\MinSizeRel\external.lib;..\cocos2d\external\Box2D\prebuilt\win32\release\libbox2d.lib;..\cocos2d\external\chipmunk\prebuilt\win32\release-lib\libchipmunk.lib;..\cocos2d\external\freetype2\prebuilt\win32\freetype.lib;lib\MinSizeRel\ext_recast.lib;..\cocos2d\external\bullet\prebuilt\win32\release\libbullet.lib;..\cocos2d\external\jpeg\prebuilt\win32\libjpeg.lib;..\cocos2d\external\webp\prebuilt\win32\libwebp.lib;..\cocos2d\external\websockets\prebuilt\win32\websockets.lib;..\cocos2d\external\openssl\prebuilt\win32\libssl.lib;..\cocos2d\external\openssl\prebuilt\win32\libcrypto.lib;..\cocos2d\external\uv\prebuilt\win32\uv_a.lib;lib\MinSizeRel\ext_tinyxml2.lib;lib\MinSizeRel\ext_xxhash.lib;lib\MinSizeRel\ext_xxtea.lib;lib\MinSizeRel\ext_clipper.lib;lib\MinSizeRel\ext_edtaa3func.lib;lib\MinSizeRel\ext_convertUTF.lib;lib\MinSizeRel\ext_poly2tri.lib;lib\MinSizeRel\ext_md5.lib;..\cocos2d\external\curl\prebuilt\win32\libcurl.lib;..\cocos2d\external\png\prebuilt\win32\libpng.lib;..\cocos2d\external\win32-specific\gles\prebuilt\glew32.lib;..\cocos2d\external\win32-specific\icon\prebuilt\libiconv.lib;..\cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.lib;..\cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.lib;..\cocos2d\external\glfw3\prebuilt\win32\glfw3.lib;..\cocos2d\external\zlib\..\win32-specific\zlib\prebuilt\libzlib.lib;lib\MinSizeRel\ext_unzip.lib;ws2_32.lib;userenv.lib;psapi.lib;winmm.lib;Version.lib;Iphlpapi.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/MinSizeRel/SoulKnight.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/MinSizeRel/SoulKnight.pdb</ProgramDataBaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_WIN32;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;CC_STATIC;LWS_WITH_LIBUV;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\audio\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\extensions;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\editor-support;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\base;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\platform\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\recast\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\tinyxml2\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxhash\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\xxtea\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\clipper\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\edtaa3func\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\ConvertUTF\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\poly2tri\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\md5\..;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\unzip\.;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\Box2D\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\chipmunk\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\freetype2\include\win32\freetype2;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\bullet\include\bullet;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\jpeg\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\openssl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\uv\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\webp\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\websockets\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\curl\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\png\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\gles\include\OGLES;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\icon\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\MP3Decoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OggDecoder\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\win32-specific\OpenalSoft\include;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\glfw3\include\win32;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\external\zlib\..\win32-specific\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message>
+      </Message>
+      <Command>setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libssl-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libssl-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/openssl/prebuilt/win32/libcrypto-1_1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libcrypto-1_1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/uv/prebuilt/win32/uv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/uv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/websockets/prebuilt/win32/websockets.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/websockets.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/curl/prebuilt/win32/libcurl.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libcurl.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/gles/prebuilt/glew32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/glew32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/icon/prebuilt/iconv.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/iconv.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/MP3Decoder/prebuilt/libmpg123.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libmpg123.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libogg.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libogg.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbis.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libvorbis.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OggDecoder/prebuilt/libvorbisfile.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/libvorbisfile.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/win32-specific/OpenalSoft/prebuilt/OpenAL32.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/OpenAL32.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -E copy_if_different D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/cocos2d/external/zlib/../win32-specific/zlib/prebuilt/zlib1.dll D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/zlib1.dll
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>lib\RelWithDebInfo\cocos2d.lib;lib\RelWithDebInfo\external.lib;..\cocos2d\external\Box2D\prebuilt\win32\release\libbox2d.lib;..\cocos2d\external\chipmunk\prebuilt\win32\release-lib\libchipmunk.lib;..\cocos2d\external\freetype2\prebuilt\win32\freetype.lib;lib\RelWithDebInfo\ext_recast.lib;..\cocos2d\external\bullet\prebuilt\win32\release\libbullet.lib;..\cocos2d\external\jpeg\prebuilt\win32\libjpeg.lib;..\cocos2d\external\webp\prebuilt\win32\libwebp.lib;..\cocos2d\external\websockets\prebuilt\win32\websockets.lib;..\cocos2d\external\openssl\prebuilt\win32\libssl.lib;..\cocos2d\external\openssl\prebuilt\win32\libcrypto.lib;..\cocos2d\external\uv\prebuilt\win32\uv_a.lib;lib\RelWithDebInfo\ext_tinyxml2.lib;lib\RelWithDebInfo\ext_xxhash.lib;lib\RelWithDebInfo\ext_xxtea.lib;lib\RelWithDebInfo\ext_clipper.lib;lib\RelWithDebInfo\ext_edtaa3func.lib;lib\RelWithDebInfo\ext_convertUTF.lib;lib\RelWithDebInfo\ext_poly2tri.lib;lib\RelWithDebInfo\ext_md5.lib;..\cocos2d\external\curl\prebuilt\win32\libcurl.lib;..\cocos2d\external\png\prebuilt\win32\libpng.lib;..\cocos2d\external\win32-specific\gles\prebuilt\glew32.lib;..\cocos2d\external\win32-specific\icon\prebuilt\libiconv.lib;..\cocos2d\external\win32-specific\MP3Decoder\prebuilt\libmpg123.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libogg.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbis.lib;..\cocos2d\external\win32-specific\OggDecoder\prebuilt\libvorbisfile.lib;..\cocos2d\external\win32-specific\OpenalSoft\prebuilt\OpenAL32.lib;..\cocos2d\external\glfw3\prebuilt\win32\glfw3.lib;..\cocos2d\external\zlib\..\win32-specific\zlib\prebuilt\libzlib.lib;lib\RelWithDebInfo\ext_unzip.lib;ws2_32.lib;userenv.lib;psapi.lib;winmm.lib;Version.lib;Iphlpapi.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/RelWithDebInfo/SoulKnight.lib</ImportLibrary>
+      <ProgramDataBaseFile>D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/bin/SoulKnight/RelWithDebInfo/SoulKnight.pdb</ProgramDataBaseFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">Building Custom Rule D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -SD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight -BD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build --check-stamp-file D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompilerABI.c;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCompilerIdDetection.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompileFeatures.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerABI.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerId.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeFindBinUtils.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseArguments.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitLinkInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystem.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCompilerCommon.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CompilerId\VS-10.vcxproj.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Internal\FeatureTesting.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-Determine-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCXXCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeRCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'">Building Custom Rule D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|win32'">setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -SD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight -BD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build --check-stamp-file D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompilerABI.c;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCompilerIdDetection.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompileFeatures.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerABI.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerId.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeFindBinUtils.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseArguments.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitLinkInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystem.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCompilerCommon.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CompilerId\VS-10.vcxproj.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Internal\FeatureTesting.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-Determine-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCXXCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeRCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">Building Custom Rule D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -SD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight -BD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build --check-stamp-file D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompilerABI.c;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCompilerIdDetection.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompileFeatures.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerABI.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerId.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeFindBinUtils.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseArguments.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitLinkInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystem.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCompilerCommon.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CompilerId\VS-10.vcxproj.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Internal\FeatureTesting.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-Determine-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCXXCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeRCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">Building Custom Rule D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">setlocal
+D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -SD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight -BD:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build --check-stamp-file D:/cocos2d-x/cocos2d-x-4.0/project/SoulKnight/win-build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCCompilerABI.c;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXCompilerABI.cpp;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeCompilerIdDetection.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompileFeatures.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerABI.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineCompilerId.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeDetermineSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeFindBinUtils.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseArguments.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitIncludeInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeParseImplicitLinkInfo.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCCompiler.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystem.cmake.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCXXCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestCompilerCommon.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CMakeTestRCCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ADSP-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMCC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\ARMClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\AppleClang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Borland-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Cray-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GHS-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IAR-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Intel-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\MSVC-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PGI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\PathScale-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SCO-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TI-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\Watcom-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\XLClang-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-C-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\CompilerId\VS-10.vcxproj.in;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Internal\FeatureTesting.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-Determine-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\VS\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildHelpers.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosBuildSet.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDefine.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cmake\Modules\CocosConfigDepend.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeCXXCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeRCCompiler.cmake;D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\3.17.20032601-MSVC_2\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BossScene.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CoinUI.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="EnemyLayer.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="HelpScene.cpp" />
+    <ClCompile Include="Merchant.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="PlayerUI.cpp" />
+    <ClCompile Include="PlayScene1.cpp" />
+    <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="SuspendScene.cpp" />
+    <ClCompile Include="TreasureChest.cpp" />
+    <ClInclude Include="BossScene.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ChooseScene.h" />
+    <ClInclude Include="Coin.h" />
+    <ClInclude Include="CoinUI.h" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\MainScene.h" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\proj.win32\main.h" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\proj.win32\resource.h" />
+    <ClCompile Include="ChooseScene.cpp" />
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\MainScene.cpp" />
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\proj.win32\main.cpp" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="EnemyLayer.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="HelpScene.h" />
+    <ClInclude Include="Merchant.h" />
+    <ClInclude Include="ObjectTag.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="PlayerUI.h" />
+    <ClInclude Include="PlayScene1.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="SuspendScene.h" />
+    <ClInclude Include="TreasureChest.h" />
+    <ResourceCompile Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\proj.win32\game.rc" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\CloseNormal.png" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\CloseSelected.png" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\HelloWorld.png" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\fonts\Marker Felt.ttf" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\fonts\arial.ttf" />
+    <ClInclude Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\Resources\res\.gitkeep" />
+    <ClCompile Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\cocos2d\cocos\precheader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\ZERO_CHECK.vcxproj">
+      <Project>{5ECAFB6F-49A9-38D6-9A55-D3A7466F3D0A}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\SYNC_RESOURCE-SoulKnight.vcxproj">
+      <Project>{A28E5BDC-7FE5-319A-AB27-F6D8D7D8CFC2}</Project>
+      <Name>SYNC_RESOURCE-SoulKnight</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\cocos\core\cocos2d.vcxproj">
+      <Project>{A3EDEB11-F4C2-3ECE-B329-5F16AC94492A}</Project>
+      <Name>cocos2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\clipper\ext_clipper.vcxproj">
+      <Project>{E0811779-3D0F-379F-ADEF-6D1BF19C8B71}</Project>
+      <Name>ext_clipper</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\ConvertUTF\ext_convertUTF.vcxproj">
+      <Project>{83F6AB29-34BB-3545-8947-CAC19FE608B1}</Project>
+      <Name>ext_convertUTF</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\edtaa3func\ext_edtaa3func.vcxproj">
+      <Project>{D6F030DB-EFEC-3282-9DD5-4274FE00F709}</Project>
+      <Name>ext_edtaa3func</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\md5\ext_md5.vcxproj">
+      <Project>{6C20E73F-44B0-311A-A318-A6B1EE5EF586}</Project>
+      <Name>ext_md5</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\poly2tri\ext_poly2tri.vcxproj">
+      <Project>{AE1A1F6C-2A40-312A-A303-D3807BB02482}</Project>
+      <Name>ext_poly2tri</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\recast\ext_recast.vcxproj">
+      <Project>{D0B83A0F-0D79-3ACD-AB26-F021AC6F6017}</Project>
+      <Name>ext_recast</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\tinyxml2\ext_tinyxml2.vcxproj">
+      <Project>{F5291CEF-EE63-36E0-BEDE-1203C2829320}</Project>
+      <Name>ext_tinyxml2</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\unzip\ext_unzip.vcxproj">
+      <Project>{2B1E8ABA-0BE9-3C8D-A010-49CE65B8900E}</Project>
+      <Name>ext_unzip</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\xxhash\ext_xxhash.vcxproj">
+      <Project>{FA25619B-A701-360D-B939-C4D0B18C0FBA}</Project>
+      <Name>ext_xxhash</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\xxtea\ext_xxtea.vcxproj">
+      <Project>{58A1A53A-5C10-387F-A756-5AC282CC64E0}</Project>
+      <Name>ext_xxtea</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\cocos2d-x\cocos2d-x-4.0\project\SoulKnight\win-build\engine\external\external.vcxproj">
+      <Project>{777C6C74-0F13-3735-A5BA-8B95EC0CB978}</Project>
+      <Name>external</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bin\SoulKnight\Debug\Resources\MainScreen\SoulKnight.png" />
+    <Image Include="bin\SoulKnight\Debug\Resources\MainScreen\title.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,21 +1,26 @@
 #pragma once
 
-#ifndef _PLAY_SCENE1_H_
-#define _PLAY_SCENE1_H_
+#ifndef _BOSSSCENE_H_
+#define _BOSSSCENE_H_
 
 #include "cocos2d.h"
 #include "ChooseScene.h"
-#include "BossScene.h"
-#include "EnemyLayer.h"
-#include "Merchant.h"
+#include "PlayScene1.h"
+#include "Enemy.h"
+#include "ObjectTag.h"
+#include "ui/CocosGUI.h"
 #include "AudioEngine.h"
+
 
 USING_NS_CC;
 
-class PlayScene1 :public Layer
+class Player;
+class Enemy;
+
+class BossScene :public Layer
 {
 public:
-	CREATE_FUNC(PlayScene1);
+	CREATE_FUNC(BossScene);
 
 	virtual bool init();
 
@@ -31,34 +36,25 @@ public:
 
 	void setMusic();
 
-	void setTreasureChest();
-
 	void displayCoinNum();
 
-	void setFence();
-	void removeFence();
+	void createBoss();
+	void bossAppearance();
 
-	void setEnemyLayer();
-	void moveToMapCenter(EventCustom* event);
-	void moveReturn(float dt);
-	void enterEddy();
-
+	void showBossHP();
 	//void ifChestOpened(float dt);
 
 
 
 private:
-	TMXTiledMap* map = TMXTiledMap::create("map/PlayMap2.tmx");
+	TMXTiledMap* map = TMXTiledMap::create("map/BossMap.tmx");
 	float mapWidth = (map->getMapSize().width) * map->getTileSize().width * 2;
 	float mapHeight = (map->getMapSize().height) * map->getTileSize().height * 2;
 
-	//各小块地图中心
-	Vec2 mapPoint[9];
-	//bool enemyMark[9] = { false };
-
-
+	ui::LoadingBar* BossHP = ui::LoadingBar::create("UI/BossHpUI.png");
+	Enemy* boss = Enemy::create(GoblinPriest);
 	Player* player;
-	void addPlayer();
+	void addPlayer(float delta);
 	int backGroundMusic1;
 
 	//HP归零，游戏结束，返回选择界面
@@ -66,4 +62,4 @@ private:
 	void returnToChoose(float dt);
 };
 
-#endif _PLAY_SCENE1_H_
+#endif 

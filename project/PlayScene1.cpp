@@ -66,7 +66,6 @@ void PlayScene1::setMap() {
 	mapPoint[6] = Vec2(mapWidth / 74 * 11, mapHeight / 74 * 11);
 	mapPoint[7] = Vec2(mapWidth / 2, mapHeight / 74 * 11);
 	mapPoint[8] = Vec2(mapWidth / 74 * 63, mapHeight / 74 * 11);
-
 }
 	
 
@@ -167,12 +166,49 @@ void PlayScene1::setTreasureChest() {
 }
 
 void PlayScene1::setEnemyLayer() {
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 1; i++) {
 		if (i != 4) {
 			EnemyLayer* enemyLayer = EnemyLayer::create();
 			enemyLayer->putIntoMap(map);
 			enemyLayer->setPosition(mapPoint[i]);
+			enemyLayer->setTag(ObjectTag_EnemyLayer - i);
 		}
+	}
+
+	//设置监听事件，如果小怪全清生成boss
+	auto cleanEnemies = EventListenerCustom::create("moveToMapCenter", CC_CALLBACK_1(PlayScene1::moveToMapCenter, this));
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(cleanEnemies, this);
+}
+
+void PlayScene1::moveToMapCenter(EventCustom* event) {
+	Player* player = dynamic_cast<Player*>(map->getChildByTag(ObjectTag_Player));
+	player->unscheduleUpdate();
+	map->runAction(MoveBy::create(static_cast<float>(1), Vec2(player->getPosition().x - mapPoint[4].x, player->getPosition().y - mapPoint[4].y)));
+	Sprite* eddy = Sprite::create("eddy.png");
+	eddy->setPosition(mapPoint[4]);
+	eddy->setScale(0.05f);
+	Action* eddyAmplify = ScaleTo::create(1.f, 0.5f);
+	eddy->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), eddyAmplify, NULL));
+	Action* eddyRevolve = RotateBy::create(10000.f, 10000.f * 10);
+	eddy->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), eddyRevolve, NULL));
+	map->addChild(eddy, map->getLayer("player")->getLocalZOrder() - 1, ObjectTag_Exit);
+
+	
+	this->scheduleOnce(CC_SCHEDULE_SELECTOR(PlayScene1::moveReturn), static_cast<float>(4));
+	auto moveReturn = MoveBy::create(static_cast<float>(1), Vec2(mapPoint[4].x - player->getPosition().x, mapPoint[4].y - player->getPosition().y));
+	map->runAction(Sequence::create(DelayTime::create(static_cast<float>(3)), moveReturn, NULL));
+}
+
+void PlayScene1::moveReturn(float dt) {
+	player->scheduleUpdate();
+}
+
+void PlayScene1::enterEddy() {
+	auto player = map->getChildByTag(ObjectTag_Player);
+	auto eddy = map->getChildByTag(ObjectTag_Exit);
+	if (eddy->getBoundingBox().containsPoint(player->getPosition())) {
+		AudioEngine::stopAll();
+		Director::getInstance()->pushScene(BossScene::createScene());
 	}
 }
 
@@ -230,14 +266,28 @@ void PlayScene1::removeFence() {
 void PlayScene1::update(float delta) {
 	//auto exit = map->getChildByTag(ObjectTag_Exit);
 	if (player != nullptr) {
-		/*if (exit->getBoundingBox().containsPoint(player->getPosition())) {
-			AudioEngine::stopAll();
-			Director::getInstance()->pushScene(TransitionFade::create(static_cast<float>(0.5), PlayScene1::createScene()));
-		}*/
 		if (!(player->aliveMark)) {
 			gameOver();
 		}
 	}
+	//遍历小怪是否全清
+	for (int i = 0; i < 1; i++) {
+		if (i != 4) {
+			auto enemyLayer = dynamic_cast<EnemyLayer*>(map->getChildByTag(ObjectTag_EnemyLayer - i));
+			if (enemyLayer != nullptr) {
+				break;
+			}
+
+		}
+		if (i == 0) {
+			Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("moveToMapCenter");
+			_eventDispatcher->removeCustomEventListeners("moveToMapCenter");
+		}
+	}
+	if (map->getChildByTag(ObjectTag_Exit) != nullptr) {
+		enterEddy();
+	}
+
 }
 
 void PlayScene1::gameOver() {

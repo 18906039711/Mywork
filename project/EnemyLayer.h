@@ -21,6 +21,9 @@ public:
 	void putIntoMap(TMXTiledMap* map);
 	
 	void createEnemies();
+
+	//小怪是否全清
+	bool cleanMark = false;
 private:
 	int enemyNum;
 	int borderLength = 950;

@@ -50,6 +50,9 @@ void Weapon::update(float delta) {
 			this->getPosition().y - my_sprite->getBoundingBox().size.height / 2);
 		Rect weaponRect = Rect(weaponPoint, this->my_sprite->getBoundingBox().size);
 		player = dynamic_cast<Player*>(this->getParent()->getChildByTag(ObjectTag_Player));
+		if (player == nullptr) {
+			return;
+		}
 		auto playerSize = player->my_sprite->getBoundingBox().size;
 		auto playerRect = Rect(Vec2(player->getPosition().x - player->my_sprite->getBoundingBox().size.width / 2,
 			player->getPosition().y - player->my_sprite->getBoundingBox().size.height / 2), playerSize);

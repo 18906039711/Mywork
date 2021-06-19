@@ -42,6 +42,7 @@ void EnemyLayer::update(float delta) {
 			my_map->addChild(chest2, my_map->getLayer("player")->getLocalZOrder() - 1);
 
 			this->unscheduleUpdate();
+			cleanMark = true;
 			this->runAction(RemoveSelf::create());
 			return;
 		}
