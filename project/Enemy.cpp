@@ -91,6 +91,15 @@ void Enemy::randomMove(float delta) {
 		return;
 	}
 
+	//boss等待出场动画
+	static int waitAction = 1;
+	if (ID >= GoblinPriest) {
+		if (waitAction) {
+			waitAction--;
+			return;
+		}
+	}
+
 	float X = 0, Y = 0, px, py, width, height;
 
 	//获取屏幕显示大小
@@ -402,7 +411,113 @@ void Enemy::bossAttack() {
 	Vec2 point = this->getPosition();
 
 	//攻击模式的切换，以及小怪的召唤
-	if (timeCounter < 10) {
+	//竖直雷电攻击
+	if (timeCounter == 4|| timeCounter == 7) {
+		/*Boss召唤动画*/
+		my_sprite->stopAllActions();
+		//创建序列帧
+		auto summon = Animation::create();
+		for (int i = 5; i <= 6; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Enemy/%d/attack%d.png", ID, i);
+			summon->addSpriteFrameWithFile(nameSize);
+		}
+		//设置两帧间的时间间隔
+		summon->setDelayPerUnit(static_cast<float>(1));
+		summon->setLoops(1);
+		my_sprite->runAction(Animate::create(summon));
+		/*Boss召唤动画*/
+
+		/*范围提示*/
+		Sprite* strikingRange = Sprite::create("thunderAnimation/strikingRange.png");
+		strikingRange->setOpacity(100);
+		strikingRange->setScale(static_cast<float>(0.1));
+		strikingRange->setPosition(player->getPosition());
+		my_map->addChild(strikingRange, my_map->getLayer("floor")->getLocalZOrder() + 1, ObjectTag_DamageRange);
+		strikingRange->runAction(Spawn::create(FadeTo::create(static_cast<float>(1), 200), ScaleTo::create(static_cast<float>(1), 1), NULL));
+		strikingRange->runAction(Sequence::create(DelayTime::create(static_cast<float>(1.5)), RemoveSelf::create(), NULL));
+		/*范围提示*/
+
+		/*痕迹*/
+		Sprite* vestige = Sprite::create("thunderAnimation/vestige.png");
+		vestige->setPosition(player->getPosition());
+		vestige->setOpacity(0);
+		my_map->addChild(vestige, my_map->getLayer("floor")->getLocalZOrder() + 1);
+		vestige->runAction(Sequence::create(DelayTime::create(static_cast<float>(1.5)),FadeIn::create(static_cast<float>(0.5)),NULL));
+		/*痕迹*/
+
+		/*雷电动画*/
+		auto thunder = Sprite::create("thunderAnimation/1.png");
+		auto thunderAnimation = Animation::create();
+		for (int i = 1; i <= 10; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "thunderAnimation/%d.png", i);
+			thunderAnimation->addSpriteFrameWithFile(nameSize);
+		}
+		//设置两帧间的时间间隔
+		thunderAnimation->setDelayPerUnit(static_cast<float>(0.1));
+		thunderAnimation->setLoops(1);
+		thunder->setOpacity(0);
+		thunder->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.99)), FadeIn::create(static_cast<float>(0.01)), NULL));
+		thunder->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), Animate::create(thunderAnimation), NULL));
+		thunder->runAction(Sequence::create(DelayTime::create(static_cast<float>(2)), RemoveSelf::create(), NULL));
+		thunder->setPosition(player->getPosition().x, player->getPosition().y + thunder->getBoundingBox().size.height / 4);
+		my_map->addChild(thunder, 20);
+		/*雷电动画*/
+
+		/*雷电音效*/
+		auto soundEffect = AudioEngine::play2d("Music/thunder.mp3", false);
+		//读取之前的音量
+		int volumePercent = UserDefault::getInstance()->getIntegerForKey("volumePercent", 100);
+		AudioEngine::setVolume(soundEffect, volumePercent / 100.f);
+		/*雷电音效*/
+
+		/*伤害判定*/
+		this->scheduleOnce(CC_SCHEDULE_SELECTOR(Enemy::thunderAttack), 1.3);
+	}
+	//召唤三只小怪
+	else if (timeCounter == 10|| timeCounter==5) {
+		//攻击循环
+		if (timeCounter == 10) {
+			timeCounter = 0;
+		}
+
+		//召唤动画
+		my_sprite->stopAllActions();
+		//创建序列帧
+		auto summon = Animation::create();
+		for (int i = 5; i <= 6; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "Enemy/%d/attack%d.png", ID, i);
+			summon->addSpriteFrameWithFile(nameSize);
+		}
+		//设置两帧间的时间间隔
+		summon->setDelayPerUnit(static_cast<float>(0.3));
+		summon->setLoops(1);
+		my_sprite->runAction(Animate::create(summon));
+		standAction();
+
+		int enemyType = rand_0_1() * 4;
+		while (enemyType == 2) {
+			enemyType = rand_0_1() * 4;
+		}
+		Enemy* enemy = Enemy::create(longRangeEnemy1 + enemyType);
+		enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
+			this->getPosition().y + rand_0_1() * 500 - 500 / 2);
+		//如果生成在障碍中，重新生成
+		while (barrier->getTileGIDAt(tileCoordForPosition(enemy->getPosition()))) {
+			enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
+				this->getPosition().y + rand_0_1() * 500 - 500 / 2);
+		}
+		//计算场上小怪数
+		int Num = 1;
+		while (my_map->getChildByTag(ObjectTag_Enemy + Num) != nullptr) {
+			Num++;
+		}
+		enemy->putIntoMap(my_map, ObjectTag_Enemy + Num);
+	}
+	//普通攻击，半血时增强
+	else {
 		attackAction();
 		standAction();
 		char HPStr[50];
@@ -432,35 +547,15 @@ void Enemy::bossAttack() {
 				}
 			}
 		}
-
 	}
-	//召唤小怪
-	else {
-		//召唤动画
-		my_sprite->stopAllActions();
-		//创建序列帧
-		auto summon = Animation::create();
-		for (int i = 5; i <= 6; i++) {
-			char nameSize[100] = { 0 };
-			sprintf(nameSize, "Enemy/%d/attack%d.png", ID, i);
-			summon->addSpriteFrameWithFile(nameSize);
-		}
-		//设置两帧间的时间间隔
-		summon->setDelayPerUnit(static_cast<float>(0.3));
-		summon->setLoops(1);
-		my_sprite->runAction(Animate::create(summon));
-		standAction();
+}
 
-		timeCounter = 0;
-		Enemy* enemy = Enemy::create(longRangeEnemy1);
-		enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
-			this->getPosition().y + rand_0_1() * 500 - 500 / 2);
-		//如果生成在障碍中，重新生成
-		while (barrier->getTileGIDAt(tileCoordForPosition(enemy->getPosition()))) {
-			enemy->setPosition(this->getPosition().x + rand_0_1() * 500 - 500 / 2,
-				this->getPosition().y + rand_0_1() * 500 - 500 / 2);
-		}
-		enemy->putIntoMap(my_map, ObjectTag_Enemy + 1);
+void Enemy::thunderAttack(float dt) {
+	auto player = dynamic_cast<Player*> (my_map->getChildByTag(ObjectTag_Player));
+	auto damageRange = my_map->getChildByTag(ObjectTag_DamageRange);
+	float distance = pow(player->getPosition().x - damageRange->getPosition().x, 2) + pow(player->getPosition().y - damageRange->getPosition().y, 2);
+	if (distance <= pow(damageRange->getBoundingBox().size.height / 2 + player->showSprite()->getBoundingBox().size.height / 2, 2)) {
+		player->changeHP(-damage * 2);
 	}
 }
 
@@ -498,6 +593,12 @@ void Enemy::changeHP(int changeValue) {
 		//随机生成0-1个coin，以及0-1个MpFactor
 		int CoinNum = static_cast<int>(rand_0_1() * 2);
 		int MpFactorNum = static_cast<int>(rand_0_1() * 2);
+
+		//boss掉落较多
+		if (ID >= GoblinPriest) {
+			CoinNum = static_cast<int>(rand_0_1() * 5) + 30;
+			MpFactorNum = static_cast<int>(rand_0_1() * 5) + 25;
+		}
 		for (int i = 0; i < CoinNum; i++) {
 			Coin* coin = Coin::create();
 			coin->setPosition(this->getPosition());
@@ -509,7 +610,7 @@ void Enemy::changeHP(int changeValue) {
 			MpFactor->setScale(static_cast<float>(0.3));
 			MpFactor->setPosition(this->getPosition());
 			MpFactor->runAction(Sequence::create(MoveBy::create(static_cast<float>(0.2), Vec2(rand_0_1() * 400 - 200, rand_0_1() * 400 - 200)),
-				DelayTime::create(static_cast<float>(0.5)), FadeOut::create(static_cast<float>(0.5)), NULL));
+				DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(0.5)), NULL));
 			my_map->addChild(MpFactor, my_map->getLayer("player")->getLocalZOrder());
 		}
 		dynamic_cast<Player*>(my_map->getChildByTag(ObjectTag_Player))->changeMP(5 * MpFactorNum);
@@ -527,13 +628,18 @@ void Enemy::changeHP(int changeValue) {
 		this->addChild(HPLabel);
 	}
 
-	std::string HPstr = std::to_string(HP);
-	Label* HPLabel = Label::createWithTTF(HPstr, "fonts/arial.ttf", 40);
-	HPLabel->setTextColor(Color4B::RED);
-	HPLabel->setPosition(Vec2(0, my_sprite->getBoundingBox().size.height / 2));
-	this->removeChildByTag(0);
-	this->addChild(HPLabel, 1, 0);
+	//显示血量
+	//std::string HPstr = std::to_string(HP);
+	//Label* HPLabel = Label::createWithTTF(HPstr, "fonts/arial.ttf", 40);
+	//HPLabel->setTextColor(Color4B::RED);
+	//HPLabel->setPosition(Vec2(0, my_sprite->getBoundingBox().size.height / 2));
+	//this->removeChildByTag(0);
+	//this->addChild(HPLabel, 1, 0);
 
+}
+
+int Enemy::getHP() {
+	return this->HP;
 }
 
 void Enemy::setBarrierLayer() {

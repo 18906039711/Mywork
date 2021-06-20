@@ -42,9 +42,9 @@ public:
 	void bossAppearance();
 
 	void showBossHP();
-	//void ifChestOpened(float dt);
 
-
+	void makeEddy(EventCustom* event);
+	void enterEddy();
 
 private:
 	TMXTiledMap* map = TMXTiledMap::create("map/BossMap.tmx");

@@ -46,19 +46,35 @@ void Merchant::update(float delta) {
 		buyThing->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event)
 		{
 			if (code == EventKeyboard::KeyCode::KEY_J && player != nullptr) {
-				if (!priceMark) {
-					showPrice();
-					priceMark = true;
+				if (ID == ObjectTag_VendingMachine) {
+					if (!talkMark) {
+						showPrice();
+						talkMark = 1;
+					}
+					else {
+						deal();
+						talkMark = 0;
+					}
 				}
-				else{
-					deal();
-					priceMark = false;
+				if (ID == ObjectTag_Saber) {
+					if (talkMark == 0) {
+						dialogue();
+						talkMark = 1;
+					}
+					else if(talkMark == 1){
+						showPrice();
+						talkMark = 2;
+					}
+					else {
+						deal();
+						talkMark = 0;
+					}
 				}
 			}
 		};
 	}
 	else {
-		priceMark = false;
+		talkMark = 0;
 		this->removeInfomation();
 		buyThing->onKeyPressed = [=](EventKeyboard::KeyCode code, Event* event) {};
 	}
@@ -109,17 +125,41 @@ void Merchant::showPrice() {
 	this->getChildByTag(ObjectTag_Information)->addChild(price);
 }
 
+void Merchant::dialogue() {
+	if (ID == ObjectTag_Saber) {
+		this->getChildByTag(ObjectTag_Information)->removeAllChildren();
+		auto talk = Label::createWithTTF("I can give you my weapon", "fonts/arial.ttf", 120);
+		talk->enableOutline(Color4B::WHITE, 2);
+		talk->setPosition(this->getChildByTag(ObjectTag_Information)->getContentSize().width / 2,
+			this->getChildByTag(ObjectTag_Information)->getContentSize().height * 2);
+		this->getChildByTag(ObjectTag_Information)->addChild(talk);
+	}
+}
+
 void Merchant::givePotion() {
-	Potion* potion=Potion::create(static_cast<int>(rand_0_1() * 1000) % 2 + ObjectTag_HPPotion);
+	auto potion=Potion::create(static_cast<int>(rand_0_1() * 1000) % 2 + ObjectTag_HPPotion);
 	potion->setPosition(this->getPosition().x, this->getPosition().y - this->my_sprite->getContentSize().height / 3);
 	potion->runAction(MoveBy::create(static_cast<float>(0.5), Vec2(0, -potion->showSprite()->getContentSize().height)));
 	potion->putIntoMap(my_map);
 }
 
+void Merchant::giveWeapon() {
+	auto weapon = Weapon::create(ExcaliburID);
+	Vec2 point = Vec2(this->getPosition().x, this->getPosition().y - this->my_sprite->getContentSize().height / 3);
+	weapon->runAction(MoveBy::create(static_cast<float>(0.5), Vec2(0, -weapon->showSprite()->getContentSize().height)));
+	weapon->my_map = my_map;
+	weapon->putIntoMap(point);
+}
+
 void Merchant::deal() {
 	//Ç®¹»
 	if (UserDefault::getInstance()->getIntegerForKey("CoinNumber", 0) >= price) {
-		givePotion();
+		if (ID == ObjectTag_Saber) {
+			giveWeapon();
+		}
+		else if (ID == ObjectTag_VendingMachine) {
+			givePotion();
+		}
 		int coinNumber = UserDefault::getInstance()->getIntegerForKey("CoinNumber") - price;
 		UserDefault::getInstance()->setIntegerForKey("CoinNumber", coinNumber);
 

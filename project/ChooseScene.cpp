@@ -6,7 +6,7 @@ Scene* ChooseScene::createScene()
 {
 	auto scene = Scene::createWithPhysics();
 	scene->getPhysicsWorld()->setGravity(Vec2(0,0));
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = ChooseScene::create();
 	scene->addChild(layer);
 	return scene;
@@ -35,6 +35,10 @@ bool ChooseScene::init()
 	setEnemy();
 	setDoor();
 
+	auto merchant = Merchant::create(ObjectTag_Saber);
+	merchant->putIntoMap(map);
+	merchant->setPosition(mapWidth / 5, mapHeight / 5 * 3);
+
 	return true;
 }
 
@@ -44,7 +48,7 @@ void ChooseScene::setMap() {
 
 	//获取单个瓦片的尺寸(pixel)
 	auto tiledSize = map->getTileSize();
-	map->setPosition(-tiledSize.width * 2, -tiledSize.height * 2);
+	map->setPosition(-tiledSize.width - 32, -tiledSize.height - 32);
 	map->getLayer("barrier")->setVisible(false);
 	map->getLayer("enemyBarrier")->setVisible(false);
 }
@@ -184,12 +188,12 @@ void ChooseScene::setTreasureChest() {
 
 void ChooseScene::displayCoinNum() {
 	CoinUI* coinPanel= CoinUI::create();
-	coinPanel->intializeCoin();
+	//coinPanel->intializeCoin();
 	this->addChild(coinPanel);
 }
 
 void ChooseScene::setEnemy() {
-	Enemy* dummy = Enemy::create(GoblinPriest);
+	Enemy* dummy = Enemy::create(Dummy);
 	dummy->setPosition(mapWidth / 5 * 4, mapHeight / 5 * 3);
 	dummy->putIntoMap(map);
 }
@@ -208,7 +212,7 @@ void ChooseScene::update(float dt) {
 	if (player != nullptr) {
 		if (exit->getBoundingBox().containsPoint(player->getPosition())) {
 			AudioEngine::stopAll();
-			Director::getInstance()->pushScene(TransitionFade::create(static_cast<float>(0.5), PlayScene1::createScene()));
+			Director::getInstance()->pushScene(PlayScene1::createScene());
 		}
 		if (!(player->aliveMark)) {
 			gameOver();
@@ -239,31 +243,4 @@ void ChooseScene::returnToChoose(float dt) {
 	playerID = 0;
 }
 
-
-//
-//void ChooseScene::makeEddy() 
-//{
-//	auto visibleSize = Director::getInstance()->getVisibleSize();
-//	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-//	//PolygonInfo eddypinfo = AutoPolygon::generatePolygon("eddy.png");
-//	Sprite* eddy = Sprite::create("eddy.png");
-//	eddy->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 1.2 + origin.y));
-//	eddy->setScale(0.05f);
-//	Action* eddy_amplify = ScaleTo::create(1.f, 0.3f);
-//	eddy->runAction(eddy_amplify);	
-//	Action* eddy_revolve = RotateBy::create(10000.f, 10000.f * 10);
-//	eddy->runAction(eddy_revolve);
-//
-//	this->addChild(eddy, 1, 100);
-//	return ;
-//}
-//
-//void ChooseScene::enterEddy() {
-//	auto sprite_right = this->getChildByTag(playerID);
-//	auto eddy = this->getChildByTag(100);
-//	auto playScene = PlayScene1::create();
-//	if (eddy->getBoundingBox().containsPoint(sprite_right->getPosition())) {
-//		Director::getInstance()->pushScene(TransitionRotoZoom::create(1.f, playScene));
-//	}
-//}
 

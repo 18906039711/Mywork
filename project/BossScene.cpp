@@ -30,7 +30,6 @@ bool BossScene::init()
 	setButton();
 	setMusic();
 	displayCoinNum();
-	//addPlayer();
 	createBoss();
 	showBossHP();
 
@@ -139,6 +138,10 @@ void BossScene::createBoss() {
 	boss->putIntoMap(map, ObjectTag_Enemy);
 	boss->setPosition(mapWidth / 2, mapHeight / 2);
 	bossAppearance();
+
+	//设置监听事件，如果boss死亡生成旋涡
+	auto gameClearancer = EventListenerCustom::create("makeEddy", CC_CALLBACK_1(BossScene::makeEddy, this));
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(gameClearancer, this);
 }
 
 void BossScene::bossAppearance() {
@@ -170,27 +173,42 @@ void BossScene::update(float delta) {
 			gameOver();
 		}
 	}
-	//遍历小怪是否全清
-	for (int i = 0; i < 1; i++) {
-		if (i != 4) {
-			auto enemyLayer = dynamic_cast<EnemyLayer*>(map->getChildByTag(ObjectTag_EnemyLayer - i));
-			if (enemyLayer != nullptr) {
-				break;
-			}
-
-		}
-		if (i == 0) {
-			Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("createBoss");
-			_eventDispatcher->removeCustomEventListeners("createBoss");
-		}
+	//boss是否死亡
+	if (map->getChildByTag(ObjectTag_Enemy) == nullptr) {
+		Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("makeEddy");
+		_eventDispatcher->removeCustomEventListeners("makeEddy");
 	}
-
 	//更新boss血条
 	char HPStr[50];
 	sprintf(HPStr, "%d_HP", boss->ID);
 	int maxHP = UserDefault::getInstance()->getIntegerForKey(HPStr);
 	BossHP->setPercent(static_cast<float>(boss->getHP()) / maxHP * 100);
 	CCLOG("%d/%d", boss->getHP(), maxHP);
+
+	if (map->getChildByTag(ObjectTag_Exit) != nullptr) {
+		enterEddy();
+	}
+}
+
+void BossScene::makeEddy(EventCustom* event) {
+	Sprite* eddy = Sprite::create("eddy.png");
+	eddy->setPosition(mapWidth / 2, mapHeight / 2);
+	eddy->setScale(0.05f);
+	Action* eddyAmplify = ScaleTo::create(1.f, 0.5f);
+	eddy->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), eddyAmplify, NULL));
+	Action* eddyRevolve = RotateBy::create(10000.f, 10000.f * 10);
+	eddy->runAction(Sequence::create(DelayTime::create(static_cast<float>(1)), eddyRevolve, NULL));
+	map->addChild(eddy, map->getLayer("player")->getLocalZOrder() - 1, ObjectTag_Exit);
+}
+
+void BossScene::enterEddy() {
+	auto player = map->getChildByTag(ObjectTag_Player);
+	auto eddy = map->getChildByTag(ObjectTag_Exit);
+	if (eddy->getBoundingBox().containsPoint(player->getPosition())) {
+		AudioEngine::stopAll();
+		Director::getInstance()->pushScene(ChooseScene::createScene());
+		playerID = 0;
+	}
 }
 
 void BossScene::gameOver() {

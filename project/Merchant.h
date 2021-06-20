@@ -29,13 +29,16 @@ public:
 	//显示金额
 	void showPrice();
 	//记录对话程度
-	bool priceMark = false;
+	int talkMark = 0;
+	void dialogue();
 
 	//交易并对话
 	void deal();
 
 	//生成恢复药水
 	void givePotion();
+	//生成武器
+	void giveWeapon();
 
 	int ID;
 	std::string name;

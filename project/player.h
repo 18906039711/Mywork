@@ -16,6 +16,7 @@ extern int playerID;
 class PlayerUI;
 class Weapon;
 class Potion;
+class Enemy;
 
 class Player :public Entity {
 public:
@@ -63,6 +64,19 @@ public:
 
 	//攻击
 	void attack();
+	//技能
+	void showSkillCD();
+	//创建一个进度条精灵 
+	ProgressTimer* CDTimer = ProgressTimer::create(Sprite::create("character/skillSprite2.png"));
+
+	void skill();
+	void rangerSkill();
+	void rangerSkillOver(float dt);
+	void sorcererSkill();
+	void sorcererThunder(Enemy* enemy);
+
+	//从异常状态恢复
+	void recover(float dt);
 
 	//护甲自动回复
 	void recoverDefendce(float dt);
@@ -75,8 +89,6 @@ public:
 
 
 private:
-
-
 	int maxHP = 0;
 	int maxMP = 0;
 	int maxDefendce = 0;
@@ -85,8 +97,12 @@ private:
 	int Defendce = 0;
 	int Speed = 7;
 	int weaponID = 0;
+
 	//记录护甲回复时间
 	int recoverDefenceTime = 0;
+	//技能冷却时间
+	int skillCD = 0;
+
 	friend class PlayerUI;
 	friend class Weapon;
 

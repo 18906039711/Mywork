@@ -3,7 +3,6 @@
 bool Player::init()
 {
 	this->scheduleUpdate();
-
 	//设置Tag
 	this->setTag(ObjectTag_Player);
 
@@ -32,7 +31,7 @@ bool Player::init()
 	auto body = PhysicsBody::createBox(playerSprite->getBoundingBox().size);
 	body->setContactTestBitmask(0xFFFFFFFF);
 	body->setDynamic(false);
-	this->addComponent(body);
+	this->setPhysicsBody(body);
 
 
 	this->scheduleUpdate();
@@ -87,6 +86,13 @@ void Player::RunningAction() {
 		for (int i = 1; i <= 4; i++) {
 			char nameSize[100] = { 0 };
 			sprintf(nameSize, "character/ranger/run%d.png", i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+	}
+	else if (playerID == sorcererID) {
+		for (int i = 1; i <= 4; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "character/sorcerer/run%d.png", i);
 			animation->addSpriteFrameWithFile(nameSize);
 		}
 	}
@@ -150,6 +156,11 @@ void Player::changeHP(int changeValue) {
 		//闪红
 		my_sprite->runAction(Sequence::create(TintTo::create(static_cast<float>(0.1), Color3B::RED),
 			TintTo::create(static_cast<float>(0.1), Color3B::WHITE), NULL));
+
+		//有时候正好stopAction会一直变红，所以用函数强制恢复
+		//之后的debuff也可以用这个函数
+		this->scheduleOnce(CC_SCHEDULE_SELECTOR(Player::recover), 0.1);
+
 		//设置护甲回复冷却时间,5s
 		recoverDefenceTime = 5;
 	}
@@ -222,9 +233,6 @@ void Player::initializePlayer() {
 	UserDefault::getInstance()->setIntegerForKey("weaponID", 0);
 }
 
-void Player::updatePlayerAttribute() {
-	
-}
 
 void Player::getPotion(Potion* potion) {
 	potion->removeChildByTag(ObjectTag_Information);
@@ -296,6 +304,16 @@ void Player::update(float delta) {
 	if (weaponID != 0) {
 		attack();
 	}
+	//技能
+	if (skillCD == 0) {
+		skill();
+		CDTimer->setPercentage(100);
+	}
+	else {
+		skillCD--;
+		CDTimer->setPercentage(static_cast<float> (100 - skillCD / 3));
+	}
+
 }
 
 void Player::searchEnemy() {
@@ -381,6 +399,95 @@ void Player::attack() {
 	}
 }
 
+void Player::showSkillCD(){
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	auto CD = Sprite::create("character/skillSprite1.png");
+	CD->setScale(visibleSize.width / CD->getContentSize().width / 10);
+	CD->setOpacity(150);
+	CD->setPosition(visibleSize.width - CD->getBoundingBox().size.width, CD->getBoundingBox().size.height);
+	my_map->getParent()->addChild(CD);
+
+	CDTimer->setType(ProgressTimer::Type::BAR);
+	CDTimer->setBarChangeRate(Vec2(0, 1));
+	CDTimer->setMidpoint(Vec2(0, 0));
+	CDTimer->setScale(visibleSize.width / CD->getContentSize().width / 10);
+	CDTimer->setOpacity(150);
+	CDTimer->setPosition(CD->getPosition());
+	my_map->getParent()->addChild(CDTimer);
+}
+
+void Player::skill() {
+	if (keyMap[EventKeyboard::KeyCode::KEY_K]) {
+		if (playerID == rangerID) {
+			skillCD = 300;//5s
+			rangerSkill();
+		}
+		if (playerID == sorcererID) {
+			skillCD = 300;//5s
+			sorcererSkill();
+		}
+		CDTimer->setPercentage(0);
+	}
+}
+
+void Player::rangerSkill() {
+	setSpeed(14);
+	my_sprite->setOpacity(150);
+	//短暂无敌
+	this->removeComponent(this->getPhysicsBody());
+	//持续两秒
+	this->scheduleOnce(CC_SCHEDULE_SELECTOR(Player::rangerSkillOver), 1);
+}
+void Player::rangerSkillOver(float dt) {
+	setSpeed(7);
+	my_sprite->setOpacity(255);
+
+
+	//重新设置物理刚体
+	auto body = PhysicsBody::createBox(my_sprite->getBoundingBox().size);
+	body->setContactTestBitmask(0xFFFFFFFF);
+	body->setDynamic(false);
+	this->setPhysicsBody(body);
+}
+
+void Player::sorcererSkill() {
+	Sprite* magicCircle = Sprite::create("MagicCircle.png");
+	magicCircle->setScale(static_cast<float>(0.01));
+	auto amplify = ScaleTo::create(static_cast<float>(0.5), my_sprite->getBoundingBox().size.width / magicCircle->getContentSize().width*2);
+	magicCircle->runAction(Sequence::create(amplify, DelayTime::create(static_cast<float>(1)), FadeOut::create(static_cast<float>(0.5)), NULL));
+	magicCircle->setPosition(0, -my_sprite->getBoundingBox().size.height / 2);
+	this->addChild(magicCircle, -1);
+
+	for (int i = 1; i <= 10; i++) {
+		Enemy* enemy = dynamic_cast<Enemy*>(my_map->getChildByTag(ObjectTag_Enemy + i - 1));
+		//遍历敌人
+		if (enemy != nullptr) {
+			sorcererThunder(enemy);
+		}
+	}
+}
+
+void Player::sorcererThunder(Enemy* enemy) {
+	auto thunder = Sprite::create("thunderAnimation/1.png");
+
+	auto animation = Animation::create();
+
+	for (int i = 1; i <= 2; i++) {
+			char nameSize[100] = { 0 };
+			sprintf(nameSize, "thunderAnimation/%d.png", i);
+			animation->addSpriteFrameWithFile(nameSize);
+		}
+	//设置两帧间的时间间隔
+	animation->setDelayPerUnit(static_cast<float>(0.3));
+	thunder->runAction(Animate::create(animation));
+	thunder->runAction(Sequence::create(DelayTime::create(static_cast<float>(0.6)), RemoveSelf::create(), NULL));
+	thunder->setScale(static_cast<float>(0.6));
+	thunder->setPosition(0, thunder->getBoundingBox().size.height / 2);
+	enemy->addChild(thunder);
+	enemy->changeHP(-10);
+}
+
 void Player::recoverDefendce(float dt) {
 	if (recoverDefenceTime != 0) {
 		recoverDefenceTime--;
@@ -388,6 +495,11 @@ void Player::recoverDefendce(float dt) {
 	else {
 		changeDefendce(1);
 	}
+}
+
+void Player::recover(float dt) {
+	setSpeed(7);
+	my_sprite->setColor(Color3B::WHITE);
 }
 
 //玩家移动
@@ -494,6 +606,7 @@ void Player::setSpeed(int speed) {
 void Player::putIntoMap(TMXTiledMap* map) {
 	my_map = map;
 	map->addChild(this, map->getLayer("player")->getLocalZOrder(), ObjectTag_Player);
+	showSkillCD();
 }
 
 void Player::setBarrierLayer() {

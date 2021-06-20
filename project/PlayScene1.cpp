@@ -35,7 +35,7 @@ bool PlayScene1::init()
 	setEnemyLayer();
 	removeFence();
 
-	auto vend = Merchant::create(601);
+	auto vend = Merchant::create(ObjectTag_VendingMachine);
 	vend->putIntoMap(map);
 	vend->setPosition(mapWidth / 148 * 59, mapHeight / 148 * 93);
 	return true;
@@ -166,7 +166,7 @@ void PlayScene1::setTreasureChest() {
 }
 
 void PlayScene1::setEnemyLayer() {
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 9; i++) {
 		if (i != 4) {
 			EnemyLayer* enemyLayer = EnemyLayer::create();
 			enemyLayer->putIntoMap(map);
@@ -271,7 +271,7 @@ void PlayScene1::update(float delta) {
 		}
 	}
 	//遍历小怪是否全清
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 9; i++) {
 		if (i != 4) {
 			auto enemyLayer = dynamic_cast<EnemyLayer*>(map->getChildByTag(ObjectTag_EnemyLayer - i));
 			if (enemyLayer != nullptr) {
@@ -279,7 +279,7 @@ void PlayScene1::update(float delta) {
 			}
 
 		}
-		if (i == 0) {
+		if (i == 8) {
 			Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("moveToMapCenter");
 			_eventDispatcher->removeCustomEventListeners("moveToMapCenter");
 		}

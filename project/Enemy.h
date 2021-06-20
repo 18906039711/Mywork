@@ -38,6 +38,7 @@ public:
 	//攻击
 	void attack();
 	void bossAttack();
+	void thunderAttack(float dt);
 
 	//进入角色搜索范围，被锁定成为攻击对象
 	void locked();
@@ -45,6 +46,7 @@ public:
 
 	//扣血
 	void changeHP(int changeValue);
+	int getHP();
 
 	int ID;
 

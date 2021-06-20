@@ -17,9 +17,11 @@
 #define ObjectTag_Exit 110 //切换地图的出口，门或旋涡
 #define ObjectTag_Information 111//物品信息
 #define ObjectTag_Merchant 112
+#define ObjectTag_DamageRange 113 //伤害范围
+#define ObjectTag_PlayerCDSprite 114 //技能冷却显示
 
-#define ObjectTag_EnemyBullet 199
-#define ObjectTag_EnemyLayer 200
+#define ObjectTag_EnemyLayer 199
+#define ObjectTag_EnemyBullet 200
 #define ObjectTag_Enemy 201
 
 
@@ -27,6 +29,7 @@
 #define ObjectTag_MPPotion 502
 
 #define ObjectTag_VendingMachine 601
+#define ObjectTag_Saber 602
 
 /*weapon*/
 #define AK47ID 1001 //AR

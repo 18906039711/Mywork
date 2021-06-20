@@ -242,6 +242,13 @@ Vec2 Bullet::tileCoordForPosition(Vec2 point) {
 	//cocos2dx与tiledmap坐标不同
 	y = static_cast<int>(mapTiledNum.height - y - 1);
 
+	if (x<0 || x>mapTiledNum.width) {
+		x = 0;
+	}
+	if (y<0 || y>mapTiledNum.height) {
+		y = 0;
+	}
+
 	//格子坐标从零开始
 	return Vec2(static_cast<float>(x), static_cast<float>(y));
 }
